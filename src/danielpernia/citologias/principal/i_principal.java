@@ -34,6 +34,16 @@ import javax.swing.JTextArea;
 import javax.swing.JFormattedTextField;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.SoftBevelBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.UIManager;
+import javax.swing.JSeparator;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JPasswordField;
+import javax.swing.border.LineBorder;
 
 public class i_principal extends JFrame {
 
@@ -59,6 +69,21 @@ public class i_principal extends JFrame {
 	private JTextField textField_18;
 	private JTextField textField_19;
 	JComboBox comboBox_13,comboBox_12,comboBox_11,comboBox_14,comboBox_15,comboBox_16,comboBox_17;
+	private JTextField txtContrasea;
+	private JTextField textField_21;
+	JPanel panel,p_inicio,central;
+	private JTextField textField_20;
+	private JTable table;
+	private JTextField textField_22;
+	private JTextField textField_23;
+	private JTextField textField_24;
+	private JTextField textField_25;
+	private JTextField textField_26;
+	private JTextField txtPepeAlcantara;
+	private JTextField txtPerezPerez;
+	private JPasswordField passwordField;
+	private JPasswordField passwordField_1;
+	private JPasswordField passwordField_2;
 
 	/**
 	 * Launch the application.
@@ -81,35 +106,73 @@ public class i_principal extends JFrame {
 	 */
 	public i_principal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1100,700);
+		setBounds(100, 100, 1300,750);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		contentPane.add(panel, BorderLayout.NORTH);
+		panel.setVisible(false);
+		
 		
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setMargin(new Insets(5, 5, 5, 5));
 		menuBar.setFont(new Font("Segoe UI Light", Font.PLAIN, 12));
 		
 		JButton btnNewButton = new JButton("Nuevo Estudio");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CardLayout cl = (CardLayout)central.getLayout();
+				cl.show(central, "name_8159828611565");
+				panel.setVisible(true);
+				
+			}
+		});
 		menuBar.add(btnNewButton);
 		
 		JButton btnBuscarEstudio = new JButton("Consultar Estudio");
+		btnBuscarEstudio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CardLayout cl = (CardLayout)central.getLayout();
+				cl.show(central, "name_8159840041347");
+				panel.setVisible(true);
+			}
+		});
 		menuBar.add(btnBuscarEstudio);
 		
-		JButton btnImprimir = new JButton("Imprimir");
+		JButton btnImprimir = new JButton("Imprimir - Sincronizar");
+		btnImprimir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CardLayout cl = (CardLayout)central.getLayout();
+				cl.show(central, "name_33870233261272");
+				panel.setVisible(true);
+			}
+		});
 		menuBar.add(btnImprimir);
 		
 		JButton btnEstadisticas = new JButton("Estadisticas");
+		btnEstadisticas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CardLayout cl = (CardLayout)central.getLayout();
+				cl.show(central, "name_38544120539856");
+				panel.setVisible(true);
+			}
+		});
 		menuBar.add(btnEstadisticas);
 		
 		JButton btnUsuarios = new JButton("Usuarios");
+		btnUsuarios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CardLayout cl = (CardLayout)central.getLayout();
+				cl.show(central, "name_38616660277399");
+				panel.setVisible(true);
+			}
+		});
 		menuBar.add(btnUsuarios);
 		
-		JLabel lblNewLabel = new JLabel("Bienvenido: Usuario");
+		JLabel lblNewLabel = new JLabel("Bienvenido: Pedro Perez (Administrador)");
 		lblNewLabel.setFont(new Font("Nirmala UI", Font.PLAIN, 16));
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
@@ -121,8 +184,8 @@ public class i_principal extends JFrame {
 							.addComponent(menuBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_panel.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(163, Short.MAX_VALUE))
+							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 391, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(530, Short.MAX_VALUE))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -132,11 +195,129 @@ public class i_principal extends JFrame {
 					.addComponent(menuBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
+		
+		JButton btnNewButton_7 = new JButton("Medicos");
+		btnNewButton_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CardLayout cl = (CardLayout)central.getLayout();
+				cl.show(central, "name_38579282003671");
+				panel.setVisible(true);
+			}
+		});
+		menuBar.add(btnNewButton_7);
 		panel.setLayout(gl_panel);
 		
-		JPanel central = new JPanel();
+		central = new JPanel();
 		contentPane.add(central, BorderLayout.CENTER);
 		central.setLayout(new CardLayout(0, 0));
+		
+		p_inicio = new JPanel();
+		central.add(p_inicio, "name_30190169966599");
+		
+		JLabel lblNewLabel_26 = new JLabel("ESTUDIO GINECOLOGICO");
+		lblNewLabel_26.setFont(new Font("Tahoma", Font.BOLD, 24));
+		
+		JLabel lblNewLabel_27 = new JLabel("Licd. Lisbeth Jaimes");
+		lblNewLabel_27.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JLabel lblNewLabel_28 = new JLabel("RIF: V-15881409-5");
+		
+		JPanel panel_4 = new JPanel();
+		panel_4.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
+		GroupLayout gl_p_inicio = new GroupLayout(p_inicio);
+		gl_p_inicio.setHorizontalGroup(
+			gl_p_inicio.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_p_inicio.createSequentialGroup()
+					.addGroup(gl_p_inicio.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_p_inicio.createSequentialGroup()
+							.addGap(254)
+							.addGroup(gl_p_inicio.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblNewLabel_26)
+								.addComponent(lblNewLabel_28)
+								.addComponent(lblNewLabel_27)))
+						.addGroup(gl_p_inicio.createSequentialGroup()
+							.addGap(321)
+							.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 405, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(348, Short.MAX_VALUE))
+		);
+		gl_p_inicio.setVerticalGroup(
+			gl_p_inicio.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_p_inicio.createSequentialGroup()
+					.addGap(24)
+					.addComponent(lblNewLabel_26)
+					.addGap(18)
+					.addComponent(lblNewLabel_27)
+					.addGap(11)
+					.addComponent(lblNewLabel_28)
+					.addGap(66)
+					.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(197, Short.MAX_VALUE))
+		);
+		
+		JLabel lblNewLabel_24 = new JLabel("Usuario");
+		
+		JLabel lblNewLabel_25 = new JLabel("Contrase\u00F1a");
+		
+		txtContrasea = new JTextField();
+		txtContrasea.setToolTipText("Contrase\u00F1a es sensible a mayusculas y minusculas");
+		txtContrasea.setColumns(12);
+		
+		textField_21 = new JTextField();
+		textField_21.setColumns(12);
+		
+		JButton btnNewButton_2 = new JButton("Entrar");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CardLayout cl = (CardLayout)central.getLayout();
+				cl.show(central, "name_8159828611565");
+				panel.setVisible(true);
+			}
+		});
+		
+		JLabel lblNewLabel_29 = new JLabel("Acceso al sistema por favor ingrese usuario y contrase\u00F1a");
+		GroupLayout gl_panel_4 = new GroupLayout(panel_4);
+		gl_panel_4.setHorizontalGroup(
+			gl_panel_4.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_4.createSequentialGroup()
+					.addGap(51)
+					.addComponent(lblNewLabel_29)
+					.addContainerGap(74, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, gl_panel_4.createSequentialGroup()
+					.addContainerGap(136, Short.MAX_VALUE)
+					.addGroup(gl_panel_4.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(gl_panel_4.createSequentialGroup()
+							.addComponent(lblNewLabel_25)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(txtContrasea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel_4.createSequentialGroup()
+							.addComponent(lblNewLabel_24)
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(textField_21, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addGap(121))
+				.addGroup(Alignment.TRAILING, gl_panel_4.createSequentialGroup()
+					.addContainerGap(193, Short.MAX_VALUE)
+					.addComponent(btnNewButton_2)
+					.addGap(169))
+		);
+		gl_panel_4.setVerticalGroup(
+			gl_panel_4.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_4.createSequentialGroup()
+					.addGap(4)
+					.addComponent(lblNewLabel_29)
+					.addGap(35)
+					.addGroup(gl_panel_4.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel_24, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textField_21, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_panel_4.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel_25)
+						.addComponent(txtContrasea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addComponent(btnNewButton_2)
+					.addGap(43))
+		);
+		panel_4.setLayout(gl_panel_4);
+		p_inicio.setLayout(gl_p_inicio);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(230, 230, 250));
@@ -149,17 +330,28 @@ public class i_principal extends JFrame {
 		JPanel info_ginecologica = new JPanel();
 		
 		JPanel panel_3 = new JPanel();
+		
+		JButton btnNewButton_4 = new JButton("Guardar");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_1.createSequentialGroup()
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-						.addComponent(usuario, GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
-						.addComponent(info_ginecologica, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 536, Short.MAX_VALUE)
-						.addComponent(tratamiento_previo, 0, 0, Short.MAX_VALUE))
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+								.addComponent(info_ginecologica, GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE)
+								.addComponent(usuario, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+								.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 624, Short.MAX_VALUE)
+								.addComponent(tratamiento_previo, 0, 0, Short.MAX_VALUE)))
+						.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
+							.addContainerGap(1193, Short.MAX_VALUE)
+							.addComponent(btnNewButton_4)))
 					.addContainerGap())
 		);
 		gl_panel_1.setVerticalGroup(
@@ -169,12 +361,14 @@ public class i_principal extends JFrame {
 						.addGroup(gl_panel_1.createSequentialGroup()
 							.addComponent(usuario, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(info_ginecologica, GroupLayout.PREFERRED_SIZE, 215, GroupLayout.PREFERRED_SIZE))
+							.addComponent(info_ginecologica, GroupLayout.PREFERRED_SIZE, 197, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_panel_1.createSequentialGroup()
 							.addComponent(tratamiento_previo, GroupLayout.PREFERRED_SIZE, 186, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 367, Short.MAX_VALUE)))
-					.addContainerGap())
+							.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 372, GroupLayout.PREFERRED_SIZE)))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnNewButton_4)
+					.addContainerGap(27, Short.MAX_VALUE))
 		);
 		
 		JLabel lblNewLabel_22 = new JLabel("Resultado");
@@ -188,7 +382,31 @@ public class i_principal extends JFrame {
 		lblCalidadDeLa.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		comboBox_11 = new JComboBox();
+		comboBox_11.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				if(comboBox_11.getSelectedIndex() == 0){
+					comboBox_12.enable(false);
+					comboBox_13.enable(false);
+					comboBox_14.enable(true);
+					comboBox_15.enable(true);
+					comboBox_16.enable(true);
+					comboBox_17.enable(true);
+					update(getGraphics());
+					
+				}else{
+					comboBox_12.enable(true);
+					comboBox_13.enable(true);
+					comboBox_14.enable(false);
+					comboBox_15.enable(false);
+					comboBox_16.enable(false);
+					comboBox_17.enable(false);
+					update(getGraphics());
+					
+				}
+			}
+		});
 		comboBox_11.setModel(new DefaultComboBoxModel(new String[] {"Satisfactoria para evaluaci\u00F3n", "Insatisfactoria para evaluaci\u00F3n"}));
+		comboBox_11.setSelectedIndex(0);
 		
 		comboBox_12 = new JComboBox();
 		comboBox_12.setModel(new DefaultComboBoxModel(new String[] {"Muestra rechazada y no procesada", "Muestra procesada y examinada pero insatisfactoria para la evaluaci\u00F3n de anomal\u00EDa epiteliales "}));
@@ -215,6 +433,8 @@ public class i_principal extends JFrame {
 			public void itemStateChanged(ItemEvent arg0) {
 			}
 		});
+		comboBox_12.enable(false);
+		comboBox_13.enable(false);
 		
 		JLabel lblNewLabel_23 = new JLabel("Clasificacion General");
 		lblNewLabel_23.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -238,8 +458,10 @@ public class i_principal extends JFrame {
 			}
 		});
 		comboBox_14.setModel(new DefaultComboBoxModel(new String[] {"NEGATIVO PARA LESI\u00D3N INTRAEPITELIAL O MALIGNIDAD", "OTROS HALLAZGOS", "ANOMAL\u00CDAS DE LAS C\u00C9LULAS EPITELIALES", "OTRAS NEOPLASIAS MALIGNAS"}));
+		comboBox_14.setSelectedIndex(0);
 		
 		comboBox_15 = new JComboBox();
+		comboBox_15.setModel(new DefaultComboBoxModel(new String[] {"MICROORGANISMOS", "OTROS HALLAZGOS NO NEOPL\u00C1SICOS"}));
 		comboBox_15.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				comboBox_16.removeAllItems();
@@ -271,9 +493,45 @@ public class i_principal extends JFrame {
 		});
 		
 		comboBox_16 = new JComboBox();
+		comboBox_16.addItem("Trichomonas vaginalis");
+		comboBox_16.addItem("Elementos micóticos de características morfológicas compatibles con Candida");
+		comboBox_16.addItem("Cambios de la flora vaginal sugerentes de VAGINOSIS BACTERIANA");
+		comboBox_16.addItem("Bacterias de características morfológicas compatibles con Actinomyces");
+		comboBox_16.addItem("Cambios celulares compatibles con HERPES SIMPLE");
+	
+		comboBox_16.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				comboBox_17.removeAllItems();
+				if(comboBox_14.getSelectedIndex() == 0 && comboBox_15.getSelectedIndex() == 1 && comboBox_16.getSelectedIndex() == 0 ){
+					comboBox_17.addItem("Inflamación");
+					comboBox_17.addItem("Radiación");
+					comboBox_17.addItem("Dispositivo intrauterino (DIU)");
+				}else if(comboBox_14.getSelectedIndex() == 2 && comboBox_15.getSelectedIndex() == 0 && comboBox_16.getSelectedIndex() == 0 ){
+					comboBox_17.addItem("de significado indeterminado (ASC-US)");
+					comboBox_17.addItem("no se puede descartar lesion escamosa intraepitelial de alto grado (ASC-H)");
+				}else if(comboBox_14.getSelectedIndex() == 2 && comboBox_15.getSelectedIndex() == 0 && comboBox_16.getSelectedIndex() == 2 ){
+					comboBox_17.addItem("con hallazgos sospechosos de invación");
+				}else if(comboBox_14.getSelectedIndex() == 2 && comboBox_15.getSelectedIndex() == 1 && comboBox_16.getSelectedIndex() == 0 ){
+					comboBox_17.addItem("Células endocervicales");
+					comboBox_17.addItem("Células endometriales");
+					comboBox_17.addItem("Células glandulares");
+				}else if(comboBox_14.getSelectedIndex() == 2 && comboBox_15.getSelectedIndex() == 1 && comboBox_16.getSelectedIndex() == 1 ){
+					comboBox_17.addItem("Células endocervicales");
+					comboBox_17.addItem("Células glandulares");
+				}else if(comboBox_14.getSelectedIndex() == 2 && comboBox_15.getSelectedIndex() == 1 && comboBox_16.getSelectedIndex() == 3 ){
+					comboBox_17.addItem("Endocervical");
+					comboBox_17.addItem("Endometrial");
+					comboBox_17.addItem("Extrauterino");
+					comboBox_17.addItem("Sin Especificar");
+				}
+			}
+		});
 		
 		comboBox_17 = new JComboBox();
-		
+		comboBox_17.addItem("Inflamación");
+		comboBox_17.addItem("Radiación");
+		comboBox_17.addItem("Dispositivo intrauterino (DIU)");
+	
 		JTextArea textArea_1 = new JTextArea();
 		textArea_1.setColumns(60);
 		textArea_1.setRows(2);
@@ -342,7 +600,7 @@ public class i_principal extends JFrame {
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Si", "No"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"No", "Si"}));
 		
 		textField = new JTextField();
 		textField.setColumns(6);
@@ -386,7 +644,7 @@ public class i_principal extends JFrame {
 		lblNewLabel_17.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		JComboBox comboBox_6 = new JComboBox();
-		comboBox_6.setModel(new DefaultComboBoxModel(new String[] {"Si", "No"}));
+		comboBox_6.setModel(new DefaultComboBoxModel(new String[] {"No", "Si"}));
 		comboBox_6.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		
 		textField_17 = new JTextField();
@@ -420,7 +678,7 @@ public class i_principal extends JFrame {
 		comboBox_10.setModel(new DefaultComboBoxModel(new String[] {"Pedro peres alcantara V-0000000-0", "Pedro peres alcantara V-0000000-0", "Pedro peres alcantara V-0000000-0", "Pedro peres alcantara V-0000000-0", "Pedro peres alcantara V-0000000-0", "nuevo"}));
 		
 		JComboBox comboBox_7 = new JComboBox();
-		comboBox_7.setModel(new DefaultComboBoxModel(new String[] {"Si", "No"}));
+		comboBox_7.setModel(new DefaultComboBoxModel(new String[] {"No", "Si"}));
 		comboBox_7.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		GroupLayout gl_info_ginecologica = new GroupLayout(info_ginecologica);
 		gl_info_ginecologica.setHorizontalGroup(
@@ -474,8 +732,8 @@ public class i_principal extends JFrame {
 									.addComponent(comboBox_7, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 								.addPreferredGap(ComponentPlacement.UNRELATED)
 								.addGroup(gl_info_ginecologica.createParallelGroup(Alignment.LEADING)
-									.addComponent(textField_18, GroupLayout.PREFERRED_SIZE, 365, GroupLayout.PREFERRED_SIZE)
-									.addComponent(textField_17))))
+									.addComponent(textField_17, GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
+									.addComponent(textField_18, GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE))))
 						.addGroup(gl_info_ginecologica.createSequentialGroup()
 							.addComponent(lblNewLabel_19)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -488,7 +746,7 @@ public class i_principal extends JFrame {
 							.addComponent(lblNewLabel_21)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(comboBox_10, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addContainerGap(108, Short.MAX_VALUE))
 		);
 		gl_info_ginecologica.setVerticalGroup(
 			gl_info_ginecologica.createParallelGroup(Alignment.LEADING)
@@ -711,14 +969,14 @@ public class i_principal extends JFrame {
 		
 		JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Si", "No"}));
+		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"No", "Si"}));
 		
 		JLabel lblNewLabel_5 = new JLabel("Quimioterapia");
 		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		JComboBox comboBox_2 = new JComboBox();
 		comboBox_2.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"Si", "No"}));
+		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"No", "Si"}));
 		
 		textField_4 = new JTextField();
 		textField_4.setColumns(14);
@@ -749,11 +1007,11 @@ public class i_principal extends JFrame {
 		
 		JComboBox comboBox_3 = new JComboBox();
 		comboBox_3.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		comboBox_3.setModel(new DefaultComboBoxModel(new String[] {"Si", "No"}));
+		comboBox_3.setModel(new DefaultComboBoxModel(new String[] {"No", "Si"}));
 		
 		JComboBox comboBox_4 = new JComboBox();
 		comboBox_4.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		comboBox_4.setModel(new DefaultComboBoxModel(new String[] {"Si", "No"}));
+		comboBox_4.setModel(new DefaultComboBoxModel(new String[] {"No", "Si"}));
 		GroupLayout gl_tratamiento_previo = new GroupLayout(tratamiento_previo);
 		gl_tratamiento_previo.setHorizontalGroup(
 			gl_tratamiento_previo.createParallelGroup(Alignment.LEADING)
@@ -837,7 +1095,676 @@ public class i_principal extends JFrame {
 		panel_1.setLayout(gl_panel_1);
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(192, 192, 192));
+		panel_2.setBackground(UIManager.getColor("Button.background"));
 		central.add(panel_2, "name_8159840041347");
+		
+		JPanel panel_6 = new JPanel();
+		
+		JPanel panel_7 = new JPanel();
+		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
+		gl_panel_2.setHorizontalGroup(
+			gl_panel_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_2.createSequentialGroup()
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_2.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(panel_7, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel_2.createSequentialGroup()
+							.addGap(147)
+							.addComponent(panel_6, GroupLayout.PREFERRED_SIZE, 343, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(194, Short.MAX_VALUE))
+		);
+		gl_panel_2.setVerticalGroup(
+			gl_panel_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_2.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel_6, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(panel_7, GroupLayout.PREFERRED_SIZE, 204, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(324, Short.MAX_VALUE))
+		);
+		
+		table = new JTable();
+		table.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{"00001", "Jose antonio perez perez", " Pedro perez (Clinica)", "00/00/0000", " 00/00/0000"},
+				{"00002", " Jose antonio perez perez", "  Pedro perez (Clinica)", "00/00/0000", " 00/00/0000"},
+				{"00003", "Pedro Antonio Perez Perez", "  Pedro perez (Clinica)", "00/00/0000", " 00/00/0000"},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+			},
+			new String[] {
+				"Codigo", "Nombre", "Medico", "Fecha recibido", "Fecha resultado"
+			}
+		));
+		table.getColumnModel().getColumn(1).setPreferredWidth(310);
+		table.getColumnModel().getColumn(2).setPreferredWidth(229);
+		table.getColumnModel().getColumn(3).setPreferredWidth(144);
+		table.getColumnModel().getColumn(4).setPreferredWidth(122);
+		
+		JButton btnNewButton_6 = new JButton("Ver");
+		
+		JButton btnImprimir_1 = new JButton("Imprimir");
+		
+		JButton button = new JButton("Ver");
+		
+		JButton button_1 = new JButton("Imprimir");
+		
+		JButton button_2 = new JButton("Ver");
+		
+		JButton button_3 = new JButton("Imprimir");
+		
+		JButton btnImprimirTodo = new JButton("Imprimir Todo");
+		GroupLayout gl_panel_7 = new GroupLayout(panel_7);
+		gl_panel_7.setHorizontalGroup(
+			gl_panel_7.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel_7.createSequentialGroup()
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(gl_panel_7.createParallelGroup(Alignment.TRAILING)
+						.addComponent(btnImprimirTodo)
+						.addGroup(gl_panel_7.createSequentialGroup()
+							.addComponent(table, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_panel_7.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel_7.createSequentialGroup()
+									.addComponent(btnNewButton_6)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnImprimir_1, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_panel_7.createSequentialGroup()
+									.addGroup(gl_panel_7.createParallelGroup(Alignment.TRAILING)
+										.addComponent(button_2, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
+										.addComponent(button, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE))
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addGroup(gl_panel_7.createParallelGroup(Alignment.LEADING)
+										.addComponent(button_3, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+										.addComponent(button_1, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE))))))
+					.addGap(24))
+		);
+		gl_panel_7.setVerticalGroup(
+			gl_panel_7.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_7.createSequentialGroup()
+					.addGroup(gl_panel_7.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_7.createSequentialGroup()
+							.addGap(92)
+							.addGroup(gl_panel_7.createParallelGroup(Alignment.BASELINE)
+								.addComponent(button_3)
+								.addComponent(button_2)))
+						.addGroup(gl_panel_7.createSequentialGroup()
+							.addGap(34)
+							.addGroup(gl_panel_7.createParallelGroup(Alignment.LEADING)
+								.addComponent(table, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_panel_7.createSequentialGroup()
+									.addGroup(gl_panel_7.createParallelGroup(Alignment.LEADING)
+										.addComponent(btnNewButton_6)
+										.addComponent(btnImprimir_1))
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addGroup(gl_panel_7.createParallelGroup(Alignment.LEADING)
+										.addComponent(button)
+										.addComponent(button_1))))))
+					.addGap(25)
+					.addComponent(btnImprimirTodo)
+					.addGap(35))
+		);
+		panel_7.setLayout(gl_panel_7);
+		
+		JLabel lblCedula = new JLabel("Cedula");
+		lblCedula.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		textField_20 = new JTextField();
+		textField_20.setToolTipText("V-0000000");
+		textField_20.setColumns(10);
+		
+		JButton btnNewButton_5 = new JButton("Buscar");
+		GroupLayout gl_panel_6 = new GroupLayout(panel_6);
+		gl_panel_6.setHorizontalGroup(
+			gl_panel_6.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_panel_6.createSequentialGroup()
+					.addContainerGap(31, Short.MAX_VALUE)
+					.addComponent(lblCedula)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(textField_20, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnNewButton_5)
+					.addGap(27))
+		);
+		gl_panel_6.setVerticalGroup(
+			gl_panel_6.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_6.createSequentialGroup()
+					.addGap(23)
+					.addGroup(gl_panel_6.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textField_20, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnNewButton_5)
+						.addComponent(lblCedula))
+					.addContainerGap(43, Short.MAX_VALUE))
+		);
+		panel_6.setLayout(gl_panel_6);
+		panel_2.setLayout(gl_panel_2);
+		
+		JPanel imprimir = new JPanel();
+		central.add(imprimir, "name_33870233261272");
+		
+		JLabel lblImprimir = new JLabel("Imprimir:");
+		lblImprimir.setFont(new Font("Tahoma", Font.BOLD, 18));
+		
+		JLabel lblNewLabel_30 = new JLabel("Total dia: 14");
+		lblNewLabel_30.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JLabel lblNewLabel_31 = new JLabel("Ultima imprecion : 00/00/0000 - Informes pendientes: 18\r\n");
+		lblNewLabel_31.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JLabel lblNewLabel_32 = new JLabel("Ultima semana: 92");
+		lblNewLabel_32.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JButton btnNewButton_8 = new JButton("Imprimir Dia");
+		
+		JButton btnImprimirPendiente = new JButton("Imprimir Pendiente");
+		
+		JButton btnImprimirSemana = new JButton("Imprimir Semana");
+		
+		JLabel lblSincornizar = new JLabel("Sincronizar:");
+		lblSincornizar.setFont(new Font("Tahoma", Font.BOLD, 18));
+		
+		JLabel lblExportarDatosAlmacenados = new JLabel("Exportar datos almacenados: 1541 (Informes).");
+		lblExportarDatosAlmacenados.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JLabel lblImportarDatos = new JLabel("Importar datos.");
+		lblImportarDatos.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JLabel lblAnalizarYEliminar = new JLabel("Analizar y eliminar informes redundantes.");
+		lblAnalizarYEliminar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JButton btnExportar = new JButton("Exportar");
+		
+		JButton btnImportar = new JButton("Importar");
+		
+		JButton btnAnalizar = new JButton("Analizar");
+		GroupLayout gl_imprimir = new GroupLayout(imprimir);
+		gl_imprimir.setHorizontalGroup(
+			gl_imprimir.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_imprimir.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_imprimir.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblImprimir)
+						.addGroup(gl_imprimir.createSequentialGroup()
+							.addGroup(gl_imprimir.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_imprimir.createSequentialGroup()
+									.addGap(10)
+									.addGroup(gl_imprimir.createParallelGroup(Alignment.LEADING)
+										.addComponent(lblNewLabel_31)
+										.addComponent(lblNewLabel_32)
+										.addComponent(lblNewLabel_30)))
+								.addComponent(lblSincornizar, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_imprimir.createSequentialGroup()
+									.addGap(10)
+									.addGroup(gl_imprimir.createParallelGroup(Alignment.LEADING)
+										.addComponent(lblImportarDatos, GroupLayout.PREFERRED_SIZE, 294, GroupLayout.PREFERRED_SIZE)
+										.addComponent(lblExportarDatosAlmacenados, GroupLayout.PREFERRED_SIZE, 294, GroupLayout.PREFERRED_SIZE)
+										.addComponent(lblAnalizarYEliminar, GroupLayout.PREFERRED_SIZE, 294, GroupLayout.PREFERRED_SIZE))))
+							.addGap(18)
+							.addGroup(gl_imprimir.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnAnalizar, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnImportar, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnExportar, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnNewButton_8)
+								.addComponent(btnImprimirSemana)
+								.addComponent(btnImprimirPendiente))))
+					.addContainerGap(774, Short.MAX_VALUE))
+		);
+		gl_imprimir.setVerticalGroup(
+			gl_imprimir.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_imprimir.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblImprimir)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_imprimir.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel_30)
+						.addComponent(btnNewButton_8))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_imprimir.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel_31)
+						.addComponent(btnImprimirPendiente))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_imprimir.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel_32)
+						.addComponent(btnImprimirSemana))
+					.addGroup(gl_imprimir.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_imprimir.createSequentialGroup()
+							.addGap(18)
+							.addComponent(lblSincornizar, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblExportarDatosAlmacenados, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(lblImportarDatos, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(lblAnalizarYEliminar, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_imprimir.createSequentialGroup()
+							.addGap(32)
+							.addComponent(btnExportar)
+							.addGap(11)
+							.addComponent(btnImportar)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(btnAnalizar)))
+					.addContainerGap(367, Short.MAX_VALUE))
+		);
+		imprimir.setLayout(gl_imprimir);
+		
+		JPanel Estadisticas = new JPanel();
+		central.add(Estadisticas, "name_38544120539856");
+		
+		JPanel panel_8 = new JPanel();
+		GroupLayout gl_Estadisticas = new GroupLayout(Estadisticas);
+		gl_Estadisticas.setHorizontalGroup(
+			gl_Estadisticas.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_Estadisticas.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel_8, GroupLayout.PREFERRED_SIZE, 630, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(634, Short.MAX_VALUE))
+		);
+		gl_Estadisticas.setVerticalGroup(
+			gl_Estadisticas.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_Estadisticas.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel_8, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(446, Short.MAX_VALUE))
+		);
+		
+		JLabel lblNewLabel_35 = new JLabel("Estadisticas");
+		lblNewLabel_35.setFont(new Font("Tahoma", Font.BOLD, 18));
+		
+		JLabel lblNewLabel_37 = new JLabel("Doctores");
+		lblNewLabel_37.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JComboBox comboBox_21 = new JComboBox();
+		comboBox_21.setModel(new DefaultComboBoxModel(new String[] {"Todos", "Pedro Perez", "Pedro Perez", "Pedro Perez", "Pedro Perez", "Pedro Perez", "Pedro Perez", "Pedro Perez"}));
+		
+		JLabel lblEdadPasiente = new JLabel("Edad Paciente");
+		lblEdadPasiente.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JComboBox comboBox_22 = new JComboBox();
+		comboBox_22.setModel(new DefaultComboBoxModel(new String[] {"Todas", "0-18", "19-35", "35-48", "Mas de 48"}));
+		
+		JLabel lblLesion = new JLabel("Lesion");
+		lblLesion.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JComboBox comboBox_23 = new JComboBox();
+		comboBox_23.setModel(new DefaultComboBoxModel(new String[] {"Lesion1", "Lesion2", "Lesion3", "Lesion4", "Lesion5", "Lesion6", "Lesion7"}));
+		
+		JLabel lblPeriodo = new JLabel("Periodo");
+		lblPeriodo.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JComboBox comboBox_24 = new JComboBox();
+		comboBox_24.setModel(new DefaultComboBoxModel(new String[] {"1 mes", "3 meses", "6 meses", "1 a\u00F1o", "Todo el periodo"}));
+		
+		JButton btnNewButton_10 = new JButton("New button");
+		GroupLayout gl_panel_8 = new GroupLayout(panel_8);
+		gl_panel_8.setHorizontalGroup(
+			gl_panel_8.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_8.createSequentialGroup()
+					.addGroup(gl_panel_8.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_8.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(gl_panel_8.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel_8.createSequentialGroup()
+									.addGap(10)
+									.addComponent(lblNewLabel_37)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(comboBox_21, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addGap(18)
+									.addComponent(lblEdadPasiente, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
+									.addGap(4)
+									.addComponent(comboBox_22, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addGap(18)
+									.addComponent(lblLesion, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(comboBox_23, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addGap(18)
+									.addComponent(lblPeriodo, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(comboBox_24, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE))
+								.addComponent(lblNewLabel_35)))
+						.addGroup(gl_panel_8.createSequentialGroup()
+							.addGap(247)
+							.addComponent(btnNewButton_10)))
+					.addContainerGap(12, Short.MAX_VALUE))
+		);
+		gl_panel_8.setVerticalGroup(
+			gl_panel_8.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_8.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblNewLabel_35)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_panel_8.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel_37)
+						.addComponent(comboBox_21, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblEdadPasiente, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+						.addComponent(comboBox_22, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblLesion, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+						.addComponent(comboBox_23, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblPeriodo, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+						.addComponent(comboBox_24, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+					.addComponent(btnNewButton_10)
+					.addGap(22))
+		);
+		panel_8.setLayout(gl_panel_8);
+		Estadisticas.setLayout(gl_Estadisticas);
+		
+		JPanel Medicos = new JPanel();
+		central.add(Medicos, "name_38579282003671");
+		
+		JLabel lblNewLabel_33 = new JLabel("Registro de medicos");
+		lblNewLabel_33.setFont(new Font("Tahoma", Font.BOLD, 18));
+		
+		JLabel lblNewLabel_34 = new JLabel("Consultar o Editar Medico");
+		lblNewLabel_34.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		textField_22 = new JTextField();
+		textField_22.setToolTipText("RIF V-00000000-0");
+		textField_22.setColumns(12);
+		
+		JButton btnBuscar = new JButton("Buscar");
+		
+		JPanel panel_5 = new JPanel();
+		panel_5.setBorder(new LineBorder(new Color(0, 0, 0)));
+		GroupLayout gl_Medicos = new GroupLayout(Medicos);
+		gl_Medicos.setHorizontalGroup(
+			gl_Medicos.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_Medicos.createSequentialGroup()
+					.addGroup(gl_Medicos.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_Medicos.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(gl_Medicos.createParallelGroup(Alignment.TRAILING)
+								.addComponent(lblNewLabel_33)
+								.addGroup(gl_Medicos.createSequentialGroup()
+									.addComponent(lblNewLabel_34)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(textField_22, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnBuscar))))
+						.addComponent(panel_5, GroupLayout.PREFERRED_SIZE, 653, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(611, Short.MAX_VALUE))
+		);
+		gl_Medicos.setVerticalGroup(
+			gl_Medicos.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_Medicos.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblNewLabel_33)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_Medicos.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel_34)
+						.addComponent(textField_22, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnBuscar))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panel_5, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(345, Short.MAX_VALUE))
+		);
+		
+		JLabel lblDatosMedico = new JLabel("Datos Medico");
+		lblDatosMedico.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JLabel lblRif = new JLabel("RIF");
+		lblRif.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JLabel lblNombre = new JLabel("Nombres");
+		lblNombre.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JLabel lblApellidos_1 = new JLabel("Apellidos");
+		lblApellidos_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		textField_23 = new JTextField();
+		textField_23.setColumns(10);
+		
+		textField_24 = new JTextField();
+		textField_24.setColumns(20);
+		
+		textField_25 = new JTextField();
+		textField_25.setColumns(20);
+		
+		JComboBox comboBox_18 = new JComboBox();
+		comboBox_18.setModel(new DefaultComboBoxModel(new String[] {"J", "E", "V"}));
+		
+		JButton btnGuardar = new JButton("Guardar");
+		GroupLayout gl_panel_5 = new GroupLayout(panel_5);
+		gl_panel_5.setHorizontalGroup(
+			gl_panel_5.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_5.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel_5.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_5.createSequentialGroup()
+							.addComponent(lblNombre, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(textField_24, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel_5.createSequentialGroup()
+							.addComponent(lblRif, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_panel_5.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel_5.createSequentialGroup()
+									.addGap(76)
+									.addComponent(lblDatosMedico))
+								.addGroup(gl_panel_5.createSequentialGroup()
+									.addGap(4)
+									.addComponent(comboBox_18, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(textField_23, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+						.addGroup(gl_panel_5.createSequentialGroup()
+							.addComponent(lblApellidos_1, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_panel_5.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnGuardar)
+								.addComponent(textField_25, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+					.addContainerGap(992, Short.MAX_VALUE))
+		);
+		gl_panel_5.setVerticalGroup(
+			gl_panel_5.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_5.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblDatosMedico)
+					.addGap(14)
+					.addGroup(gl_panel_5.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblRif, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textField_23, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(comboBox_18, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(14)
+					.addGroup(gl_panel_5.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNombre, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textField_24, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_panel_5.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblApellidos_1, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textField_25, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addComponent(btnGuardar)
+					.addContainerGap(52, Short.MAX_VALUE))
+		);
+		panel_5.setLayout(gl_panel_5);
+		Medicos.setLayout(gl_Medicos);
+		
+		JPanel Usuarios = new JPanel();
+		central.add(Usuarios, "name_38616660277399");
+		
+		JLabel lblNewLabel_36 = new JLabel("Usuarios");
+		lblNewLabel_36.setFont(new Font("Tahoma", Font.BOLD, 17));
+		
+		JPanel panel_9 = new JPanel();
+		panel_9.setBorder(new LineBorder(new Color(0, 0, 0)));
+		
+		JPanel panel_10 = new JPanel();
+		panel_10.setBorder(new LineBorder(new Color(0, 0, 0)));
+		
+		JLabel lblContrasea = new JLabel("Contrase\u00F1a");
+		lblContrasea.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JLabel lblRepitaContrasea = new JLabel("Repita Contrase\u00F1a");
+		lblRepitaContrasea.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JLabel lblNuevaContrasea = new JLabel("Nueva Contrase\u00F1a");
+		lblNuevaContrasea.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JButton btnNewButton_9 = new JButton("Guardar");
+		
+		JLabel lblActualizarContrasea = new JLabel("Actualizar Contrase\u00F1a");
+		lblActualizarContrasea.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		passwordField = new JPasswordField();
+		passwordField.setColumns(14);
+		
+		passwordField_1 = new JPasswordField();
+		passwordField_1.setColumns(14);
+		
+		passwordField_2 = new JPasswordField();
+		passwordField_2.setColumns(14);
+		GroupLayout gl_panel_10 = new GroupLayout(panel_10);
+		gl_panel_10.setHorizontalGroup(
+			gl_panel_10.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_10.createSequentialGroup()
+					.addGroup(gl_panel_10.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_10.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(gl_panel_10.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(lblRepitaContrasea, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(lblContrasea)
+								.addGroup(gl_panel_10.createSequentialGroup()
+									.addComponent(lblNuevaContrasea, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.UNRELATED)))
+							.addGap(10)
+							.addGroup(gl_panel_10.createParallelGroup(Alignment.LEADING)
+								.addComponent(passwordField_2, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
+								.addComponent(passwordField_1, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
+								.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnNewButton_9)))
+						.addGroup(gl_panel_10.createSequentialGroup()
+							.addGap(192)
+							.addComponent(lblActualizarContrasea)))
+					.addContainerGap(990, Short.MAX_VALUE))
+		);
+		gl_panel_10.setVerticalGroup(
+			gl_panel_10.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_panel_10.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblActualizarContrasea)
+					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(gl_panel_10.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblContrasea)
+						.addComponent(passwordField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel_10.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblRepitaContrasea, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+						.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel_10.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNuevaContrasea, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+						.addComponent(passwordField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnNewButton_9)
+					.addContainerGap())
+		);
+		panel_10.setLayout(gl_panel_10);
+		GroupLayout gl_Usuarios = new GroupLayout(Usuarios);
+		gl_Usuarios.setHorizontalGroup(
+			gl_Usuarios.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_Usuarios.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_Usuarios.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(lblNewLabel_36)
+						.addComponent(panel_9, GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
+						.addComponent(panel_10, 0, 0, Short.MAX_VALUE))
+					.addGap(733))
+		);
+		gl_Usuarios.setVerticalGroup(
+			gl_Usuarios.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_Usuarios.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblNewLabel_36)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panel_9, GroupLayout.PREFERRED_SIZE, 123, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(panel_10, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(296, Short.MAX_VALUE))
+		);
+		
+		JLabel lblNombre_1 = new JLabel("Cedula:");
+		lblNombre_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JComboBox comboBox_19 = new JComboBox();
+		comboBox_19.setEnabled(false);
+		comboBox_19.setModel(new DefaultComboBoxModel(new String[] {"V", "E", "N"}));
+		
+		textField_26 = new JTextField();
+		textField_26.setText("0000000");
+		textField_26.setEnabled(false);
+		textField_26.setColumns(10);
+		
+		JLabel lblNombre_2 = new JLabel("Nombre");
+		lblNombre_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JLabel lblApellidos_2 = new JLabel("Apellidos");
+		lblApellidos_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		txtPepeAlcantara = new JTextField();
+		txtPepeAlcantara.setText("Pepe alcantara");
+		txtPepeAlcantara.setEnabled(false);
+		txtPepeAlcantara.setColumns(10);
+		
+		txtPerezPerez = new JTextField();
+		txtPerezPerez.setEnabled(false);
+		txtPerezPerez.setText("Perez Perez");
+		txtPerezPerez.setColumns(10);
+		
+		JLabel lblRol = new JLabel("Acceso");
+		lblRol.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JComboBox comboBox_20 = new JComboBox();
+		comboBox_20.setEnabled(false);
+		comboBox_20.setModel(new DefaultComboBoxModel(new String[] {"Licenciada", "Ayudante", "Administrador"}));
+		GroupLayout gl_panel_9 = new GroupLayout(panel_9);
+		gl_panel_9.setHorizontalGroup(
+			gl_panel_9.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_9.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel_9.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_9.createSequentialGroup()
+							.addComponent(lblNombre_1)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(comboBox_19, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(textField_26, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel_9.createSequentialGroup()
+							.addGroup(gl_panel_9.createParallelGroup(Alignment.TRAILING, false)
+								.addComponent(lblNombre_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(lblApellidos_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE))
+							.addGap(18)
+							.addGroup(gl_panel_9.createParallelGroup(Alignment.LEADING)
+								.addComponent(txtPerezPerez, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtPepeAlcantara, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_panel_9.createSequentialGroup()
+							.addComponent(lblRol, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(comboBox_20, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(179, Short.MAX_VALUE))
+		);
+		gl_panel_9.setVerticalGroup(
+			gl_panel_9.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_9.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel_9.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNombre_1)
+						.addComponent(comboBox_19, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textField_26, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel_9.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNombre_2, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtPepeAlcantara, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel_9.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblApellidos_2, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtPerezPerez, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel_9.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblRol, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+						.addComponent(comboBox_20, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(113, Short.MAX_VALUE))
+		);
+		panel_9.setLayout(gl_panel_9);
+		Usuarios.setLayout(gl_Usuarios);
 	}
 }

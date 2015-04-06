@@ -8,42 +8,62 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JMenuBar;
 import javax.swing.JButton;
+
 import java.awt.Color;
+import java.awt.Dialog;
 import java.awt.Font;
 import java.awt.Insets;
+
 import javax.swing.JTextField;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+
 import java.awt.FlowLayout;
+
 import javax.swing.LayoutStyle.ComponentPlacement;
+
 import java.awt.CardLayout;
+
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
+
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+
 import javax.swing.BoxLayout;
+
 import net.miginfocom.swing.MigLayout;
+
 import com.jgoodies.forms.factories.FormFactory;
+
 import javax.swing.JTextArea;
 import javax.swing.JFormattedTextField;
+
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.Properties;
+
 import javax.swing.UIManager;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JPasswordField;
 import javax.swing.border.LineBorder;
+
+import org.jdatepicker.impl.*;
 
 public class i_principal extends JFrame {
 
@@ -69,6 +89,7 @@ public class i_principal extends JFrame {
 	private JTextField textField_17;
 	private JTextField textField_18;
 	private JTextField textField_19;
+	JDatePickerImpl datePicker;
 	JComboBox comboBox_13,comboBox_12,comboBox_11,comboBox_14,comboBox_15,comboBox_16,comboBox_17;
 	private JTextField txtContrasea;
 	private JTextField textField_21;
@@ -85,6 +106,8 @@ public class i_principal extends JFrame {
 	private JPasswordField passwordField;
 	private JPasswordField passwordField_1;
 	private JPasswordField passwordField_2;
+	private JTextField textField_27;
+	private JTextField textField_28;
 
 	/**
 	 * Launch the application.
@@ -663,16 +686,8 @@ public class i_principal extends JFrame {
 		JLabel lblNewLabel_19 = new JLabel("Muestra de");
 		lblNewLabel_19.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
-		JComboBox comboBox_8 = new JComboBox();
-		comboBox_8.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		comboBox_8.setModel(new DefaultComboBoxModel(new String[] {"Falta descripccion", "Falta descripccion", "Falta descripccion", "Falta descripccion", "Falta descripccion"}));
-		
 		JLabel lblNewLabel_20 = new JLabel("Sitio de lesi\u00F3n");
 		lblNewLabel_20.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
-		JComboBox comboBox_9 = new JComboBox();
-		comboBox_9.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		comboBox_9.setModel(new DefaultComboBoxModel(new String[] {"Falta descripcion", "Falta descripcion", "Falta descripcion", "Falta descripcion", "Falta descripcion", ""}));
 		
 		JLabel lblNewLabel_21 = new JLabel("Medico solicitante");
 		lblNewLabel_21.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -684,6 +699,12 @@ public class i_principal extends JFrame {
 		JComboBox comboBox_7 = new JComboBox();
 		comboBox_7.setModel(new DefaultComboBoxModel(new String[] {"No", "Si"}));
 		comboBox_7.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		
+		textField_27 = new JTextField();
+		textField_27.setColumns(10);
+		
+		textField_28 = new JTextField();
+		textField_28.setColumns(10);
 		GroupLayout gl_info_ginecologica = new GroupLayout(info_ginecologica);
 		gl_info_ginecologica.setHorizontalGroup(
 			gl_info_ginecologica.createParallelGroup(Alignment.LEADING)
@@ -741,11 +762,11 @@ public class i_principal extends JFrame {
 						.addGroup(gl_info_ginecologica.createSequentialGroup()
 							.addComponent(lblNewLabel_19)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(comboBox_8, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(textField_27, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(lblNewLabel_20)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(comboBox_9, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addComponent(textField_28, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_info_ginecologica.createSequentialGroup()
 							.addComponent(lblNewLabel_21)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -789,14 +810,14 @@ public class i_principal extends JFrame {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_info_ginecologica.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNewLabel_19)
-						.addComponent(comboBox_8, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textField_27, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblNewLabel_20)
-						.addComponent(comboBox_9, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(textField_28, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_info_ginecologica.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNewLabel_21)
 						.addComponent(comboBox_10, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(26, Short.MAX_VALUE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		info_ginecologica.setLayout(gl_info_ginecologica);
 		
@@ -836,6 +857,27 @@ public class i_principal extends JFrame {
 		textField_13.setColumns(6);
 		
 		JButton btnFecha = new JButton("Fecha");
+		btnFecha.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				UtilDateModel model = new UtilDateModel();
+				model.setSelected(true);
+				//model.setDate(20,04,2014);
+				// Need this...
+				Properties p = new Properties();
+				p.put("text.today", "Today_X");
+				p.put("text.month", "Month_X");
+				p.put("text.year", "Year_X");
+				JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+				//datePanel.setBounds(0,0,500,100);
+				// Don't know about the formatter, but there it is...
+				JDatePickerImpl datePicker = new JDatePickerImpl(datePanel,null);
+				datePicker.setBounds(220,350,120,30);
+				 panel_1.add(datePicker);
+			
+				System.out.println("muestro fecha!!");
+			}
+		});
 		
 		JLabel lblNewLabel_13 = new JLabel("Telefono");
 		lblNewLabel_13.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -863,7 +905,7 @@ public class i_principal extends JFrame {
 		textArea_4.setColumns(40);
 		textArea_4.setRows(2);
 		
-		JLabel lblClinica = new JLabel("Clinica");
+		JLabel lblClinica = new JLabel("Procedencia");
 		lblClinica.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		textField_19 = new JTextField();
@@ -1362,8 +1404,8 @@ public class i_principal extends JFrame {
 			gl_Estadisticas.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_Estadisticas.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(panel_8, GroupLayout.PREFERRED_SIZE, 630, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(634, Short.MAX_VALUE))
+					.addComponent(panel_8, GroupLayout.PREFERRED_SIZE, 711, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(553, Short.MAX_VALUE))
 		);
 		gl_Estadisticas.setVerticalGroup(
 			gl_Estadisticas.createParallelGroup(Alignment.LEADING)

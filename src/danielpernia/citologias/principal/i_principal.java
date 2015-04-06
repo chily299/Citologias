@@ -47,6 +47,7 @@ import javax.swing.border.LineBorder;
 
 public class i_principal extends JFrame {
 
+	private conexion db;
 	private JPanel contentPane;
 	private JTextField textField_2;
 	private JTextField textField_4;
@@ -94,6 +95,7 @@ public class i_principal extends JFrame {
 				try {
 					i_principal frame = new i_principal();
 					frame.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -116,6 +118,8 @@ public class i_principal extends JFrame {
 		contentPane.add(panel, BorderLayout.NORTH);
 		panel.setVisible(false);
 		
+		db = new conexion();
+		db.conectar();
 		
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setMargin(new Insets(5, 5, 5, 5));

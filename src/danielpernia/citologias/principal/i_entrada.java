@@ -33,6 +33,7 @@ public class i_entrada {
 	private JFrame frame;
 	private JTextField textField;
 	private JTextField textField_1;
+	private manejador_PDF pdf;
 
 	/**
 	 * Launch the application.
@@ -55,6 +56,10 @@ public class i_entrada {
 	 */
 	public i_entrada() {
 		initialize();
+		
+		pdf = new manejador_PDF();
+		
+		pdf.imprimirEstudioSeleccionado(new estudio_citologico());
 	}
 
 	/**

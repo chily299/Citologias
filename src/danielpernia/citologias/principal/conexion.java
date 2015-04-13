@@ -77,32 +77,65 @@ public class conexion {
 		
 	}
 	
-	public int registrarUsuarioNuevo(int rol,String nombre, String contrasenna){
+public boolean buscarUsuarioPorCedula(usuario usu){
+		
+		boolean usuarioAutorizado = false;
 		
 		try {
 			sentencia = conn.createStatement();
-			String sql = "INSERT INTO usuario (rol,nombre,contrasenna) " +
-	                   "VALUES ("+rol+", '"+nombre+"','"+contrasenna+"');"; 
-			sentencia.executeUpdate(sql);
-			//System.out.println("fin insert exitoso");
+			ResultSet rs = sentencia.executeQuery( "SELECT * FROM usuario where cedula = '"+usu.cedula+"';" );
+			while ( rs.next() ) {
+				 usuarioAutorizado = true;
+			     //id = rs.getInt("rowid");
+			     usu.nombres = rs.getString("nombre");
+			     usu.apellidos= rs.getString("apellidos");
+			     usu.rol = rs.getInt("rol");
+			     usu.clave  = rs.getString("contrasenna");
+			}
+
+			rs.close();
+			sentencia.close();
+			return usuarioAutorizado;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		JOptionPane.showMessageDialog(null, "No se encuentra");
+		
+		return usuarioAutorizado;
+		
+	}
+	
+	public int registrarUsuarioNuevo(usuario usu){
+		
+		try {
+			sentencia = conn.createStatement();
+			String sql = "INSERT INTO usuario (rol,nombre,contrasenna,cedula,apellidos) " +
+	                   "VALUES ("+usu.rol+", '"+usu.nombres+"','"+usu.clave+"','"+usu.cedula+"','"+usu.apellidos+"');"; 
+			sentencia.executeUpdate(sql);
+			JOptionPane.showMessageDialog(null, "Usuario Registrado");
+			return 1;
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Usuario No Registrado Codigo: "+e.getErrorCode());
 			e.printStackTrace();
 		}
 		
 		return 0;
 	}
 	
-	public int actualizarUsuario(int rol,String nombre, String contrasenna){
+	
+	
+	public int actualizarUsuario(usuario usu){
 		
 		try {
 			sentencia = conn.createStatement();
-			String sql = "UPDATE INTO usuario (rol,nombre,contrasenna) " +
-	                   "VALUES ("+rol+", '"+nombre+"','"+contrasenna+"');"; 
+			String sql = "UPDATE usuario SET rol="+usu.rol+",nombre='"+usu.nombres+"',contrasenna='"+usu.clave+"',apellidos='"+usu.apellidos+"' " +
+	                   "WHERE cedula ='"+usu.cedula+"';"; 
 			sentencia.executeUpdate(sql);
-			//System.out.println("fin insert exitoso");
+			JOptionPane.showMessageDialog(null, "Usuario "+usu.cedula+" Actualizado");
+			return 1;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, "Problemas para actualizar Codigo: "+e.getErrorCode());
 			e.printStackTrace();
 		}
 		
@@ -120,10 +153,10 @@ public class conexion {
 					+ "numero_impresion,fecha_muestra,fecha_resultado,estado,cedula_pasiente) " +
 	                   "VALUES ( '"+estudio.motivo_consulta+"','"+estudio.diagnostico+"',"
 	                   		+ ""+estudio.embarazos+","+estudio.cesareas+","+estudio.partos+","+estudio.abortos+",'"+estudio.f_ultimo_embarazo+"',"
-	                   		+ ""+estudio.FUR+",'"+estudio.f_FUR+"',"+estudio.diu+","+estudio.citologia+",'"+estudio.f_citologia+"',"+estudio.biopsia+",'"+estudio.f_biopsia+"',"
+	                   		+ ""+estudio.FUR+",'"+estudio.f_FUR+"',"+estudio.citologia+",'"+estudio.f_citologia+"',"+estudio.biopsia+",'"+estudio.f_biopsia+"',"
 	                   		+ "'"+estudio.muestra_de+"','"+estudio.sitio_lesion+"',"+estudio.id_medico+","
 	                   		+ ""+estudio.irradiacion+",'"+estudio.f_irradiacion+"',"+estudio.quimio+",'"+estudio.f_quimio+"',"
-	                   		+ "'"+estudio.quirurgico+"','"+estudio.hormonas+"',"+estudio.anticonceptivo+",'"+estudio.d_anticonceptivo+"',"
+	                   		+ "'"+estudio.quirurgico+"','"+estudio.hormonas+"',"+estudio.diu+","+estudio.anticonceptivo+",'"+estudio.d_anticonceptivo+"',"
 	                   		+ "'"+estudio.resultado+"',"+estudio.info_muestra1+","+estudio.info_muestra2+","+estudio.info_muestra3+","
 	                   		+ ""+estudio.clasificacion1+","+estudio.clasificacion2+","+estudio.clasificacion3+","+estudio.clasificacion4+",'"+estudio.clasificacion_detalle+"',"
 	                   		+ ""+estudio.numero_impresiones+",'"+estudio.fecha_muestra+"','"+estudio.fecha_resultado+"','"+estudio.estado+"','"+estudio.cedula_pasiente+"');"; 
@@ -159,7 +192,7 @@ public class conexion {
 				estudio_.FUR = rs.getInt("fur");
 				estudio_.f_FUR = rs.getString("fecha_fur");
 				estudio_.citologia = rs.getInt("citologia");
-				estudio_.f_citologia = rs.getString("biopsia_fecha");
+				estudio_.f_citologia = rs.getString("citologia_fecha");
 				estudio_.biopsia = rs.getInt("biopsia");
 				estudio_.f_biopsia = rs.getString("biopsia_fecha");
 				estudio_.muestra_de = rs.getString("muestra_de");
@@ -172,6 +205,7 @@ public class conexion {
 			    estudio_.f_quimio = rs.getString("quimioterapia_fecha");
 			    estudio_.quirurgico = rs.getString("quirurgico");
 			    estudio_.hormonas = rs.getString("hormonas");
+			    estudio_.diu = rs.getInt("DIU");
 			    estudio_.anticonceptivo = rs.getInt("anticonceptivos_orales");
 			    estudio_.d_anticonceptivo = rs.getString("anticonceptivos_orales_descripcion");
 			     
@@ -188,7 +222,7 @@ public class conexion {
 			    estudio_.fecha_muestra = rs.getString("fecha_muestra");
 			    estudio_.fecha_resultado = rs.getString("fecha_resultado");
 			    estudio_.estado = rs.getString("estado");
-			     
+			    estudio_.cedula_pasiente = rs.getString("cedula_pasiente");
 			     estudio.add(estudio_);
 			     
 			     //imprimir
@@ -598,9 +632,9 @@ public int buscarEstudiosPorSemana(estudio_citologico estudio[]){
 				pasiente_.direccion = rs.getString("direccion");
 			     
 			     //imprimir
-			     System.out.println( "ID = " + pasiente_.rowid );
-			     System.out.println( "ROL = " +pasiente_.cedula);
-			     System.out.println();
+			   //  System.out.println( "ID = " + pasiente_.rowid );
+			   //  System.out.println( "ROL = " +pasiente_.cedula);
+			   //  System.out.println();
 		
 			}
 
@@ -693,6 +727,42 @@ public int buscarEstudiosPorSemana(estudio_citologico estudio[]){
 		return encontrado;
 	}
 	
+public int buscarMedicoPorId(medico medico_){
+		
+		int encontrado =0;
+		
+		try {
+			sentencia = conn.createStatement();
+			ResultSet rs = sentencia.executeQuery( "SELECT * FROM medico where id_medico = "+medico_.id_medico+";" );
+			System.out.println("busco medico"+medico_.rif);
+			
+			while ( rs.next() ) {
+				encontrado = 1;
+				medico_.id_medico = rs.getInt("id_medico");
+				medico_.rif = rs.getString("rif");
+				medico_.nombres = rs.getString("nombres");
+				medico_.Apellidos = rs.getString("apellidos");
+				
+
+			     System.out.println( "id = " +medico_.id_medico);
+				
+			}
+
+			rs.close();
+			sentencia.close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(encontrado==0){
+			medico_.id_medico = -1;
+			JOptionPane.showMessageDialog(null, "Medico "+medico_.rif+" No encontrado");
+		}
+		return encontrado;
+	}
+	
 	public int listarMedicos(Vector<medico> medico_v){
 		int i =0;
 		medico medico_;
@@ -710,8 +780,8 @@ public int buscarEstudiosPorSemana(estudio_citologico estudio[]){
 			    
 				medico_v.add(medico_);
 			     //imprimir
-			     System.out.println( "ID = " + medico_.id_medico );
-			     System.out.println( "ROL = " +medico_.rif);
+			     //System.out.println( "ID = " + medico_.id_medico );
+			     //System.out.println( "ROL = " +medico_.rif);
 		
 			}
 
@@ -731,12 +801,7 @@ public int buscarEstudiosPorSemana(estudio_citologico estudio[]){
 		
 		try {
 			
-			//imprimir
-		     System.out.println( "ID = " + medico_.id_medico );
-		     System.out.println( "rif = " +medico_.rif);
-		     System.out.println( "nombre = " +medico_.nombres);
-		     System.out.println( "apellidos = " +medico_.Apellidos);
-		     System.out.println();
+			
 			
 			sentencia = conn.createStatement();
 			String sql = "UPDATE medico SET rif = '"+medico_.rif+"',nombres = '"+medico_.nombres+"',apellidos= '"+medico_.Apellidos+"' "

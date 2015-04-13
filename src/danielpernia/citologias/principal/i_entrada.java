@@ -57,9 +57,7 @@ public class i_entrada {
 	public i_entrada() {
 		initialize();
 		
-		pdf = new manejador_PDF();
 		
-		pdf.imprimirEstudioSeleccionado(new estudio_citologico());
 	}
 
 	/**

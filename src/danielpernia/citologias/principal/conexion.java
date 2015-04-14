@@ -8,6 +8,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Vector;
 
 import javax.swing.Icon;
@@ -180,7 +183,9 @@ public boolean buscarUsuarioPorCedula(usuario usu){
 			
 			while ( rs.next() ) {
 				estudio_ = new estudio_citologico();
-				//estudio_.rowid = rs.getInt("rowid");
+				
+				estudio_.rowid = rs.getInt("id_consulta");
+				//System.out.println("rowid ? "+estudio_.rowid);
 				estudio_.motivo_consulta = rs.getString("motivo_consulta");
 				estudio_.diagnostico = rs.getString("diagnostico");
 			     
@@ -211,12 +216,137 @@ public boolean buscarUsuarioPorCedula(usuario usu){
 			     
 			    estudio_.resultado = rs.getString("resultado");
 			    estudio_.info_muestra1 = rs.getInt("info_muestra_1");
-			    estudio_.info_muestra1 = rs.getInt("info_muestra_2");
-			    estudio_.info_muestra1 = rs.getInt("info_muestra_3");
+			    estudio_.info_muestra2 = rs.getInt("info_muestra_2");
+			    estudio_.info_muestra3 = rs.getInt("info_muestra_3");
 			    estudio_.clasificacion1 = rs.getInt("clasificacion_1");
-			    estudio_.clasificacion1 = rs.getInt("clasificacion_2");
-			    estudio_.clasificacion1 = rs.getInt("clasificacion_3");
-			    estudio_.clasificacion1 = rs.getInt("clasificacion_4");
+			    estudio_.clasificacion2 = rs.getInt("clasificacion_2");
+			    estudio_.clasificacion3 = rs.getInt("clasificacion_3");
+			    estudio_.clasificacion4 = rs.getInt("clasificacion_4");
+			     
+			    estudio_.numero_impresiones = rs.getInt("numero_impresion");
+			    estudio_.fecha_muestra = rs.getString("fecha_muestra");
+			    estudio_.fecha_resultado = rs.getString("fecha_resultado");
+			    estudio_.estado = rs.getString("estado");
+			    estudio_.cedula_pasiente = rs.getString("cedula_pasiente");
+			     estudio.add(estudio_);
+			     
+			     /*
+			     DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+					try {
+					    Date today = (Date) df.parse(rs.getString("fecha_resultado"));
+					    estudio_.fecha_resultado = df.format(today);
+					    System.out.println("F_resultado!!! = " + df.format(today));
+					} catch (ParseException e) {
+					   e.printStackTrace();
+				 }*/
+			     i++;
+			}
+
+			
+			
+			
+			rs.close();
+			sentencia.close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		
+		return 0;
+	}
+	
+	public int EditarEstudio(estudio_citologico estudio){
+		
+		try {
+			sentencia = conn.createStatement();
+			String sql = "UPDATE consulta SET motivo_consulta ='"+estudio.motivo_consulta+"',diagnostico='"+estudio.diagnostico+"',"
+					+ "embarazos="+estudio.embarazos+",cesareas="+estudio.cesareas+",partos="+estudio.partos+",abortos="+estudio.abortos+",ultimo_embarazo='"+estudio.f_ultimo_embarazo+"',"
+					+ "fur="+estudio.FUR+",fecha_fur='"+estudio.f_FUR+"',citologia="+estudio.citologia+",citologia_fecha='"+estudio.f_citologia+"',biopsia="+estudio.biopsia+",biopsia_fecha='"+estudio.f_biopsia+"',"
+					+ "muestra_de='"+estudio.muestra_de+"',sitio_lesion='"+estudio.sitio_lesion+"',id_medico="+estudio.id_medico+","
+					+ "irradiacion="+estudio.irradiacion+",irradiacion_fecha='"+estudio.f_irradiacion+"',quimioterapia="+estudio.quimio+",quimioterapia_fecha='"+estudio.f_quimio+"',"
+					+ "quirurgico='"+estudio.quirurgico+"',hormonas='"+estudio.hormonas+"',anticonceptivos_orales="+estudio.anticonceptivo+",anticonceptivos_orales_descripcion='"+estudio.d_anticonceptivo+"',"
+					+ "resultado='"+estudio.resultado+"',info_muestra_1="+estudio.info_muestra1+",info_muestra_2="+estudio.info_muestra2+",info_muestra_3="+estudio.info_muestra3+","
+					+ "clasificacion_1="+estudio.clasificacion1+",clasificacion_2="+estudio.clasificacion2+",clasificacion_3="+estudio.clasificacion3+",clasificacion_4="+estudio.clasificacion4+","
+					+ "clasificacion_descripcion='"+estudio.clasificacion_detalle+"',"
+					+ "fecha_muestra='"+estudio.fecha_muestra+"',fecha_resultado=datetime(),estado= '"+estudio.estado+"'"
+					+ " WHERE id_consulta ="+estudio.rowid+";"; 
+			sentencia.executeUpdate(sql);
+			
+			
+			
+			
+			return 1;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "No se puede Editar. Codigo: "+e.getErrorCode());
+		}
+	
+		return 0;
+	}
+	
+	public int actualizarImpresionesDeEstudio(estudio_citologico estudio){
+		estudio.numero_impresiones++;
+		try {
+			sentencia = conn.createStatement();
+			String sql = "UPDATE consulta SET numero_impresion = "+estudio.numero_impresiones+" " +
+	                     " WHERE id_consulta ="+estudio.rowid+";"; 
+			sentencia.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	
+		return 0;
+	}
+	
+	public int buscarEstudiosPendientesPorImprimir(Vector<estudio_citologico> estudio){
+		estudio_citologico estudio_ ;
+		try {
+			sentencia = conn.createStatement();
+			ResultSet rs = sentencia.executeQuery( "SELECT * FROM consulta where numero_impresion < 1 AND estado = 'terminado'" );
+			int i =0;
+			
+			while ( rs.next() ) {
+				estudio_ = new estudio_citologico();
+				
+				estudio_.rowid = rs.getInt("id_consulta");
+				//System.out.println("rowid ? "+estudio_.rowid);
+				estudio_.motivo_consulta = rs.getString("motivo_consulta");
+				estudio_.diagnostico = rs.getString("diagnostico");
+			     
+				estudio_.embarazos = rs.getInt("embarazos");
+				estudio_.cesareas = rs.getInt("cesareas");
+				estudio_.partos = rs.getInt("partos");
+				estudio_.abortos = rs.getInt("abortos");
+				estudio_.f_ultimo_embarazo = rs.getString("ultimo_embarazo");
+				estudio_.FUR = rs.getInt("fur");
+				estudio_.f_FUR = rs.getString("fecha_fur");
+				estudio_.citologia = rs.getInt("citologia");
+				estudio_.f_citologia = rs.getString("citologia_fecha");
+				estudio_.biopsia = rs.getInt("biopsia");
+				estudio_.f_biopsia = rs.getString("biopsia_fecha");
+				estudio_.muestra_de = rs.getString("muestra_de");
+				estudio_.sitio_lesion = rs.getString("sitio_lesion");
+				estudio_.id_medico = rs.getInt("id_medico");
+			     
+			   	estudio_.irradiacion = rs.getInt("irradiacion");
+				estudio_.f_irradiacion = rs.getString("irradiacion_fecha");
+			    estudio_.quimio = rs.getInt("quimioterapia");
+			    estudio_.f_quimio = rs.getString("quimioterapia_fecha");
+			    estudio_.quirurgico = rs.getString("quirurgico");
+			    estudio_.hormonas = rs.getString("hormonas");
+			    estudio_.diu = rs.getInt("DIU");
+			    estudio_.anticonceptivo = rs.getInt("anticonceptivos_orales");
+			    estudio_.d_anticonceptivo = rs.getString("anticonceptivos_orales_descripcion");
+			     
+			    estudio_.resultado = rs.getString("resultado");
+			    estudio_.info_muestra1 = rs.getInt("info_muestra_1");
+			    estudio_.info_muestra2 = rs.getInt("info_muestra_2");
+			    estudio_.info_muestra3 = rs.getInt("info_muestra_3");
+			    estudio_.clasificacion1 = rs.getInt("clasificacion_1");
+			    estudio_.clasificacion2 = rs.getInt("clasificacion_2");
+			    estudio_.clasificacion3 = rs.getInt("clasificacion_3");
+			    estudio_.clasificacion4 = rs.getInt("clasificacion_4");
 			     
 			    estudio_.numero_impresiones = rs.getInt("numero_impresion");
 			    estudio_.fecha_muestra = rs.getString("fecha_muestra");
@@ -243,102 +373,67 @@ public boolean buscarUsuarioPorCedula(usuario usu){
 		return 0;
 	}
 	
-	public int EditarEstudio(estudio_citologico estudio){
+	public int buscarEstudiosPendientesPorResultado( Vector<estudio_citologico> estudio){
 		
+		estudio_citologico estudio_ ;
 		try {
 			sentencia = conn.createStatement();
-			String sql = "UPDATE INTO consulta (motivo_consulta,diagnostico,embarazos,cesareas,partos,abortos,ultimo_embarazo"
-					+ "fur,fecha_fur,citologia,citologia_fecha,biopsia,biopsia_fecha,muestra_de,sitio_lesion,id_medico"
-					+ "irradiacion,irradiacion_fecha,quimioterapia,quimioterapia_fecha,quirurgico,hormonas,anticonceptivos_orales,anticonceptivos_orales_descripcion"
-					+ "resultado,info_muestra_1,info_muestra_2,info_muestra_3,clasificacion_1,clasificacion_2,clasificacion_3,clasificacion_4,clasificacion_descripcion,numero_impresion,fecha_muestra,fecha_resultado,estado) " +
-	                   "VALUES ('"+estudio.motivo_consulta+"','"+estudio.diagnostico+"',"
-	                   		+ ""+estudio.embarazos+","+estudio.cesareas+","+estudio.partos+","+estudio.abortos+",'"+estudio.f_ultimo_embarazo+"',"
-	                   		+ ""+estudio.FUR+",'"+estudio.f_FUR+"',"+estudio.citologia+",'"+estudio.f_citologia+"',"+estudio.biopsia+",'"+estudio.f_biopsia+"',"
-	                   		+ "'"+estudio.muestra_de+"','"+estudio.sitio_lesion+"',"+estudio.id_medico+","
-	                   		+ ""+estudio.irradiacion+",'"+estudio.f_irradiacion+"',"+estudio.quimio+",'"+estudio.f_quimio+"',"
-	                   		+ "'"+estudio.quirurgico+"','"+estudio.hormonas+"',"+estudio.anticonceptivo+",'"+estudio.d_anticonceptivo+"',"
-	                   		+ "'"+estudio.resultado+"',"+estudio.info_muestra1+","+estudio.info_muestra2+","+estudio.info_muestra3+","
-	                   		+ ""+estudio.clasificacion1+","+estudio.clasificacion2+","+estudio.clasificacion3+","+estudio.clasificacion4+",'"+estudio.clasificacion_detalle+"',"+estudio.numero_impresiones+""
-	                   		+ ""+estudio.numero_impresiones+",'"+estudio.fecha_muestra+"','"+estudio.fecha_resultado+"','"+estudio.estado+"')"
-	                   		+ " WHERE rowid ="+estudio.rowid+";"; 
-			sentencia.executeUpdate(sql);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	
-		return 0;
-	}
-	
-	public int actualizarImpresionesDeEstudio(estudio_citologico estudio){
-		estudio.numero_impresiones++;
-		try {
-			sentencia = conn.createStatement();
-			String sql = "UPDATE INTO consulta (numero_impresion) " +
-	                   "VALUES ("+estudio.numero_impresiones+")"
-	                   		+ " WHERE rowid ="+estudio.rowid+";"; 
-			sentencia.executeUpdate(sql);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	
-		return 0;
-	}
-	
-	public int buscarEstudiosPendientesPorImprimir(estudio_citologico estudio[]){
-		try {
-			sentencia = conn.createStatement();
-			ResultSet rs = sentencia.executeQuery( "SELECT * FROM consulta where numero_impresiones = 0;" );
+			ResultSet rs = sentencia.executeQuery( "SELECT * FROM consulta where estado = 'esperando resultado'" );
 			int i =0;
 			
 			while ( rs.next() ) {
-				estudio[i].rowid = rs.getInt("rowid");
-				estudio[i].motivo_consulta = rs.getString("motivo_consulta");
-				estudio[i].diagnostico = rs.getString("diagnostico");
+				estudio_ = new estudio_citologico();
+				
+				estudio_.rowid = rs.getInt("id_consulta");
+				//System.out.println("rowid ? "+estudio_.rowid);
+				estudio_.motivo_consulta = rs.getString("motivo_consulta");
+				estudio_.diagnostico = rs.getString("diagnostico");
 			     
-				estudio[i].embarazos = rs.getInt("embarazos");
-				estudio[i].cesareas = rs.getInt("cesareas");
-				estudio[i].partos = rs.getInt("partos");
-				estudio[i].abortos = rs.getInt("abortos");
-				estudio[i].f_ultimo_embarazo = rs.getString("ultimo_embarazo");
-				estudio[i].FUR = rs.getInt("fur");
-				estudio[i].f_FUR = rs.getString("fecha_fur");
-				estudio[i].citologia = rs.getInt("citologia");
-				estudio[i].f_citologia = rs.getString("biopsia_fecha");
-				estudio[i].biopsia = rs.getInt("biopsia");
-				estudio[i].f_biopsia = rs.getString("biopsia_fecha");
-				estudio[i].muestra_de = rs.getString("muestra_de");
-				estudio[i].sitio_lesion = rs.getString("sitio_lesion");
-				estudio[i].id_medico = rs.getInt("id_medico");
+				estudio_.embarazos = rs.getInt("embarazos");
+				estudio_.cesareas = rs.getInt("cesareas");
+				estudio_.partos = rs.getInt("partos");
+				estudio_.abortos = rs.getInt("abortos");
+				estudio_.f_ultimo_embarazo = rs.getString("ultimo_embarazo");
+				estudio_.FUR = rs.getInt("fur");
+				estudio_.f_FUR = rs.getString("fecha_fur");
+				estudio_.citologia = rs.getInt("citologia");
+				estudio_.f_citologia = rs.getString("citologia_fecha");
+				estudio_.biopsia = rs.getInt("biopsia");
+				estudio_.f_biopsia = rs.getString("biopsia_fecha");
+				estudio_.muestra_de = rs.getString("muestra_de");
+				estudio_.sitio_lesion = rs.getString("sitio_lesion");
+				estudio_.id_medico = rs.getInt("id_medico");
 			     
-			   	estudio[i].irradiacion = rs.getInt("irradiacion");
-				estudio[i].f_irradiacion = rs.getString("irradiacion_fecha");
-			    estudio[i].quimio = rs.getInt("quimioterapia");
-			    estudio[i].f_quimio = rs.getString("quimioterapia_fecha");
-			    estudio[i].quirurgico = rs.getString("quirurgico");
-			    estudio[i].hormonas = rs.getString("hormonas");
-			    estudio[i].anticonceptivo = rs.getInt("anticonceptivos_orales");
-			    estudio[i].d_anticonceptivo = rs.getString("anticonceptivos_orales_descripcion");
+			   	estudio_.irradiacion = rs.getInt("irradiacion");
+				estudio_.f_irradiacion = rs.getString("irradiacion_fecha");
+			    estudio_.quimio = rs.getInt("quimioterapia");
+			    estudio_.f_quimio = rs.getString("quimioterapia_fecha");
+			    estudio_.quirurgico = rs.getString("quirurgico");
+			    estudio_.hormonas = rs.getString("hormonas");
+			    estudio_.diu = rs.getInt("DIU");
+			    estudio_.anticonceptivo = rs.getInt("anticonceptivos_orales");
+			    estudio_.d_anticonceptivo = rs.getString("anticonceptivos_orales_descripcion");
 			     
-			    estudio[i].resultado = rs.getString("resultado");
-			    estudio[i].info_muestra1 = rs.getInt("info_muestra_1");
-			    estudio[i].info_muestra1 = rs.getInt("info_muestra_2");
-			    estudio[i].info_muestra1 = rs.getInt("info_muestra_3");
-			    estudio[i].clasificacion1 = rs.getInt("clasificacion_1");
-			    estudio[i].clasificacion1 = rs.getInt("clasificacion_2");
-			    estudio[i].clasificacion1 = rs.getInt("clasificacion_3");
-			    estudio[i].clasificacion1 = rs.getInt("clasificacion_4");
+			    estudio_.resultado = rs.getString("resultado");
+			    estudio_.info_muestra1 = rs.getInt("info_muestra_1");
+			    estudio_.info_muestra2 = rs.getInt("info_muestra_2");
+			    estudio_.info_muestra3 = rs.getInt("info_muestra_3");
+			    estudio_.clasificacion1 = rs.getInt("clasificacion_1");
+			    estudio_.clasificacion2 = rs.getInt("clasificacion_2");
+			    estudio_.clasificacion3 = rs.getInt("clasificacion_3");
+			    estudio_.clasificacion4 = rs.getInt("clasificacion_4");
 			     
-			    estudio[i].numero_impresiones = rs.getInt("numero_impresion");
-			    estudio[i].fecha_muestra = rs.getString("fecha_muestra");
-			    estudio[i].fecha_resultado = rs.getString("fecha_resultado");
-			    estudio[i].estado = rs.getString("estado");
-			     
-			     
+			    estudio_.numero_impresiones = rs.getInt("numero_impresion");
+			    estudio_.fecha_muestra = rs.getString("fecha_muestra");
+			    estudio_.fecha_resultado = rs.getString("fecha_resultado");
+			    estudio_.estado = rs.getString("estado");
+			    estudio_.cedula_pasiente = rs.getString("cedula_pasiente");
+			    estudio.add(estudio_);
 			     
 			     //imprimir
-			     System.out.println( "ID = " + estudio[i].motivo_consulta );
-			     System.out.println( "ROL = " + estudio[i].diagnostico );
-			     System.out.println();
+			     //System.out.println( "ID_ 2312 = " + estudio_.motivo_consulta );
+			    // System.out.println( "ROL = " + estudio[i].diagnostico );
+			    // System.out.println();
 			     i++;
 			}
 
@@ -349,66 +444,69 @@ public boolean buscarUsuarioPorCedula(usuario usu){
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
-		
 		return 0;
 	}
 	
-	public int buscarEstudiosPendientesPorResultado(estudio_citologico estudio[]){
-		
+public int buscarEstudiosPorDia(Vector<estudio_citologico> estudio){
+		estudio_citologico estudio_ ;
 		try {
 			sentencia = conn.createStatement();
-			ResultSet rs = sentencia.executeQuery( "SELECT * FROM consulta where estado = 'resultado_pendiente';" );
+			ResultSet rs = sentencia.executeQuery( "SELECT * FROM consulta where fecha_resultado >= date('now','-1 day') AND estado ='terminado';" );
 			int i =0;
 			
 			while ( rs.next() ) {
-				estudio[i].rowid = rs.getInt("rowid");
-				estudio[i].motivo_consulta = rs.getString("motivo_consulta");
-				estudio[i].diagnostico = rs.getString("diagnostico");
+				estudio_ = new estudio_citologico();
+				
+				estudio_.rowid = rs.getInt("id_consulta");
+				//System.out.println("rowid ? "+estudio_.rowid);
+				estudio_.motivo_consulta = rs.getString("motivo_consulta");
+				estudio_.diagnostico = rs.getString("diagnostico");
 			     
-				estudio[i].embarazos = rs.getInt("embarazos");
-				estudio[i].cesareas = rs.getInt("cesareas");
-				estudio[i].partos = rs.getInt("partos");
-				estudio[i].abortos = rs.getInt("abortos");
-				estudio[i].f_ultimo_embarazo = rs.getString("ultimo_embarazo");
-				estudio[i].FUR = rs.getInt("fur");
-				estudio[i].f_FUR = rs.getString("fecha_fur");
-				estudio[i].citologia = rs.getInt("citologia");
-				estudio[i].f_citologia = rs.getString("biopsia_fecha");
-				estudio[i].biopsia = rs.getInt("biopsia");
-				estudio[i].f_biopsia = rs.getString("biopsia_fecha");
-				estudio[i].muestra_de = rs.getString("muestra_de");
-				estudio[i].sitio_lesion = rs.getString("sitio_lesion");
-				estudio[i].id_medico = rs.getInt("id_medico");
+				estudio_.embarazos = rs.getInt("embarazos");
+				estudio_.cesareas = rs.getInt("cesareas");
+				estudio_.partos = rs.getInt("partos");
+				estudio_.abortos = rs.getInt("abortos");
+				estudio_.f_ultimo_embarazo = rs.getString("ultimo_embarazo");
+				estudio_.FUR = rs.getInt("fur");
+				estudio_.f_FUR = rs.getString("fecha_fur");
+				estudio_.citologia = rs.getInt("citologia");
+				estudio_.f_citologia = rs.getString("citologia_fecha");
+				estudio_.biopsia = rs.getInt("biopsia");
+				estudio_.f_biopsia = rs.getString("biopsia_fecha");
+				estudio_.muestra_de = rs.getString("muestra_de");
+				estudio_.sitio_lesion = rs.getString("sitio_lesion");
+				estudio_.id_medico = rs.getInt("id_medico");
 			     
-			   	estudio[i].irradiacion = rs.getInt("irradiacion");
-				estudio[i].f_irradiacion = rs.getString("irradiacion_fecha");
-			    estudio[i].quimio = rs.getInt("quimioterapia");
-			    estudio[i].f_quimio = rs.getString("quimioterapia_fecha");
-			    estudio[i].quirurgico = rs.getString("quirurgico");
-			    estudio[i].hormonas = rs.getString("hormonas");
-			    estudio[i].anticonceptivo = rs.getInt("anticonceptivos_orales");
-			    estudio[i].d_anticonceptivo = rs.getString("anticonceptivos_orales_descripcion");
+			   	estudio_.irradiacion = rs.getInt("irradiacion");
+				estudio_.f_irradiacion = rs.getString("irradiacion_fecha");
+			    estudio_.quimio = rs.getInt("quimioterapia");
+			    estudio_.f_quimio = rs.getString("quimioterapia_fecha");
+			    estudio_.quirurgico = rs.getString("quirurgico");
+			    estudio_.hormonas = rs.getString("hormonas");
+			    estudio_.diu = rs.getInt("DIU");
+			    estudio_.anticonceptivo = rs.getInt("anticonceptivos_orales");
+			    estudio_.d_anticonceptivo = rs.getString("anticonceptivos_orales_descripcion");
 			     
-			    estudio[i].resultado = rs.getString("resultado");
-			    estudio[i].info_muestra1 = rs.getInt("info_muestra_1");
-			    estudio[i].info_muestra1 = rs.getInt("info_muestra_2");
-			    estudio[i].info_muestra1 = rs.getInt("info_muestra_3");
-			    estudio[i].clasificacion1 = rs.getInt("clasificacion_1");
-			    estudio[i].clasificacion1 = rs.getInt("clasificacion_2");
-			    estudio[i].clasificacion1 = rs.getInt("clasificacion_3");
-			    estudio[i].clasificacion1 = rs.getInt("clasificacion_4");
+			    estudio_.resultado = rs.getString("resultado");
+			    estudio_.info_muestra1 = rs.getInt("info_muestra_1");
+			    estudio_.info_muestra2 = rs.getInt("info_muestra_2");
+			    estudio_.info_muestra3 = rs.getInt("info_muestra_3");
+			    estudio_.clasificacion1 = rs.getInt("clasificacion_1");
+			    estudio_.clasificacion2 = rs.getInt("clasificacion_2");
+			    estudio_.clasificacion3 = rs.getInt("clasificacion_3");
+			    estudio_.clasificacion4 = rs.getInt("clasificacion_4");
 			     
-			    estudio[i].numero_impresiones = rs.getInt("numero_impresion");
-			    estudio[i].fecha_muestra = rs.getString("fecha_muestra");
-			    estudio[i].fecha_resultado = rs.getString("fecha_resultado");
-			    estudio[i].estado = rs.getString("estado");
-			     
-			     
+			    estudio_.numero_impresiones = rs.getInt("numero_impresion");
+			    estudio_.fecha_muestra = rs.getString("fecha_muestra");
+			    estudio_.fecha_resultado = rs.getString("fecha_resultado");
+			    estudio_.estado = rs.getString("estado");
+			    estudio_.cedula_pasiente = rs.getString("cedula_pasiente");
+			    estudio.add(estudio_);
 			     
 			     //imprimir
-			     System.out.println( "ID = " + estudio[i].motivo_consulta );
-			     System.out.println( "ROL = " + estudio[i].diagnostico );
-			     System.out.println();
+			     //System.out.println( "ID_ 2312 = " + estudio_.motivo_consulta );
+			    // System.out.println( "ROL = " + estudio[i].diagnostico );
+			    // System.out.println();
 			     i++;
 			}
 
@@ -419,136 +517,72 @@ public boolean buscarUsuarioPorCedula(usuario usu){
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
-		
-		return 0;
-	}
-	
-public int buscarEstudiosPorDia(estudio_citologico estudio[]){
-		
-		try {
-			sentencia = conn.createStatement();
-			ResultSet rs = sentencia.executeQuery( "SELECT * FROM consulta where fecha_resultado > "+"fecha_dia"+";" );
-			int i =0;
-			
-			while ( rs.next() ) {
-				estudio[i].rowid = rs.getInt("rowid");
-				estudio[i].motivo_consulta = rs.getString("motivo_consulta");
-				estudio[i].diagnostico = rs.getString("diagnostico");
-			     
-				estudio[i].embarazos = rs.getInt("embarazos");
-				estudio[i].cesareas = rs.getInt("cesareas");
-				estudio[i].partos = rs.getInt("partos");
-				estudio[i].abortos = rs.getInt("abortos");
-				estudio[i].f_ultimo_embarazo = rs.getString("ultimo_embarazo");
-				estudio[i].FUR = rs.getInt("fur");
-				estudio[i].f_FUR = rs.getString("fecha_fur");
-				estudio[i].citologia = rs.getInt("citologia");
-				estudio[i].f_citologia = rs.getString("biopsia_fecha");
-				estudio[i].biopsia = rs.getInt("biopsia");
-				estudio[i].f_biopsia = rs.getString("biopsia_fecha");
-				estudio[i].muestra_de = rs.getString("muestra_de");
-				estudio[i].sitio_lesion = rs.getString("sitio_lesion");
-				estudio[i].id_medico = rs.getInt("id_medico");
-			     
-			   	estudio[i].irradiacion = rs.getInt("irradiacion");
-				estudio[i].f_irradiacion = rs.getString("irradiacion_fecha");
-			    estudio[i].quimio = rs.getInt("quimioterapia");
-			    estudio[i].f_quimio = rs.getString("quimioterapia_fecha");
-			    estudio[i].quirurgico = rs.getString("quirurgico");
-			    estudio[i].hormonas = rs.getString("hormonas");
-			    estudio[i].anticonceptivo = rs.getInt("anticonceptivos_orales");
-			    estudio[i].d_anticonceptivo = rs.getString("anticonceptivos_orales_descripcion");
-			     
-			    estudio[i].resultado = rs.getString("resultado");
-			    estudio[i].info_muestra1 = rs.getInt("info_muestra_1");
-			    estudio[i].info_muestra1 = rs.getInt("info_muestra_2");
-			    estudio[i].info_muestra1 = rs.getInt("info_muestra_3");
-			    estudio[i].clasificacion1 = rs.getInt("clasificacion_1");
-			    estudio[i].clasificacion1 = rs.getInt("clasificacion_2");
-			    estudio[i].clasificacion1 = rs.getInt("clasificacion_3");
-			    estudio[i].clasificacion1 = rs.getInt("clasificacion_4");
-			     
-			    estudio[i].numero_impresiones = rs.getInt("numero_impresion");
-			    estudio[i].fecha_muestra = rs.getString("fecha_muestra");
-			    estudio[i].fecha_resultado = rs.getString("fecha_resultado");
-			    estudio[i].estado = rs.getString("estado");
-			     
-			     
-			     
-			     //imprimir
-			     System.out.println( "ID = " + estudio[i].motivo_consulta );
-			     System.out.println( "ROL = " + estudio[i].diagnostico );
-			     System.out.println();
-			     i++;
-			}
+		return 0;			
 
-			rs.close();
-			sentencia.close();
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
-		
-		return 0;
+
 	}
 
-public int buscarEstudiosPorSemana(estudio_citologico estudio[]){
+public int buscarEstudiosPorSemana(Vector<estudio_citologico> estudio){
+	estudio_citologico estudio_;
 	
 	try {
 		sentencia = conn.createStatement();
-		ResultSet rs = sentencia.executeQuery( "SELECT * FROM consulta where fecha_resultado > '"+"fecha_semana"+"';" );
+		ResultSet rs = sentencia.executeQuery( "SELECT * FROM consulta where fecha_resultado >= date('now','-7 day') AND estado ='terminado';" );
 		int i =0;
 		
 		while ( rs.next() ) {
-			estudio[i].rowid = rs.getInt("rowid");
-			estudio[i].motivo_consulta = rs.getString("motivo_consulta");
-			estudio[i].diagnostico = rs.getString("diagnostico");
+			estudio_ = new estudio_citologico();
+			
+			estudio_.rowid = rs.getInt("id_consulta");
+			//System.out.println("rowid ? "+estudio_.rowid);
+			estudio_.motivo_consulta = rs.getString("motivo_consulta");
+			estudio_.diagnostico = rs.getString("diagnostico");
 		     
-			estudio[i].embarazos = rs.getInt("embarazos");
-			estudio[i].cesareas = rs.getInt("cesareas");
-			estudio[i].partos = rs.getInt("partos");
-			estudio[i].abortos = rs.getInt("abortos");
-			estudio[i].f_ultimo_embarazo = rs.getString("ultimo_embarazo");
-			estudio[i].FUR = rs.getInt("fur");
-			estudio[i].f_FUR = rs.getString("fecha_fur");
-			estudio[i].citologia = rs.getInt("citologia");
-			estudio[i].f_citologia = rs.getString("biopsia_fecha");
-			estudio[i].biopsia = rs.getInt("biopsia");
-			estudio[i].f_biopsia = rs.getString("biopsia_fecha");
-			estudio[i].muestra_de = rs.getString("muestra_de");
-			estudio[i].sitio_lesion = rs.getString("sitio_lesion");
-			estudio[i].id_medico = rs.getInt("id_medico");
+			estudio_.embarazos = rs.getInt("embarazos");
+			estudio_.cesareas = rs.getInt("cesareas");
+			estudio_.partos = rs.getInt("partos");
+			estudio_.abortos = rs.getInt("abortos");
+			estudio_.f_ultimo_embarazo = rs.getString("ultimo_embarazo");
+			estudio_.FUR = rs.getInt("fur");
+			estudio_.f_FUR = rs.getString("fecha_fur");
+			estudio_.citologia = rs.getInt("citologia");
+			estudio_.f_citologia = rs.getString("citologia_fecha");
+			estudio_.biopsia = rs.getInt("biopsia");
+			estudio_.f_biopsia = rs.getString("biopsia_fecha");
+			estudio_.muestra_de = rs.getString("muestra_de");
+			estudio_.sitio_lesion = rs.getString("sitio_lesion");
+			estudio_.id_medico = rs.getInt("id_medico");
 		     
-		   	estudio[i].irradiacion = rs.getInt("irradiacion");
-			estudio[i].f_irradiacion = rs.getString("irradiacion_fecha");
-		    estudio[i].quimio = rs.getInt("quimioterapia");
-		    estudio[i].f_quimio = rs.getString("quimioterapia_fecha");
-		    estudio[i].quirurgico = rs.getString("quirurgico");
-		    estudio[i].hormonas = rs.getString("hormonas");
-		    estudio[i].anticonceptivo = rs.getInt("anticonceptivos_orales");
-		    estudio[i].d_anticonceptivo = rs.getString("anticonceptivos_orales_descripcion");
+		   	estudio_.irradiacion = rs.getInt("irradiacion");
+			estudio_.f_irradiacion = rs.getString("irradiacion_fecha");
+		    estudio_.quimio = rs.getInt("quimioterapia");
+		    estudio_.f_quimio = rs.getString("quimioterapia_fecha");
+		    estudio_.quirurgico = rs.getString("quirurgico");
+		    estudio_.hormonas = rs.getString("hormonas");
+		    estudio_.diu = rs.getInt("DIU");
+		    estudio_.anticonceptivo = rs.getInt("anticonceptivos_orales");
+		    estudio_.d_anticonceptivo = rs.getString("anticonceptivos_orales_descripcion");
 		     
-		    estudio[i].resultado = rs.getString("resultado");
-		    estudio[i].info_muestra1 = rs.getInt("info_muestra_1");
-		    estudio[i].info_muestra1 = rs.getInt("info_muestra_2");
-		    estudio[i].info_muestra1 = rs.getInt("info_muestra_3");
-		    estudio[i].clasificacion1 = rs.getInt("clasificacion_1");
-		    estudio[i].clasificacion1 = rs.getInt("clasificacion_2");
-		    estudio[i].clasificacion1 = rs.getInt("clasificacion_3");
-		    estudio[i].clasificacion1 = rs.getInt("clasificacion_4");
+		    estudio_.resultado = rs.getString("resultado");
+		    estudio_.info_muestra1 = rs.getInt("info_muestra_1");
+		    estudio_.info_muestra2 = rs.getInt("info_muestra_2");
+		    estudio_.info_muestra3 = rs.getInt("info_muestra_3");
+		    estudio_.clasificacion1 = rs.getInt("clasificacion_1");
+		    estudio_.clasificacion2 = rs.getInt("clasificacion_2");
+		    estudio_.clasificacion3 = rs.getInt("clasificacion_3");
+		    estudio_.clasificacion4 = rs.getInt("clasificacion_4");
 		     
-		    estudio[i].numero_impresiones = rs.getInt("numero_impresion");
-		    estudio[i].fecha_muestra = rs.getString("fecha_muestra");
-		    estudio[i].fecha_resultado = rs.getString("fecha_resultado");
-		    estudio[i].estado = rs.getString("estado");
-		     
-		     
+		    estudio_.numero_impresiones = rs.getInt("numero_impresion");
+		    estudio_.fecha_muestra = rs.getString("fecha_muestra");
+		    estudio_.fecha_resultado = rs.getString("fecha_resultado");
+		    estudio_.estado = rs.getString("estado");
+		    estudio_.cedula_pasiente = rs.getString("cedula_pasiente");
+		    estudio.add(estudio_);
 		     
 		     //imprimir
-		     System.out.println( "ID = " + estudio[i].motivo_consulta );
-		     System.out.println( "ROL = " + estudio[i].diagnostico );
-		     System.out.println();
+		     //System.out.println( "ID_ 2312 = " + estudio_.motivo_consulta );
+		    // System.out.println( "ROL = " + estudio[i].diagnostico );
+		    // System.out.println();
 		     i++;
 		}
 
@@ -559,7 +593,6 @@ public int buscarEstudiosPorSemana(estudio_citologico estudio[]){
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}		
-	
 	return 0;
 }
 	

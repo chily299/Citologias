@@ -59,7 +59,7 @@ public class manejador_PDF {
 			pie.scaleToFit(500, 100);
 			pie.setAlignment(Chunk.ALIGN_CENTER);
 			
-			FileOutputStream ficheroPdf = new FileOutputStream("fichero.pdf");
+			FileOutputStream ficheroPdf = new FileOutputStream("estudio_citologico_multiple"+estudio_v.size()+".pdf");
 			
 			PdfWriter.getInstance(documento,ficheroPdf).setInitialLeading(20);
 			
@@ -75,7 +75,7 @@ public class manejador_PDF {
 				
 				pasiente  pasiente_= new pasiente();
 				pasiente_.cedula = estudio.cedula_pasiente;
-				System.out.println("--------------cedula: "+estudio.cedula_pasiente);
+				//System.out.println("--------------cedula: "+estudio.cedula_pasiente);
 				medico medico_ = new medico();
 				medico_.id_medico = estudio.id_medico;
 				db.buscarPasientePorCedula(pasiente_);
@@ -91,7 +91,7 @@ public class manejador_PDF {
 			String pie_de_pagina;
 			
 			fecha = "fecha: "+estudio.fecha_resultado;
-			sub_titulo_pasiente ="PASIENTE:";
+			sub_titulo_pasiente ="PACIENTE:";
 			info_pasiente ="Cedula: "+pasiente_.cedula+"         Nombre: "+pasiente_.nombres+" "+pasiente_.Apellidos+"\n"
 							+ "Edad:"+pasiente_.f_nacimiento+"        Telefono: "+pasiente_.telefono+"        Procedencia: "+pasiente_.procedencia+"\n"
 							+ "Direccion: "+pasiente_.direccion+"\n"
@@ -396,13 +396,17 @@ public class manejador_PDF {
 			e.printStackTrace();
 		}
 		
-		JOptionPane.showMessageDialog(null, "Se imprimio todo con exito");
+		for (estudio_citologico estudio : estudio_v) {
+			db.actualizarImpresionesDeEstudio(estudio);
+		}
+		
+		JOptionPane.showMessageDialog(null, "Se imprimio "+estudio_v.size()+" estudios con exito");
 		return 0;
 	}
 	
 	
 	
-	public int imprimirEstudioSeleccionado( estudio_citologico estudio, pasiente pasiente_,medico medico_){
+	public int imprimirEstudioSeleccionado( estudio_citologico estudio, pasiente pasiente_,medico medico_, conexion db){
 		
 		Document documento = new Document(PageSize.LETTER, 50, 50, 0, 50);
 		
@@ -432,7 +436,7 @@ public class manejador_PDF {
 			pie.scaleToFit(500, 100);
 			pie.setAlignment(Chunk.ALIGN_CENTER);
 			
-			FileOutputStream ficheroPdf = new FileOutputStream("fichero.pdf");
+			FileOutputStream ficheroPdf = new FileOutputStream("estudio_citologico_"+estudio.cedula_pasiente+".pdf");
 			
 			PdfWriter.getInstance(documento,ficheroPdf).setInitialLeading(20);
 			
@@ -454,9 +458,9 @@ public class manejador_PDF {
 			String pie_de_pagina;
 			
 			fecha = "fecha: "+estudio.fecha_resultado;
-			sub_titulo_pasiente ="PASIENTE:";
-			info_pasiente ="Cedula: "+pasiente_.cedula+"         Nombre: "+pasiente_.nombres+" "+pasiente_.Apellidos+"\n"
-							+ "Edad:"+pasiente_.f_nacimiento+"        Telefono: "+pasiente_.telefono+"        Procedencia: "+pasiente_.procedencia+"\n"
+			sub_titulo_pasiente ="PACIENTE:";
+			info_pasiente =      "Cedula: "+pasiente_.cedula+"         Nombre: "+pasiente_.nombres+" "+pasiente_.Apellidos+"\n"
+							+ "Edad:"+pasiente_.f_nacimiento+"         Telefono: "+pasiente_.telefono+"        Procedencia: "+pasiente_.procedencia+"\n"
 							+ "Direccion: "+pasiente_.direccion+"\n"
 							+ "Fecha de la muestra: "+estudio.fecha_muestra+"\n"
 							+ "Motivo consulta: "+estudio.motivo_consulta+"         Diagnostico clinico: "+estudio.diagnostico;
@@ -756,6 +760,11 @@ public class manejador_PDF {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		db.actualizarImpresionesDeEstudio(estudio);
+		
+		
+		JOptionPane.showMessageDialog(null, "Se imprimio estudio "+estudio.rowid);
 		
 		return 0;
 	}

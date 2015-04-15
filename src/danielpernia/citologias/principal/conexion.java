@@ -28,8 +28,8 @@ public class conexion {
 	Statement sentencia = null;
 	
 	public conexion(){
-		 ruta = "C:\\Users\\Daniel Pernia\\workspace\\citologias\\db.sqlite";
-		 //ruta = "..\\db.sqlite";
+		// ruta = "C:\\Program Files (x86)\\citologias\\db.sqlite";
+		 ruta = "db.sqlite";
 		}
 	
 	public void conectar(){
@@ -717,6 +717,8 @@ public int buscarEstudiosPorSemana(Vector<estudio_citologico> estudio){
 			}else{
 				JOptionPane.showMessageDialog(null, " No se puede registrar, Falla Codigo "+e.getErrorCode() +"descripcion: " +e.getMessage());
 			}
+			
+			e.printStackTrace();
 		
 		}	
 		
@@ -731,7 +733,7 @@ public int buscarEstudiosPorSemana(Vector<estudio_citologico> estudio){
 		try {
 			sentencia = conn.createStatement();
 			ResultSet rs = sentencia.executeQuery( "SELECT * FROM medico where rif = '"+medico_.rif+"';" );
-			System.out.println("busco medico"+medico_.rif);
+			//System.out.println("busco medico"+medico_.rif);
 			
 			while ( rs.next() ) {
 				encontrado = 1;
@@ -741,7 +743,7 @@ public int buscarEstudiosPorSemana(Vector<estudio_citologico> estudio){
 				medico_.Apellidos = rs.getString("apellidos");
 				
 
-			     System.out.println( "id = " +medico_.id_medico);
+			     //System.out.println( "id = " +medico_.id_medico);
 				
 			}
 
@@ -813,8 +815,8 @@ public int buscarMedicoPorId(medico medico_){
 			    
 				medico_v.add(medico_);
 			     //imprimir
-			     //System.out.println( "ID = " + medico_.id_medico );
-			     //System.out.println( "ROL = " +medico_.rif);
+			     System.out.println( "ID = " + medico_.id_medico );
+			     System.out.println( "ROL = " +medico_.rif);
 		
 			}
 

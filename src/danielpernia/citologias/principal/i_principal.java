@@ -563,10 +563,11 @@ public class i_principal extends JFrame {
 				
 				actualizarEstudioConFormulario();
 				estudio.estado = "terminado";
-				estudio.numero_impresiones = 0;
+				estudio.numero_impresiones = -1;
 				
 				if(db.EditarEstudio(estudio)==1){
 					JOptionPane.showMessageDialog(null, "Estudio N° "+estudio.rowid+" Listo para imprimir");
+					db.actualizarImpresionesDeEstudio(estudio);
 				}
 			}
 		});
@@ -2535,7 +2536,8 @@ public class i_principal extends JFrame {
 		textField_18.setText(estudio.f_biopsia);
 		textField_27.setText(estudio.muestra_de);
 		textField_28.setText(estudio.sitio_lesion);
-		comboBox_10.setSelectedIndex(0);
+		if(comboBox_10.getItemCount()>0)
+			comboBox_10.setSelectedIndex(0);
 		
 		comboBox_1.setSelectedIndex(0);
 		textField_2.setText(estudio.f_irradiacion);

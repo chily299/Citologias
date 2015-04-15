@@ -48,6 +48,10 @@ public class manejador_PDF {
 				Font.NORMAL,                   // estilo
 				BaseColor.BLACK);
 		
+		Font font_info_pequena = FontFactory.getFont("arial",   // fuente
+				10,                            // tamaño
+				Font.NORMAL,                   // estilo
+				BaseColor.BLACK);
 		
 		try {
 			
@@ -179,10 +183,10 @@ public class manejador_PDF {
 			}
 			
 			if(estudio.citologia == 1){
-				info_informacion_g+= "Citologia: "+estudio.f_citologia +"\n";
+				info_informacion_g+= "Citologia anterior: "+estudio.f_citologia +"\n";
 			}
 			if(estudio.biopsia == 1){
-				info_informacion_g+= "Biopsia: "+estudio.f_biopsia +"\n";
+				info_informacion_g+= "Biopsia anterior: "+estudio.f_biopsia +"\n";
 			}
 			
 			info_informacion_g+= "Muestra de: "+estudio.muestra_de+"      Sitio de lesion: "+estudio.sitio_lesion;
@@ -212,15 +216,15 @@ public class manejador_PDF {
 							info_categoria+="Cambios celulares compatibles con HERPES SIMPLE ";
 						}
 					}else if(estudio.clasificacion2 == 1){
-						info_categoria+="OTROS HALLAZGOS NO NEOPLÁSICOS";
+						info_categoria+="OTROS HALLAZGOS NO NEOPLÁSICOS ";
 						if(estudio.clasificacion3 == 0){
 							info_categoria+="Cambios celulares reactivos asosiados a: ";
 							if(estudio.clasificacion4 == 0){
-								info_categoria+="Inflamación";
+								info_categoria+="Inflamación ";
 							}else if(estudio.clasificacion4 == 1){
-								info_categoria+="Radiación";
+								info_categoria+="Radiación ";
 							}else if(estudio.clasificacion4 == 2){
-								info_categoria+="Dispositivo intrauterino (DIU)";
+								info_categoria+="Dispositivo intrauterino (DIU) ";
 							}
 						}else if(estudio.clasificacion3 == 1){
 							info_categoria+="Células glandulares poshisterectomía ";
@@ -332,19 +336,19 @@ public class manejador_PDF {
 			Paragraph p_sub_titulo_pasiente = new Paragraph(sub_titulo_pasiente,font_sub_titulo);
 			p_sub_titulo_pasiente.setAlignment(Paragraph.ALIGN_LEFT);
 			
-			Paragraph p_info_pasiente = new Paragraph(info_pasiente,font_info);
+			Paragraph p_info_pasiente = new Paragraph(info_pasiente,font_info_pequena);
 			p_info_pasiente.setAlignment(Paragraph.ALIGN_JUSTIFIED);
 			
 			Paragraph p_sub_titulo_tratamiento = new Paragraph(sub_titulo_tratamiento,font_sub_titulo);
 			p_sub_titulo_tratamiento.setAlignment(Paragraph.ALIGN_LEFT);
 			
-			Paragraph p_info_tratamento = new Paragraph(info_tratamento,font_info);
+			Paragraph p_info_tratamento = new Paragraph(info_tratamento,font_info_pequena);
 			p_info_tratamento.setAlignment(Paragraph.ALIGN_JUSTIFIED);
 			
 			Paragraph p_sub_titulo_informacion_g = new Paragraph(sub_titulo_informacion_g,font_sub_titulo);
 			p_sub_titulo_informacion_g.setAlignment(Paragraph.ALIGN_LEFT);
 			
-			Paragraph p_info_informacion_g = new Paragraph(info_informacion_g,font_info);
+			Paragraph p_info_informacion_g = new Paragraph(info_informacion_g,font_info_pequena);
 			p_info_informacion_g.setAlignment(Paragraph.ALIGN_JUSTIFIED);
 			
 			Paragraph p_sub_titulo_resultado = new Paragraph(sub_titulo_resultado,font_sub_titulo);
@@ -425,6 +429,11 @@ public class manejador_PDF {
 				Font.NORMAL,                   // estilo
 				BaseColor.BLACK);
 		
+		Font font_info_pequena =  FontFactory.getFont("arial",   // fuente
+				10,                            // tamaño
+				Font.NORMAL,                   // estilo
+				BaseColor.BLACK); 
+		
 		
 		try {
 			
@@ -443,9 +452,9 @@ public class manejador_PDF {
 			documento.open();
 			//-----------------------------------------------------------------------------------------
 			
-			documento.addTitle("Titulo documento");
-			documento.addAuthor("Autor !!!");
-			documento.addSubject("Asunto ????");
+			documento.addTitle("Estudio Citologico");
+			documento.addAuthor("Lisbeth Jaimes");
+			documento.addSubject("Resultado de laboratorio");
 			documento.addCreationDate();
 			
 			//documento.add(new pa)
@@ -457,7 +466,9 @@ public class manejador_PDF {
 			String sub_titulo_categoria, info_categoria;
 			String pie_de_pagina;
 			
-			fecha = "fecha: "+estudio.fecha_resultado;
+			String fecha_resultado[] = estudio.fecha_resultado.split(" ");
+			
+			fecha = "N°"+estudio.rowid+"         Fecha: "+fecha_resultado[0];
 			sub_titulo_pasiente ="PACIENTE:";
 			info_pasiente =      "Cedula: "+pasiente_.cedula+"         Nombre: "+pasiente_.nombres+" "+pasiente_.Apellidos+"\n"
 							+ "Edad:"+pasiente_.f_nacimiento+"         Telefono: "+pasiente_.telefono+"        Procedencia: "+pasiente_.procedencia+"\n"
@@ -546,10 +557,10 @@ public class manejador_PDF {
 			}
 			
 			if(estudio.citologia == 1){
-				info_informacion_g+= "Citologia: "+estudio.f_citologia +"\n";
+				info_informacion_g+= "Citologia anterior: "+estudio.f_citologia +"\n";
 			}
 			if(estudio.biopsia == 1){
-				info_informacion_g+= "Biopsia: "+estudio.f_biopsia +"\n";
+				info_informacion_g+= "Biopsia anterior: "+estudio.f_biopsia +"\n";
 			}
 			
 			info_informacion_g+= "Muestra de: "+estudio.muestra_de+"      Sitio de lesion: "+estudio.sitio_lesion;
@@ -579,15 +590,15 @@ public class manejador_PDF {
 							info_categoria+="Cambios celulares compatibles con HERPES SIMPLE ";
 						}
 					}else if(estudio.clasificacion2 == 1){
-						info_categoria+="OTROS HALLAZGOS NO NEOPLÁSICOS";
+						info_categoria+="OTROS HALLAZGOS NO NEOPLÁSICOS ";
 						if(estudio.clasificacion3 == 0){
 							info_categoria+="Cambios celulares reactivos asosiados a: ";
 							if(estudio.clasificacion4 == 0){
-								info_categoria+="Inflamación";
+								info_categoria+="Inflamación ";
 							}else if(estudio.clasificacion4 == 1){
-								info_categoria+="Radiación";
+								info_categoria+="Radiación ";
 							}else if(estudio.clasificacion4 == 2){
-								info_categoria+="Dispositivo intrauterino (DIU)";
+								info_categoria+="Dispositivo intrauterino (DIU) ";
 							}
 						}else if(estudio.clasificacion3 == 1){
 							info_categoria+="Células glandulares poshisterectomía ";
@@ -618,7 +629,7 @@ public class manejador_PDF {
 								info_categoria+="no se puede descartar lesion escamosa intraepitelial de alto grado (ASC-H) ";
 							}
 						}else if(estudio.clasificacion3 == 1){
-							info_categoria+="LESIÓN ESCAMOSA INTRAEPITELIAL DE BAJO GRADO (LSIL)  ";
+							info_categoria+="LESIÓN ESCAMOSA INTRAEPITELIAL DE BAJO GRADO (LSIL) ";
 						}else if(estudio.clasificacion3 == 2){
 							info_categoria+="LESIÓN ESCAMOSA INTRAEPITELIAL DE ALTO GRADO (HSIL) ";
 							if(estudio.clasificacion4 == 0){
@@ -699,19 +710,19 @@ public class manejador_PDF {
 			Paragraph p_sub_titulo_pasiente = new Paragraph(sub_titulo_pasiente,font_sub_titulo);
 			p_sub_titulo_pasiente.setAlignment(Paragraph.ALIGN_LEFT);
 			
-			Paragraph p_info_pasiente = new Paragraph(info_pasiente,font_info);
+			Paragraph p_info_pasiente = new Paragraph(info_pasiente,font_info_pequena);
 			p_info_pasiente.setAlignment(Paragraph.ALIGN_JUSTIFIED);
 			
 			Paragraph p_sub_titulo_tratamiento = new Paragraph(sub_titulo_tratamiento,font_sub_titulo);
 			p_sub_titulo_tratamiento.setAlignment(Paragraph.ALIGN_LEFT);
 			
-			Paragraph p_info_tratamento = new Paragraph(info_tratamento,font_info);
+			Paragraph p_info_tratamento = new Paragraph(info_tratamento,font_info_pequena);
 			p_info_tratamento.setAlignment(Paragraph.ALIGN_JUSTIFIED);
 			
 			Paragraph p_sub_titulo_informacion_g = new Paragraph(sub_titulo_informacion_g,font_sub_titulo);
 			p_sub_titulo_informacion_g.setAlignment(Paragraph.ALIGN_LEFT);
 			
-			Paragraph p_info_informacion_g = new Paragraph(info_informacion_g,font_info);
+			Paragraph p_info_informacion_g = new Paragraph(info_informacion_g,font_info_pequena);
 			p_info_informacion_g.setAlignment(Paragraph.ALIGN_JUSTIFIED);
 			
 			Paragraph p_sub_titulo_resultado = new Paragraph(sub_titulo_resultado,font_sub_titulo);

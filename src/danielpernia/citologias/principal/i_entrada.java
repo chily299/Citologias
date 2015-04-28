@@ -27,6 +27,8 @@ import java.awt.Font;
 import javax.swing.JToolBar;
 import java.awt.Color;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class i_entrada {
 
@@ -34,6 +36,7 @@ public class i_entrada {
 	private JTextField textField;
 	private JTextField textField_1;
 	private manejador_PDF pdf;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -130,6 +133,20 @@ public class i_entrada {
 			}
 		});
 		Login.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+			},
+			new String[] {
+				"New column", "New column", "New column", "New column", "New columnssss", "sssss"
+			}
+		));
+		Login.add(table);
 		Login.add(lblNewLabel);
 		Login.add(textField);
 		Login.add(lblContrasea);

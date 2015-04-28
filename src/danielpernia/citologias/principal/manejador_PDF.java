@@ -1,10 +1,8 @@
 package danielpernia.citologias.principal;
 
-import java.awt.Color;
-import java.io.FileNotFoundException;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.Date;
 import java.util.Vector;
 
 import javax.swing.JOptionPane;
@@ -33,10 +31,10 @@ public class manejador_PDF {
 	public int imprimirListaDeEstudios(Vector<estudio_citologico> estudio_v,conexion db ){
 		Document documento = new Document(PageSize.LETTER, 50, 50, 0, 50);
 		
-		Font font_titulo = FontFactory.getFont("arial",   // fuente
+		/*Font font_titulo = FontFactory.getFont("arial",   // fuente
 				22,                            // tamaño
 				Font.BOLD,                   // estilo
-				BaseColor.BLACK);
+				BaseColor.BLACK);*/
 		
 		Font font_sub_titulo= FontFactory.getFont("arial",   // fuente
 				14,                            // tamaño
@@ -92,7 +90,7 @@ public class manejador_PDF {
 			String sub_titulo_informacion_g, info_informacion_g;
 			String sub_titulo_resultado, info_resultado;
 			String sub_titulo_categoria, info_categoria;
-			String pie_de_pagina;
+		//	String pie_de_pagina;
 			
 			fecha = "fecha: "+estudio.fecha_resultado;
 			sub_titulo_pasiente ="PACIENTE:";
@@ -394,6 +392,7 @@ public class manejador_PDF {
 			//----------------------------------------------------------------------------------------
 			}
 			documento.close();
+			ficheroPdf.close();
 			
 		} catch (DocumentException | IOException e) {
 			// TODO Auto-generated catch block
@@ -414,10 +413,10 @@ public class manejador_PDF {
 		
 		Document documento = new Document(PageSize.LETTER, 50, 50, 0, 50);
 		
-		Font font_titulo = FontFactory.getFont("arial",   // fuente
+		/*Font font_titulo = FontFactory.getFont("arial",   // fuente
 				22,                            // tamaño
 				Font.BOLD,                   // estilo
-				BaseColor.BLACK);
+				BaseColor.BLACK);*/
 		
 		Font font_sub_titulo= FontFactory.getFont("arial",   // fuente
 				14,                            // tamaño
@@ -464,7 +463,7 @@ public class manejador_PDF {
 			String sub_titulo_informacion_g, info_informacion_g;
 			String sub_titulo_resultado, info_resultado;
 			String sub_titulo_categoria, info_categoria;
-			String pie_de_pagina;
+			//String pie_de_pagina;
 			
 			String fecha_resultado[] = estudio.fecha_resultado.split(" ");
 			
@@ -766,6 +765,7 @@ public class manejador_PDF {
 			*/
 			//----------------------------------------------------------------------------------------
 			documento.close();
+			ficheroPdf.close();
 			
 		} catch (DocumentException | IOException e) {
 			// TODO Auto-generated catch block

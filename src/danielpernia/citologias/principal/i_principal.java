@@ -10,7 +10,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JButton;
 
 import java.awt.Color;
-import java.awt.Dialog;
 import java.awt.Font;
 import java.awt.Insets;
 
@@ -19,33 +18,15 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 
-import java.awt.FlowLayout;
-
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import java.awt.CardLayout;
 
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-
-import javax.swing.BoxLayout;
-
-import net.miginfocom.swing.MigLayout;
-
-import com.jgoodies.forms.factories.FormFactory;
-
 import javax.swing.JTextArea;
-import javax.swing.JFormattedTextField;
 
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
@@ -59,15 +40,12 @@ import java.util.Properties;
 import java.util.Vector;
 
 import javax.swing.UIManager;
-import javax.swing.JSeparator;
 import javax.swing.JTable;
-import javax.swing.plaf.SliderUI;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JPasswordField;
 import javax.swing.border.LineBorder;
 
 import org.jdatepicker.impl.*;
-import javax.swing.JScrollPane;
 
 public class i_principal extends JFrame {
 
@@ -1466,8 +1444,8 @@ public class i_principal extends JFrame {
 				.addGroup(gl_panel_2.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel_6, GroupLayout.PREFERRED_SIZE, 965, GroupLayout.PREFERRED_SIZE)
-						.addComponent(panel_7, GroupLayout.PREFERRED_SIZE, 1182, GroupLayout.PREFERRED_SIZE))
+						.addComponent(panel_7, GroupLayout.PREFERRED_SIZE, 1182, GroupLayout.PREFERRED_SIZE)
+						.addComponent(panel_6, GroupLayout.PREFERRED_SIZE, 965, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(82, Short.MAX_VALUE))
 		);
 		gl_panel_2.setVerticalGroup(
@@ -1476,23 +1454,36 @@ public class i_principal extends JFrame {
 					.addContainerGap()
 					.addComponent(panel_6, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(panel_7, GroupLayout.PREFERRED_SIZE, 371, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(164, Short.MAX_VALUE))
+					.addComponent(panel_7, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(33, Short.MAX_VALUE))
 		);
 		
 		table = new JTable();
-		table.setBackground(new Color(255, 255, 255));
+		table.setToolTipText("");
+		table.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		table.setForeground(new Color(102, 0, 102));
+		table.setBackground(Color.WHITE);
 		table.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"", "", "", "", ""},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
 				{null, null, null, null, null},
 				{null, null, null, null, null},
 			},
 			new String[] {
 				"Codigo", "Nombre", "Medico", "Fecha recibido", "Fecha resultado"
 			}
-		));
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, true, true, true
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setResizable(false);
 		table.getColumnModel().getColumn(1).setPreferredWidth(310);
 		table.getColumnModel().getColumn(2).setPreferredWidth(229);
 		table.getColumnModel().getColumn(3).setPreferredWidth(144);
@@ -1597,29 +1588,30 @@ public class i_principal extends JFrame {
 		GroupLayout gl_panel_7 = new GroupLayout(panel_7);
 		gl_panel_7.setHorizontalGroup(
 			gl_panel_7.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_panel_7.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel_7.createParallelGroup(Alignment.TRAILING)
-						.addComponent(table, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 1079, Short.MAX_VALUE)
-						.addGroup(gl_panel_7.createSequentialGroup()
-							.addComponent(btnNewButton_6)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnImprimir_1, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnImprimirTodo)))
+				.addGroup(gl_panel_7.createSequentialGroup()
+					.addContainerGap(905, Short.MAX_VALUE)
+					.addComponent(btnNewButton_6)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnImprimir_1, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnImprimirTodo)
 					.addGap(24))
 				.addGroup(gl_panel_7.createSequentialGroup()
 					.addGap(470)
 					.addComponent(lblInformasionConsulta)
 					.addContainerGap(602, Short.MAX_VALUE))
+				.addGroup(gl_panel_7.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(table, GroupLayout.DEFAULT_SIZE, 1148, Short.MAX_VALUE)
+					.addGap(24))
 		);
 		gl_panel_7.setVerticalGroup(
 			gl_panel_7.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_7.createSequentialGroup()
 					.addComponent(lblInformasionConsulta)
-					.addGap(20)
-					.addComponent(table, GroupLayout.PREFERRED_SIZE, 294, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(table, GroupLayout.PREFERRED_SIZE, 421, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
 					.addGroup(gl_panel_7.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnImprimirTodo)
 						.addComponent(btnImprimir_1)

@@ -1,23 +1,16 @@
 package danielpernia.citologias.principal;
 
-import java.awt.TrayIcon;
-import java.awt.TrayIcon.MessageType;
+
 import java.sql.Connection;
-import java.sql.Date;
+
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Vector;
 
-import javax.swing.Icon;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
-import com.itextpdf.awt.geom.misc.Messages;
 
 
 
@@ -179,7 +172,6 @@ public boolean buscarUsuarioPorCedula(usuario usu){
 		try {
 			sentencia = conn.createStatement();
 			ResultSet rs = sentencia.executeQuery( "SELECT * FROM consulta where cedula_pasiente = '"+cedula+"';" );
-			int i =0;
 			
 			while ( rs.next() ) {
 				estudio_ = new estudio_citologico();
@@ -239,8 +231,7 @@ public boolean buscarUsuarioPorCedula(usuario usu){
 					} catch (ParseException e) {
 					   e.printStackTrace();
 				 }*/
-			     i++;
-			}
+			  }
 
 			
 			
@@ -304,7 +295,6 @@ public boolean buscarUsuarioPorCedula(usuario usu){
 		try {
 			sentencia = conn.createStatement();
 			ResultSet rs = sentencia.executeQuery( "SELECT * FROM consulta where numero_impresion < 1 AND estado = 'terminado'" );
-			int i =0;
 			
 			while ( rs.next() ) {
 				estudio_ = new estudio_citologico();
@@ -359,7 +349,7 @@ public boolean buscarUsuarioPorCedula(usuario usu){
 			     //System.out.println( "ID_ 2312 = " + estudio_.motivo_consulta );
 			    // System.out.println( "ROL = " + estudio[i].diagnostico );
 			    // System.out.println();
-			     i++;
+			     
 			}
 
 			rs.close();
@@ -379,7 +369,7 @@ public boolean buscarUsuarioPorCedula(usuario usu){
 		try {
 			sentencia = conn.createStatement();
 			ResultSet rs = sentencia.executeQuery( "SELECT * FROM consulta where estado = 'esperando resultado'" );
-			int i =0;
+			//int i =0;
 			
 			while ( rs.next() ) {
 				estudio_ = new estudio_citologico();
@@ -434,7 +424,7 @@ public boolean buscarUsuarioPorCedula(usuario usu){
 			     //System.out.println( "ID_ 2312 = " + estudio_.motivo_consulta );
 			    // System.out.println( "ROL = " + estudio[i].diagnostico );
 			    // System.out.println();
-			     i++;
+			    // i++;
 			}
 
 			rs.close();
@@ -452,7 +442,7 @@ public int buscarEstudiosPorDia(Vector<estudio_citologico> estudio){
 		try {
 			sentencia = conn.createStatement();
 			ResultSet rs = sentencia.executeQuery( "SELECT * FROM consulta where fecha_resultado >= date('now','-1 day') AND estado ='terminado';" );
-			int i =0;
+			//int i =0;
 			
 			while ( rs.next() ) {
 				estudio_ = new estudio_citologico();
@@ -507,7 +497,7 @@ public int buscarEstudiosPorDia(Vector<estudio_citologico> estudio){
 			     //System.out.println( "ID_ 2312 = " + estudio_.motivo_consulta );
 			    // System.out.println( "ROL = " + estudio[i].diagnostico );
 			    // System.out.println();
-			     i++;
+			     //i++;
 			}
 
 			rs.close();
@@ -528,7 +518,7 @@ public int buscarEstudiosPorSemana(Vector<estudio_citologico> estudio){
 	try {
 		sentencia = conn.createStatement();
 		ResultSet rs = sentencia.executeQuery( "SELECT * FROM consulta where fecha_resultado >= date('now','-7 day') AND estado ='terminado';" );
-		int i =0;
+		//int i =0;
 		
 		while ( rs.next() ) {
 			estudio_ = new estudio_citologico();
@@ -583,7 +573,7 @@ public int buscarEstudiosPorSemana(Vector<estudio_citologico> estudio){
 		     //System.out.println( "ID_ 2312 = " + estudio_.motivo_consulta );
 		    // System.out.println( "ROL = " + estudio[i].diagnostico );
 		    // System.out.println();
-		     i++;
+		    // i++;
 		}
 
 		rs.close();

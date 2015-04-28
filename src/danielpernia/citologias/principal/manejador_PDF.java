@@ -53,15 +53,18 @@ public class manejador_PDF {
 		
 		try {
 			
-			Image foto = Image.getInstance("cabecera.png");
+			Image foto = Image.getInstance("Assets\\cabecera.png");
 			foto.scaleToFit(400, 100);
 			foto.setAlignment(Chunk.ALIGN_CENTER);
 			
-			Image pie = Image.getInstance("pie.png");
+			Image pie = Image.getInstance("Assets\\pie.png");
 			pie.scaleToFit(500, 100);
 			pie.setAlignment(Chunk.ALIGN_CENTER);
 			
-			FileOutputStream ficheroPdf = new FileOutputStream("estudio_citologico_multiple"+estudio_v.size()+".pdf");
+			String date[] =estudio_v.elementAt(estudio_v.size()-1).fecha_resultado.split(" ");
+			String fechar = date[0];
+			
+			FileOutputStream ficheroPdf = new FileOutputStream("pdf\\EC-multiple-"+fechar+"-"+estudio_v.size()+".pdf");
 			
 			PdfWriter.getInstance(documento,ficheroPdf).setInitialLeading(20);
 			
@@ -397,6 +400,8 @@ public class manejador_PDF {
 		} catch (DocumentException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+
+			JOptionPane.showMessageDialog(null, "Error "+e.getMessage());
 		}
 		
 		for (estudio_citologico estudio : estudio_v) {
@@ -436,15 +441,18 @@ public class manejador_PDF {
 		
 		try {
 			
-			Image foto = Image.getInstance("cabecera.png");
+			Image foto = Image.getInstance("Assets\\cabecera.png");
 			foto.scaleToFit(400, 100);
 			foto.setAlignment(Chunk.ALIGN_CENTER);
 			
-			Image pie = Image.getInstance("pie.png");
+			Image pie = Image.getInstance("Assets\\pie.png");
 			pie.scaleToFit(500, 100);
 			pie.setAlignment(Chunk.ALIGN_CENTER);
 			
-			FileOutputStream ficheroPdf = new FileOutputStream("estudio_citologico_"+estudio.cedula_pasiente+".pdf");
+			String date[] = estudio.fecha_resultado.split(" ");
+			String fechar = date[0];
+			
+			FileOutputStream ficheroPdf = new FileOutputStream("pdf\\EC-"+fechar+"-"+estudio.cedula_pasiente+".pdf");
 			
 			PdfWriter.getInstance(documento,ficheroPdf).setInitialLeading(20);
 			
@@ -769,6 +777,7 @@ public class manejador_PDF {
 			
 		} catch (DocumentException | IOException e) {
 			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, "Error "+e.getMessage());
 			e.printStackTrace();
 		}
 		

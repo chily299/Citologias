@@ -1493,70 +1493,75 @@ public class i_principal extends JFrame {
 		btnNewButton_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				CardLayout cl = (CardLayout)central.getLayout();
-				cl.show(central, "name_722126808976");
-				panel.setVisible(true);
-				actualizarDatosMedico();
-				
-				
-				
-				estudio = estudio_v.elementAt((table.getSelectedRow()-1));
-				
-				textArea_3.setText(estudio.motivo_consulta );
-				textArea_4.setText(estudio.diagnostico);
-				textField_1.setText(""+estudio.embarazos);
-				textField_3.setText(""+estudio.cesareas);
-				textField_6.setText(estudio.partos+"");
-				textField_16.setText(""+estudio.abortos);
-				textField_5.setText(estudio.f_ultimo_embarazo);
-				comboBox.setSelectedIndex(estudio.FUR);
-				textField.setText(estudio.f_FUR);
-				comboBox_6.setSelectedIndex(estudio.citologia );
-				textField_17.setText(estudio.f_citologia);
-				comboBox_7.setSelectedIndex(estudio.biopsia);
-				textField_18.setText(estudio.f_biopsia);
-				textField_27.setText(estudio.muestra_de);
-				textField_28.setText(estudio.sitio_lesion);
-				actualizarDatosMedico();
-				comboBox_10.setSelectedIndex((estudio.id_medico-1));
-				
-				comboBox_1.setSelectedIndex(estudio.irradiacion);
-				textField_2.setText(estudio.f_irradiacion);
-				comboBox_2.setSelectedIndex(estudio.quimio);
-				textField_4.setText(estudio.f_quimio);
-				textField_8.setText(estudio.quirurgico);
-				textField_7.setText(estudio.hormonas);
-				comboBox_3.setSelectedIndex(estudio.diu );
-				comboBox_4.setSelectedIndex(estudio.anticonceptivo);
-				textField_9.setText(estudio.d_anticonceptivo);
-				
-				textArea.setText(estudio.resultado);
-				comboBox_11.setSelectedIndex(estudio.info_muestra1);
-				comboBox_12.setSelectedIndex(estudio.info_muestra2);
-				comboBox_13.setSelectedIndex(estudio.info_muestra3);
-				comboBox_14.setSelectedIndex(estudio.clasificacion1);
-				comboBox_15.setSelectedIndex(estudio.clasificacion2);
-				comboBox_16.setSelectedIndex(estudio.clasificacion3);
-				if(comboBox_17.getItemCount()>0)
-				comboBox_17.setSelectedIndex(estudio.clasificacion4);
-				textArea_1.setText(estudio.clasificacion_detalle);
-				estudio.numero_impresiones = 0;
-				textField_29.setText(estudio.fecha_muestra);
-				//textField_1.setText(estudio.fecha_resultado);
-				estudio.estado = "esperando resultado";
-				//estudio.cedula_pasiente = pasiente_.cedula;
-				
-				// datos pasiente
-				textField_10.setText(estudio.cedula_pasiente.substring(1));
-				pasiente_.cedula = estudio.cedula_pasiente;
-				
-				if(db.buscarPasientePorCedula(pasiente_)==1){
-					textField_11.setText(pasiente_.nombres);
-					textField_12.setText(pasiente_.Apellidos);
-					textField_13.setText(pasiente_.f_nacimiento);
-					textField_14.setText(pasiente_.telefono);
-					textField_15.setText(pasiente_.direccion);
-					textField_19.setText(pasiente_.procedencia);
+				if(table.getSelectedRow()==-1){
+					JOptionPane.showMessageDialog(null, "Debe seleccionar un estudio");
+				}else if(table.getSelectedRow()>estudio_v.size()){
+						JOptionPane.showMessageDialog(null, "Debe seleccionar un estudio valido");
+				}else{
+					
+					CardLayout cl = (CardLayout)central.getLayout();
+					cl.show(central, "name_722126808976");
+					panel.setVisible(true);
+					actualizarDatosMedico();
+					
+					estudio = estudio_v.elementAt((table.getSelectedRow()-1));
+					
+					textArea_3.setText(estudio.motivo_consulta );
+					textArea_4.setText(estudio.diagnostico);
+					textField_1.setText(""+estudio.embarazos);
+					textField_3.setText(""+estudio.cesareas);
+					textField_6.setText(estudio.partos+"");
+					textField_16.setText(""+estudio.abortos);
+					textField_5.setText(estudio.f_ultimo_embarazo);
+					comboBox.setSelectedIndex(estudio.FUR);
+					textField.setText(estudio.f_FUR);
+					comboBox_6.setSelectedIndex(estudio.citologia );
+					textField_17.setText(estudio.f_citologia);
+					comboBox_7.setSelectedIndex(estudio.biopsia);
+					textField_18.setText(estudio.f_biopsia);
+					textField_27.setText(estudio.muestra_de);
+					textField_28.setText(estudio.sitio_lesion);
+					actualizarDatosMedico();
+					comboBox_10.setSelectedIndex((estudio.id_medico-1));
+					
+					comboBox_1.setSelectedIndex(estudio.irradiacion);
+					textField_2.setText(estudio.f_irradiacion);
+					comboBox_2.setSelectedIndex(estudio.quimio);
+					textField_4.setText(estudio.f_quimio);
+					textField_8.setText(estudio.quirurgico);
+					textField_7.setText(estudio.hormonas);
+					comboBox_3.setSelectedIndex(estudio.diu );
+					comboBox_4.setSelectedIndex(estudio.anticonceptivo);
+					textField_9.setText(estudio.d_anticonceptivo);
+					
+					textArea.setText(estudio.resultado);
+					comboBox_11.setSelectedIndex(estudio.info_muestra1);
+					comboBox_12.setSelectedIndex(estudio.info_muestra2);
+					comboBox_13.setSelectedIndex(estudio.info_muestra3);
+					comboBox_14.setSelectedIndex(estudio.clasificacion1);
+					comboBox_15.setSelectedIndex(estudio.clasificacion2);
+					comboBox_16.setSelectedIndex(estudio.clasificacion3);
+					if(comboBox_17.getItemCount()>0)
+					comboBox_17.setSelectedIndex(estudio.clasificacion4);
+					textArea_1.setText(estudio.clasificacion_detalle);
+					estudio.numero_impresiones = 0;
+					textField_29.setText(estudio.fecha_muestra);
+					//textField_1.setText(estudio.fecha_resultado);
+					estudio.estado = "esperando resultado";
+					//estudio.cedula_pasiente = pasiente_.cedula;
+					
+					// datos pasiente
+					textField_10.setText(estudio.cedula_pasiente.substring(1));
+					pasiente_.cedula = estudio.cedula_pasiente;
+					
+					if(db.buscarPasientePorCedula(pasiente_)==1){
+						textField_11.setText(pasiente_.nombres);
+						textField_12.setText(pasiente_.Apellidos);
+						textField_13.setText(pasiente_.f_nacimiento);
+						textField_14.setText(pasiente_.telefono);
+						textField_15.setText(pasiente_.direccion);
+						textField_19.setText(pasiente_.procedencia);
+					}
 				}
 			}
 		});
@@ -1564,15 +1569,29 @@ public class i_principal extends JFrame {
 		JButton btnImprimir_1 = new JButton("Imprimir");
 		btnImprimir_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				estudio = estudio_v.elementAt((table.getSelectedRow()-1));
-				pasiente_.cedula = textField_20.getText();
-				db.buscarPasientePorCedula(pasiente_);
-				medico_.id_medico = estudio.id_medico;
-				db.buscarMedicoPorId(medico_);
 				
 				
 				
-				pdf.imprimirEstudioSeleccionado(estudio,pasiente_,medico_,db);
+				
+				if(table.getSelectedRow()!=-1){
+					
+					if(table.getSelectedRow()>estudio_v.size()){
+						JOptionPane.showMessageDialog(null, "Debe seleccionar un estudio valido");
+						
+					}else{
+						estudio = estudio_v.elementAt((table.getSelectedRow()-1));
+						pasiente_.cedula = textField_20.getText();
+						db.buscarPasientePorCedula(pasiente_);
+						medico_.id_medico = estudio.id_medico;
+						db.buscarMedicoPorId(medico_);
+						pdf.imprimirEstudioSeleccionado(estudio,pasiente_,medico_,db);
+					}
+				}else{
+					JOptionPane.showMessageDialog(null, "Debe seleccionar un estudio");
+					
+				}
+				
+				
 			}
 		});
 		

@@ -146,7 +146,7 @@ public boolean buscarUsuarioPorCedula(usuario usu){
 					+ "fur,fecha_fur,citologia,citologia_fecha,biopsia,biopsia_fecha,muestra_de,sitio_lesion,id_medico,"
 					+ "irradiacion,irradiacion_fecha,quimioterapia,quimioterapia_fecha,quirurgico,hormonas,diu,anticonceptivos_orales,anticonceptivos_orales_descripcion,"
 					+ "resultado,info_muestra_1,info_muestra_2,info_muestra_3,clasificacion_1,clasificacion_2,clasificacion_3,clasificacion_4,clasificacion_descripcion,"
-					+ "numero_impresion,fecha_muestra,fecha_resultado,estado,cedula_pasiente) " +
+					+ "numero_impresion,fecha_muestra,fecha_resultado,estado,cedula_paciente) " +
 	                   "VALUES ( '"+estudio.motivo_consulta+"','"+estudio.diagnostico+"',"
 	                   		+ ""+estudio.embarazos+","+estudio.cesareas+","+estudio.partos+","+estudio.abortos+",'"+estudio.f_ultimo_embarazo+"',"
 	                   		+ ""+estudio.FUR+",'"+estudio.f_FUR+"',"+estudio.citologia+",'"+estudio.f_citologia+"',"+estudio.biopsia+",'"+estudio.f_biopsia+"',"
@@ -155,7 +155,7 @@ public boolean buscarUsuarioPorCedula(usuario usu){
 	                   		+ "'"+estudio.quirurgico+"','"+estudio.hormonas+"',"+estudio.diu+","+estudio.anticonceptivo+",'"+estudio.d_anticonceptivo+"',"
 	                   		+ "'"+estudio.resultado+"',"+estudio.info_muestra1+","+estudio.info_muestra2+","+estudio.info_muestra3+","
 	                   		+ ""+estudio.clasificacion1+","+estudio.clasificacion2+","+estudio.clasificacion3+","+estudio.clasificacion4+",'"+estudio.clasificacion_detalle+"',"
-	                   		+ ""+estudio.numero_impresiones+",'"+estudio.fecha_muestra+"','"+estudio.fecha_resultado+"','"+estudio.estado+"','"+estudio.cedula_pasiente+"');"; 
+	                   		+ ""+estudio.numero_impresiones+",'"+estudio.fecha_muestra+"','"+estudio.fecha_resultado+"','"+estudio.estado+"','"+estudio.cedula_paciente+"');"; 
 			sentencia.executeUpdate(sql);
 			JOptionPane.showMessageDialog(null, "Estudio Registrado");
 			return 1;
@@ -171,7 +171,7 @@ public boolean buscarUsuarioPorCedula(usuario usu){
 		estudio_citologico estudio_ ;
 		try {
 			sentencia = conn.createStatement();
-			ResultSet rs = sentencia.executeQuery( "SELECT * FROM consulta where cedula_pasiente = '"+cedula+"';" );
+			ResultSet rs = sentencia.executeQuery( "SELECT * FROM consulta where cedula_paciente = '"+cedula+"';" );
 			
 			while ( rs.next() ) {
 				estudio_ = new estudio_citologico();
@@ -219,7 +219,7 @@ public boolean buscarUsuarioPorCedula(usuario usu){
 			    estudio_.fecha_muestra = rs.getString("fecha_muestra");
 			    estudio_.fecha_resultado = rs.getString("fecha_resultado");
 			    estudio_.estado = rs.getString("estado");
-			    estudio_.cedula_pasiente = rs.getString("cedula_pasiente");
+			    estudio_.cedula_paciente = rs.getString("cedula_paciente");
 			     estudio.add(estudio_);
 			     
 			     /*
@@ -342,7 +342,7 @@ public boolean buscarUsuarioPorCedula(usuario usu){
 			    estudio_.fecha_muestra = rs.getString("fecha_muestra");
 			    estudio_.fecha_resultado = rs.getString("fecha_resultado");
 			    estudio_.estado = rs.getString("estado");
-			    estudio_.cedula_pasiente = rs.getString("cedula_pasiente");
+			    estudio_.cedula_paciente = rs.getString("cedula_paciente");
 			     estudio.add(estudio_);
 			     
 			     //imprimir
@@ -417,7 +417,7 @@ public boolean buscarUsuarioPorCedula(usuario usu){
 			    estudio_.fecha_muestra = rs.getString("fecha_muestra");
 			    estudio_.fecha_resultado = rs.getString("fecha_resultado");
 			    estudio_.estado = rs.getString("estado");
-			    estudio_.cedula_pasiente = rs.getString("cedula_pasiente");
+			    estudio_.cedula_paciente = rs.getString("cedula_paciente");
 			    estudio.add(estudio_);
 			     
 			     //imprimir
@@ -490,7 +490,7 @@ public int buscarEstudiosPorDia(Vector<estudio_citologico> estudio){
 			    estudio_.fecha_muestra = rs.getString("fecha_muestra");
 			    estudio_.fecha_resultado = rs.getString("fecha_resultado");
 			    estudio_.estado = rs.getString("estado");
-			    estudio_.cedula_pasiente = rs.getString("cedula_pasiente");
+			    estudio_.cedula_paciente = rs.getString("cedula_paciente");
 			    estudio.add(estudio_);
 			     
 			     //imprimir
@@ -566,7 +566,7 @@ public int buscarEstudiosPorSemana(Vector<estudio_citologico> estudio){
 		    estudio_.fecha_muestra = rs.getString("fecha_muestra");
 		    estudio_.fecha_resultado = rs.getString("fecha_resultado");
 		    estudio_.estado = rs.getString("estado");
-		    estudio_.cedula_pasiente = rs.getString("cedula_pasiente");
+		    estudio_.cedula_paciente = rs.getString("cedula_paciente");
 		    estudio.add(estudio_);
 		     
 		     //imprimir
@@ -587,18 +587,18 @@ public int buscarEstudiosPorSemana(Vector<estudio_citologico> estudio){
 }
 	
 	
-	public void registrarPasiente(pasiente pasiente_){
+	public void registrarPasiente(paciente paciente_){
 		
 		try {
 			sentencia = conn.createStatement();
-			String sql = "INSERT INTO pasiente (cedula,nombres,apellidos,fecha_nacimiento,procedencia,direccion,telefono) " +
-	                   "VALUES ('"+pasiente_.cedula+"', '"+pasiente_.nombres+"','"+pasiente_.Apellidos+"','"+pasiente_.f_nacimiento+" 00:00:00','"+pasiente_.procedencia+"','"+pasiente_.direccion+"','"+pasiente_.telefono+"');"; 
+			String sql = "INSERT INTO paciente (cedula,nombres,apellidos,edad,procedencia,direccion,telefono) " +
+	                   "VALUES ('"+paciente_.cedula+"', '"+paciente_.nombres+"','"+paciente_.Apellidos+"',"+paciente_.edad+",'"+paciente_.procedencia+"','"+paciente_.direccion+"','"+paciente_.telefono+"');"; 
 			sentencia.executeUpdate(sql);
 			//System.out.println("fin insert exitoso");
-			JOptionPane.showMessageDialog(null, "Pasiente "+pasiente_.cedula+" Registrado");
+			JOptionPane.showMessageDialog(null, "Pasiente "+paciente_.cedula+" Registrado");
 		} catch (SQLException e) {
 			if(e.getErrorCode() == 0){
-				JOptionPane.showMessageDialog(null, "Cedula "+pasiente_.cedula+" Ya esta Registrada. Codigo:"+e.getErrorCode());
+				JOptionPane.showMessageDialog(null, "Cedula "+paciente_.cedula+" Ya esta Registrada. Codigo:"+e.getErrorCode());
 			}else{
 				JOptionPane.showMessageDialog(null, "Tengo problemas para Registrada. Codigo:"+e.getErrorCode());
 			}
@@ -607,23 +607,23 @@ public int buscarEstudiosPorSemana(Vector<estudio_citologico> estudio){
 		
 	}
 	
-	public int buscarPasientePorCedula(pasiente pasiente_){
+	public int buscarPasientePorCedula(paciente paciente_){
 		int encontrado =0;
 		try {
 			sentencia = conn.createStatement();
-			ResultSet rs = sentencia.executeQuery( "SELECT * FROM pasiente WHERE cedula = '"+pasiente_.cedula+"';" );
+			ResultSet rs = sentencia.executeQuery( "SELECT * FROM paciente WHERE cedula = '"+paciente_.cedula+"';" );
 			
 			while ( rs.next() ) {
 				encontrado = 1;
-				//pasiente_.rowid = rs.getInt("rowid");
-				pasiente_.cedula = rs.getString("cedula");
-				pasiente_.nombres = rs.getString("nombres");
-				pasiente_.Apellidos = rs.getString("apellidos");
-				pasiente_.f_nacimiento = rs.getString("fecha_nacimiento");
-				pasiente_.procedencia = rs.getString("procedencia");
-				pasiente_.direccion = rs.getString("direccion");
-				pasiente_.telefono = rs.getString("telefono");
-				//pasiente_.rowid = rs.getInt(0);
+				//paciente_.rowid = rs.getInt("rowid");
+				paciente_.cedula = rs.getString("cedula");
+				paciente_.nombres = rs.getString("nombres");
+				paciente_.Apellidos = rs.getString("apellidos");
+				paciente_.edad = rs.getInt("edad");
+				paciente_.procedencia = rs.getString("procedencia");
+				paciente_.direccion = rs.getString("direccion");
+				paciente_.telefono = rs.getString("telefono");
+				//paciente_.rowid = rs.getInt(0);
 
 			}
 
@@ -639,24 +639,24 @@ public int buscarEstudiosPorSemana(Vector<estudio_citologico> estudio){
 		return 0;
 	}
 	
-	public int buscarPasientePorRowId(pasiente pasiente_){
+	public int buscarPasientePorRowId(paciente paciente_){
 		
 		try {
 			sentencia = conn.createStatement();
-			ResultSet rs = sentencia.executeQuery( "SELECT * FROM consulta where rowid = '"+pasiente_.rowid+"';" );
+			ResultSet rs = sentencia.executeQuery( "SELECT * FROM consulta where rowid = '"+paciente_.rowid+"';" );
 			
 			while ( rs.next() ) {
-				pasiente_.rowid = rs.getInt("rowid");
-				pasiente_.cedula = rs.getString("cedula");
-				pasiente_.nombres = rs.getString("nombres");
-				pasiente_.Apellidos = rs.getString("apellidos");
-				pasiente_.f_nacimiento = rs.getString("fecha_nacimiento");
-				pasiente_.procedencia = rs.getString("procedencia");
-				pasiente_.direccion = rs.getString("direccion");
+				paciente_.rowid = rs.getInt("rowid");
+				paciente_.cedula = rs.getString("cedula");
+				paciente_.nombres = rs.getString("nombres");
+				paciente_.Apellidos = rs.getString("apellidos");
+				paciente_.edad = rs.getInt("edad");
+				paciente_.procedencia = rs.getString("procedencia");
+				paciente_.direccion = rs.getString("direccion");
 			     
 			     //imprimir
-			   //  System.out.println( "ID = " + pasiente_.rowid );
-			   //  System.out.println( "ROL = " +pasiente_.cedula);
+			   //  System.out.println( "ID = " + paciente_.rowid );
+			   //  System.out.println( "ROL = " +paciente_.cedula);
 			   //  System.out.println();
 		
 			}
@@ -672,13 +672,13 @@ public int buscarEstudiosPorSemana(Vector<estudio_citologico> estudio){
 		return 0;
 	}
 	
-	public int EditarPasiente(pasiente pasiente_){
+	public int EditarPasiente(paciente paciente_){
 		
 		try {
 			sentencia = conn.createStatement();
-			String sql = 	"UPDATE INTO usuario (nombres,apellidos,fecha_nacimiento,procedencia,direccion) " +
-	                   		"VALUES ('"+pasiente_.nombres+"','"+pasiente_.Apellidos+"','"+pasiente_.f_nacimiento+"','"+pasiente_.procedencia+"','"+pasiente_.direccion+"')"
-	                   		+ " WHERE rowid = "+pasiente_.rowid+";"; 
+			String sql = 	"UPDATE INTO usuario (nombres,apellidos,edad,procedencia,direccion) " +
+	                   		"VALUES ('"+paciente_.nombres+"','"+paciente_.Apellidos+"',"+paciente_.edad+",'"+paciente_.procedencia+"','"+paciente_.direccion+"')"
+	                   		+ " WHERE rowid = "+paciente_.rowid+";"; 
 			sentencia.executeUpdate(sql);
 			//System.out.println("fin insert exitoso");
 		} catch (SQLException e) {
@@ -842,6 +842,9 @@ public int buscarMedicoPorId(medico medico_){
 		return 0;
 	}
 	
+	public void consultaEstadistica( int id_medico, int edad_minima,int edad_maxima, int rango_fecha_dias, int categoria1,int categoria2,int categoria3,int categoria4,int estudios_consultados,int resultado){
+		
+	}
 	
 }
 

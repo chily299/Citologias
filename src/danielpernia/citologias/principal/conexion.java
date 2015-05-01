@@ -142,14 +142,15 @@ public class conexion {
 		
 	}
 	
-	public int registrarUsuarioNuevo(usuario usu){
+	public int registrarUsuarioNuevo(usuario usu,boolean alerta){
 		
 		try {
 			sentencia = conn.createStatement();
 			String sql = "INSERT INTO usuario (rol,nombre,contrasenna,cedula,apellidos) " +
 	                   "VALUES ("+usu.rol+", '"+usu.nombres+"','"+usu.clave+"','"+usu.cedula+"','"+usu.apellidos+"');"; 
 			sentencia.executeUpdate(sql);
-			JOptionPane.showMessageDialog(null, "Usuario Registrado");
+			if(alerta)
+				JOptionPane.showMessageDialog(null, "Usuario Registrado");
 			return 1;
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Usuario No Registrado Codigo: "+e.getErrorCode());
@@ -761,7 +762,7 @@ public class conexion {
 	return 0;
 }
 
-	public void registrarPasiente(paciente paciente_){
+	public void registrarPasiente(paciente paciente_,boolean alerta){
 		
 		try {
 			sentencia = conn.createStatement();
@@ -769,7 +770,8 @@ public class conexion {
 	                   "VALUES ('"+paciente_.cedula+"', '"+paciente_.nombres+"','"+paciente_.Apellidos+"',"+paciente_.edad+",'"+paciente_.procedencia+"','"+paciente_.direccion+"','"+paciente_.telefono+"');"; 
 			sentencia.executeUpdate(sql);
 			//System.out.println("fin insert exitoso");
-			JOptionPane.showMessageDialog(null, "Pasiente "+paciente_.cedula+" Registrado");
+			if(alerta)
+				JOptionPane.showMessageDialog(null, "Pasiente "+paciente_.cedula+" Registrado");
 		} catch (SQLException e) {
 			if(e.getErrorCode() == 0){
 				JOptionPane.showMessageDialog(null, "Cedula "+paciente_.cedula+" Ya esta Registrada. Codigo:"+e.getErrorCode());
@@ -1055,16 +1057,18 @@ public class conexion {
 	
 	public void consultaEstadistica( String rif_medico, int edad_minima,int edad_maxima, int rango_fecha_dias, int categoria1,int categoria2,int categoria3,int categoria4,int estudios_consultados,int resultado){
 		
-		estudios_consultados =0;
-		resultado =0;
+		//estudios_consultados =0;
+		//resultado =0;
+		String info_categoria="";
 		
 		medico medico_ = new medico();
 		if(!rif_medico.equals("Todos")){
 			medico_.rif = rif_medico;
 			buscarMedico(medico_, false);
-			//System.out.println("Rif "+rif_medico+ " id_medico: "+medico_.id_medico);
+			info_categoria+="Medico: "+medico_.rif+" ";
+		}else{
+			info_categoria+="Medico: Todos ";
 		}
-		//int id_medico =0; // buscar el id basandose en el rif
 		
 		
 		
@@ -1076,39 +1080,164 @@ public class conexion {
 		
 		if(edad_minima!= -1){
 			SQL+="pas.edad BETWEEN "+edad_minima+" AND "+edad_maxima+" AND ";
+			info_categoria+="Edad: "+edad_minima+"-"+edad_maxima+" ";
+		}else{
+			info_categoria+="Edad: Todas ";
 		}
 		
 		if(rango_fecha_dias != -1){
 			SQL+="con.fecha_resultado >= date('now','-"+rango_fecha_dias+" day') AND ";
+			info_categoria+="Tiempo: "+rango_fecha_dias+" dias \n";
+		}else{
+			info_categoria+="Tiempo: Todo el periodo \n";
 		}
 		
 		String SQL_Total = SQL;
 		
-		SQL+= "con.clasificacion_1 = "+categoria1+" AND "
-			+ "con.clasificacion_2 = "+categoria2+" AND "
-			+ "con.clasificacion_3 = "+categoria3+" AND "
-			+ "con.clasificacion_4 = "+categoria4+" AND "
-			+ "con.estado ='terminado';";
+		if(categoria1!=-1){
+			SQL+= "con.clasificacion_1 = "+categoria1+" AND ";
+		}
 		
+		if(categoria2!=-1){
+			SQL+= "con.clasificacion_2 = "+categoria2+" AND ";
+		}
+		
+		if(categoria3!=-1){
+			SQL+= "con.clasificacion_3 = "+categoria3+" AND ";
+		}
+		
+		if(categoria4!=-1){
+			SQL+= "con.clasificacion_4 = "+categoria4+" AND ";
+		}
+		
+		if(categoria1 == 0){
+			info_categoria+="NEGATIVO PARA LESIÓN INTRAEPITELIAL O MALIGNIDAD\n";
+			if(categoria2 == 0){
+				info_categoria+="MICROORGANISMOS ";
+				if(categoria3 == 0){
+					info_categoria+="Trichomonas vaginalis ";
+				}else if(categoria3 == 1){
+					info_categoria+="Elementos micóticos de características morfológicas compatibles con Candida ";
+				}else if(categoria3 == 2){
+					info_categoria+="Cambios de la flora vaginal sugerentes de VAGINOSIS BACTERIANA ";
+				}else if(categoria3 == 3){
+					info_categoria+="Bacterias de características morfológicas compatibles con Actinomyces ";
+				}else if(categoria3 == 4){
+					info_categoria+="Cambios celulares compatibles con HERPES SIMPLE ";
+				}
+			}else if(categoria2 == 1){
+				info_categoria+="OTROS HALLAZGOS NO NEOPLÁSICOS";
+				if(categoria3 == 0){
+					info_categoria+="Cambios celulares reactivos asosiados a: ";
+					if(categoria4 == 0){
+						info_categoria+="Inflamación ";
+					}else if(categoria4 == 1){
+						info_categoria+="Radiación ";
+					}else if(categoria4 == 2){
+						info_categoria+="Dispositivo intrauterino (DIU) ";
+					}
+				}else if(categoria3 == 1){
+					info_categoria+="Células glandulares poshisterectomía ";
+				}else if(categoria3 == 2){
+					info_categoria+="Atrofia ";
+				}
+			}
+		}else if(categoria1 == 1){
+			info_categoria+="OTROS HALLAZGOS\n";
+			 if(categoria2 == 0){
+					info_categoria+="CÉLULAS ENDOMETRIALES  (mujer mayor de 40 años)  ";
+					if(categoria3 == 0){
+						info_categoria+="NEGATIVO PARA LESIÓN ESCAMOSA INTRAEPITELIAL ";
+				 }
+			 }
+		}else if(categoria1 == 2){
+			info_categoria+="ANOMALÍAS DE LAS CÉLULAS EPITELIALES\n";
+			
+		}else if(categoria1 == 3){
+			info_categoria+="OTRAS NEOPLASIAS MALIGNAS\n";
+			if(categoria2 == 0){
+				info_categoria+="CÉLULAS ESCAMOSAS ";
+				if(categoria3 == 0){
+					info_categoria+="CÉLULAS ESCAMOSAS ATÍPICAS ";
+					if(categoria4 == 0){
+						info_categoria+="de significado indeterminado (ASC-US) ";
+					}else if(categoria4 == 1){
+						info_categoria+="no se puede descartar lesion escamosa intraepitelial de alto grado (ASC-H) ";
+					}
+				}else if(categoria3 == 1){
+					info_categoria+="LESIÓN ESCAMOSA INTRAEPITELIAL DE BAJO GRADO (LSIL) ";
+				}else if(categoria3 == 2){
+					info_categoria+="LESIÓN ESCAMOSA INTRAEPITELIAL DE ALTO GRADO (HSIL) ";
+					if(categoria4 == 0){
+						info_categoria+="con hallazgos sospechosos de invación ";
+					}
+				}else if(categoria3 == 3){
+					info_categoria+="CARCINOMA ESCAMOSO ";
+				} 
+		 }
+			if(categoria2 == 1){
+				info_categoria+="CÉLULAS GLANDULARES ";
+				if(categoria3 == 0){
+					info_categoria+="ATÍPICAS ";
+					if(categoria4 == 0){
+						info_categoria+="Células endocervicales ";
+					}else if(categoria4 == 1){
+						info_categoria+="Células endometriales ";
+					}else if(categoria4 == 2){
+						info_categoria+="Células glandulares ";
+					}
+				}else if(categoria3 == 1){
+					info_categoria+="ATÍPICAS SUGESTIVAS A NEOPLASIA ";
+					if(categoria4 == 0){
+						info_categoria+="Células endocervicales ";
+					}else if(categoria4 == 1){
+						info_categoria+="Células glandulares ";
+					}
+				}else if(categoria3 == 2){
+					info_categoria+="ADENOCARCINOMA ENDOCERVICAL (in situ) ";
+				}else if(categoria3 == 3){
+					info_categoria+="ADENOCARCINOMA ";
+					if(categoria4 == 0){
+						info_categoria+="Endocervical ";
+					}else if(categoria4 == 1){
+						info_categoria+="Endometrial ";
+					}else if(categoria4 == 2){
+						info_categoria+="Extrauterino ";
+					}else if(categoria4 == 3){
+						info_categoria+="Sin Especificar ";
+					}
+				} 
+		 }
+		}
+		
+		SQL+=		"con.estado ='terminado';";
 		SQL_Total+= "con.estado ='terminado';";
-		System.out.println("SQL: "+SQL);
+		//System.out.println("SQL: "+SQL);
 		
 		
 		try {
 			sentencia = conn.createStatement();
 			
 			// calculo el total
-			ResultSet rs = sentencia.executeQuery(SQL);
+			ResultSet rs = sentencia.executeQuery(SQL_Total);
 			
 			while ( rs.next() ) {
+				
 				estudios_consultados++;
 			}
 			// calculo por lesion
 			rs = sentencia.executeQuery(SQL);
 			
 			while ( rs.next() ) {
+
+				
 				resultado++;
 			}
+			
+			JOptionPane.showMessageDialog(null,info_categoria+" \nTodos los estudios sin tomar en cuenta la lesion: "+estudios_consultados+"\nEstudios encontrados con lesion: "+resultado);
+			
+			System.out.println("total "+estudios_consultados);
+			System.out.println("resultado "+resultado);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -1163,7 +1292,7 @@ public class conexion {
 			pacienteAlmacenado.cedula = pacienteNuevo.cedula;
 			
 			if(buscarPasientePorCedula(pacienteAlmacenado)==0){
-				registrarPasiente(pacienteNuevo);
+				registrarPasiente(pacienteNuevo,false);
 				contPacientesNuevos++;
 			}
 		}
@@ -1194,7 +1323,7 @@ public class conexion {
 			if(buscarUsuarioPorCedula(usuarioAlmacenado,false)){
 				
 			}else{
-				registrarUsuarioNuevo(usuarioNuevo);
+				registrarUsuarioNuevo(usuarioNuevo,false);
 				contUsuariosNuevos++;
 			}
 		}

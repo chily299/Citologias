@@ -81,7 +81,7 @@ public class i_principal extends JFrame {
 	private JTextField textField_19;
 	JButton btnBuscar_1,btnNewButton_4;
 	JButton btnGuardar_1,btnTerminar;
-	private JLabel lblNewLabel,lblInformasionConsulta,lblConsulta,lblNewLabel_38;
+	private JLabel lblNewLabel,lblInformasionConsulta;
 	JDatePickerImpl datePicker;
 	private JComboBox comboBox,comboBox_1,comboBox_2,comboBox_3,comboBox_4,comboBox_5,comboBox_6,comboBox_7,comboBox_9, comboBox_13,comboBox_12,comboBox_10,comboBox_11,comboBox_14,comboBox_15,comboBox_16,comboBox_17,comboBox_18,comboBox_8,comboBox_20,comboBox_19,comboBox_21 ;
 	private JComboBox comboBox_28,comboBox_29,comboBox_30,comboBox_31;
@@ -112,7 +112,7 @@ public class i_principal extends JFrame {
 	private JPasswordField passwordField_5;
 	private JPasswordField passwordField_3;
 	String anno,mes,dia;
-	int totalEstudiosEstadistica, totalResultadoEstadistica;
+	private int totalEstudiosEstadistica, totalResultadoEstadistica;
 	
 	/**
 	 * Launch the application.
@@ -513,7 +513,7 @@ public class i_principal extends JFrame {
 				if(db.buscarPasientePorCedula(paciente_)==1){
 				}else{
 					actulizarPasienteConFormulario();
-					db.registrarPasiente(paciente_);
+					db.registrarPasiente(paciente_,true);
 					//db.buscarPasientePorCedula(paciente_); // lo busco otra vez para sacar el rowid
 				}
 				
@@ -1131,7 +1131,7 @@ public class i_principal extends JFrame {
 				textField_13 = new JTextField();
 				textField_13.setText("00");
 				textField_13.setToolTipText("");
-				textField_13.setColumns(6);
+				textField_13.setColumns(2);
 				
 				JLabel lblNewLabel_13 = new JLabel("Telefono");
 				lblNewLabel_13.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -1810,7 +1810,7 @@ public class i_principal extends JFrame {
 		JLabel lblImprimir = new JLabel("Imprimir:");
 		lblImprimir.setFont(new Font("Tahoma", Font.BOLD, 18));
 		
-		JLabel lblNewLabel_30 = new JLabel("Total dia:");
+		JLabel lblNewLabel_30 = new JLabel("Informes terminados por dia");
 		lblNewLabel_30.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		JLabel lblNewLabel_31 = new JLabel("Informes pendientes:");
@@ -2015,6 +2015,7 @@ public class i_principal extends JFrame {
 				String rif="Todos";
 				int edadMinima, edadMaxima = 100;
 				int diasConsulta = -1;
+				int categoria1,categoria2,categoria3,categoria4;
 				
 				if(!comboBox_21.getItemAt(comboBox_21.getSelectedIndex()).equals("Todos")){
 					String tmp[] =comboBox_21.getItemAt(comboBox_21.getSelectedIndex()).toString().split(" ");
@@ -2044,20 +2045,40 @@ public class i_principal extends JFrame {
 					diasConsulta = -1;
 				}
 				
-				db.consultaEstadistica(rif, edadMinima, edadMaxima, diasConsulta, comboBox_28.getSelectedIndex(), comboBox_29.getSelectedIndex(), comboBox_30.getSelectedIndex(), comboBox_31.getSelectedIndex(), totalEstudiosEstadistica, totalResultadoEstadistica);
+				if(comboBox_28.getSelectedIndex()!=-1 && !comboBox_28.getSelectedItem().toString().isEmpty()){
+					categoria1 =comboBox_28.getSelectedIndex();
+				}else{
+					categoria1 = -1;
+				}
+				
+				
+				if(comboBox_29.getSelectedIndex()!=-1 && !comboBox_29.getSelectedItem().toString().isEmpty()){
+					categoria2 =comboBox_29.getSelectedIndex();
+				}else{
+					categoria2 = -1;
+				}
+				
+				if(comboBox_30.getSelectedIndex()!=-1 && !comboBox_30.getSelectedItem().toString().isEmpty()){
+					categoria3 =comboBox_30.getSelectedIndex();
+				}else{
+					categoria3 = -1;
+				}
+				
+				if(comboBox_31.getSelectedIndex()!=-1 && !comboBox_31.getSelectedItem().toString().isEmpty()){
+					categoria4 =comboBox_31.getSelectedIndex();
+				}else{
+					categoria4 = -1;
+				}
+				
+				//totalEstudiosEstadistica = -1;
+				//totalResultadoEstadistica =-1;
+				
+				db.consultaEstadistica(rif, edadMinima, edadMaxima, diasConsulta, categoria1, categoria2, categoria3, categoria4, totalEstudiosEstadistica, totalResultadoEstadistica);
 			
-				lblConsulta.setText(""+totalEstudiosEstadistica);
-				lblNewLabel_38.setText(""+totalResultadoEstadistica);
+				//lblConsulta.setText(""+totalEstudiosEstadistica);
+				//lblNewLabel_38.setText(""+totalResultadoEstadistica);
 			}
 		});
-		
-		JLabel lblDatosConsultados = new JLabel("Datos consultados:");
-		
-		JLabel lblResultado = new JLabel("Resultado:");
-		
-		lblConsulta = new JLabel("consulta");
-		
-		lblNewLabel_38 = new JLabel("25");
 		
 		comboBox_28 = new JComboBox();
 		//comboBox_28.setSelectedIndex(0);
@@ -2177,14 +2198,6 @@ public class i_principal extends JFrame {
 							.addGroup(gl_panel_8.createParallelGroup(Alignment.LEADING)
 								.addComponent(btnNewButton_10)
 								.addGroup(gl_panel_8.createSequentialGroup()
-									.addGroup(gl_panel_8.createParallelGroup(Alignment.TRAILING)
-										.addComponent(lblResultado)
-										.addComponent(lblDatosConsultados))
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addGroup(gl_panel_8.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblNewLabel_38)
-										.addComponent(lblConsulta)))
-								.addGroup(gl_panel_8.createSequentialGroup()
 									.addComponent(lblNewLabel_37)
 									.addPreferredGap(ComponentPlacement.UNRELATED)
 									.addComponent(comboBox_21, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -2193,19 +2206,18 @@ public class i_principal extends JFrame {
 									.addGap(4)
 									.addComponent(comboBox_22, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 									.addGap(18)
+									.addComponent(lblPeriodo)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(comboBox_24, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE)
+									.addGap(18)
 									.addComponent(lblLesion, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addGroup(gl_panel_8.createParallelGroup(Alignment.LEADING)
-										.addGroup(gl_panel_8.createSequentialGroup()
-											.addComponent(comboBox_28, GroupLayout.PREFERRED_SIZE, 297, GroupLayout.PREFERRED_SIZE)
-											.addGap(29)
-											.addComponent(lblPeriodo)
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addComponent(comboBox_24, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE))
+										.addComponent(comboBox_28, GroupLayout.PREFERRED_SIZE, 297, GroupLayout.PREFERRED_SIZE)
 										.addComponent(comboBox_29, GroupLayout.PREFERRED_SIZE, 204, GroupLayout.PREFERRED_SIZE)
 										.addComponent(comboBox_30, GroupLayout.PREFERRED_SIZE, 336, GroupLayout.PREFERRED_SIZE)
 										.addComponent(comboBox_31, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE))))))
-					.addContainerGap(423, Short.MAX_VALUE))
+					.addContainerGap(385, Short.MAX_VALUE))
 		);
 		gl_panel_8.setVerticalGroup(
 			gl_panel_8.createParallelGroup(Alignment.LEADING)
@@ -2215,32 +2227,28 @@ public class i_principal extends JFrame {
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_panel_8.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel_8.createSequentialGroup()
+							.addGroup(gl_panel_8.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel_8.createSequentialGroup()
+									.addComponent(comboBox_28, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+									.addGap(6)
+									.addComponent(comboBox_29, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+									.addGap(6)
+									.addComponent(comboBox_30, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+									.addGap(6)
+									.addComponent(comboBox_31, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
+								.addComponent(lblLesion, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
+							.addContainerGap())
+						.addGroup(gl_panel_8.createSequentialGroup()
 							.addGroup(gl_panel_8.createParallelGroup(Alignment.BASELINE)
-								.addComponent(comboBox_28, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNewLabel_37)
+								.addComponent(comboBox_21, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblEdadPasiente, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+								.addComponent(comboBox_22, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(lblPeriodo, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
 								.addComponent(comboBox_24, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addGap(6)
-							.addComponent(comboBox_29, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-							.addGap(6)
-							.addComponent(comboBox_30, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-							.addGap(6)
-							.addComponent(comboBox_31, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel_8.createParallelGroup(Alignment.BASELINE)
-							.addComponent(lblNewLabel_37)
-							.addComponent(comboBox_21, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblEdadPasiente, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-							.addComponent(comboBox_22, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblLesion, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)))
-					.addPreferredGap(ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-					.addComponent(btnNewButton_10)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panel_8.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblDatosConsultados)
-						.addComponent(lblConsulta))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panel_8.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblResultado)
-						.addComponent(lblNewLabel_38)))
+							.addPreferredGap(ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
+							.addComponent(btnNewButton_10)
+							.addGap(40))))
 		);
 		panel_8.setLayout(gl_panel_8);
 		Estadisticas.setLayout(gl_Estadisticas);
@@ -2350,7 +2358,7 @@ public class i_principal extends JFrame {
 		comboBox_18 = new JComboBox();
 		comboBox_18.setModel(new DefaultComboBoxModel(new String[] {"J", "E", "V"}));
 		
-		JButton btnGuardar = new JButton("Guardar");
+		JButton btnGuardar = new JButton("Guardar Nuevo");
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -2384,7 +2392,7 @@ public class i_principal extends JFrame {
 			}
 		});
 		
-		btnEditar = new JButton("Editar");
+		btnEditar = new JButton("Actualizar");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -2444,9 +2452,9 @@ public class i_principal extends JFrame {
 								.addGroup(gl_panel_5.createSequentialGroup()
 									.addComponent(btnGuardar)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnEditar, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE))
+									.addComponent(btnEditar, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE))
 								.addComponent(textField_25, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-					.addContainerGap(389, Short.MAX_VALUE))
+					.addContainerGap(340, Short.MAX_VALUE))
 		);
 		gl_panel_5.setVerticalGroup(
 			gl_panel_5.createParallelGroup(Alignment.LEADING)
@@ -2603,7 +2611,7 @@ public class i_principal extends JFrame {
 				if(!passwordField_4.getText().isEmpty()&&passwordField_4.getText().equals(passwordField_5.getText()) && !t_u_nombre.getText().isEmpty() && !t_u_apellido.getText().isEmpty() && !t_u_cedula.getText().isEmpty()){
 					System.out.println("son iguales");
 					usuario_.clave = passwordField_4.getText();
-					if(db.registrarUsuarioNuevo(usuario_)==1){
+					if(db.registrarUsuarioNuevo(usuario_,true)==1){
 						t_u_cedula.setText("");;	
 						t_u_nombre.setText("");
 						t_u_apellido.setText("");
@@ -2626,12 +2634,12 @@ public class i_principal extends JFrame {
 		gl_panel_9.setHorizontalGroup(
 			gl_panel_9.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_9.createSequentialGroup()
-					.addContainerGap()
+					.addGap(24)
 					.addGroup(gl_panel_9.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblNombre_1)
 						.addComponent(lblRepitaContrasea_1)
 						.addComponent(lblNombre_2)
-						.addComponent(lblApellidos_2, GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+						.addComponent(lblApellidos_2, GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
 						.addComponent(lblRol, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblContrasea_1, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
@@ -2647,28 +2655,40 @@ public class i_principal extends JFrame {
 						.addGroup(gl_panel_9.createSequentialGroup()
 							.addGap(36)
 							.addComponent(passwordField_4, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel_9.createSequentialGroup()
-							.addGroup(gl_panel_9.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_panel_9.createSequentialGroup()
-									.addComponent(comboBox_19, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(t_u_cedula, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_panel_9.createSequentialGroup()
-									.addGap(36)
-									.addGroup(gl_panel_9.createParallelGroup(Alignment.TRAILING)
-										.addComponent(btnActualizar)
-										.addComponent(passwordField_5, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE))))
-							.addGap(4)
-							.addGroup(gl_panel_9.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnGuardar_1)
-								.addComponent(btnBuscar_1))))
-					.addContainerGap(144, Short.MAX_VALUE))
+						.addGroup(gl_panel_9.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_panel_9.createSequentialGroup()
+								.addComponent(comboBox_19, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(t_u_cedula, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(btnBuscar_1))
+							.addGroup(gl_panel_9.createSequentialGroup()
+								.addGap(36)
+								.addGroup(gl_panel_9.createParallelGroup(Alignment.LEADING)
+									.addGroup(gl_panel_9.createSequentialGroup()
+										.addComponent(btnGuardar_1)
+										.addPreferredGap(ComponentPlacement.RELATED)
+										.addComponent(btnActualizar, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE))
+									.addComponent(passwordField_5, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)))))
+					.addContainerGap(126, Short.MAX_VALUE))
 		);
 		gl_panel_9.setVerticalGroup(
 			gl_panel_9.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_9.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panel_9.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_panel_9.createSequentialGroup()
+							.addComponent(lblNombre_1)
+							.addGap(8)
+							.addComponent(lblNombre_2, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblApellidos_2, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblRol, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+							.addGap(11)
+							.addComponent(lblContrasea_1, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(lblRepitaContrasea_1, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_panel_9.createSequentialGroup()
 							.addGroup(gl_panel_9.createParallelGroup(Alignment.BASELINE)
 								.addComponent(comboBox_19, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -2683,23 +2703,11 @@ public class i_principal extends JFrame {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(passwordField_4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(passwordField_5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel_9.createSequentialGroup()
-							.addComponent(lblNombre_1)
-							.addGap(8)
-							.addComponent(lblNombre_2, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblApellidos_2, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblRol, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-							.addGap(11)
-							.addComponent(lblContrasea_1, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(lblRepitaContrasea_1, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(passwordField_5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_panel_9.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnActualizar)
-						.addComponent(btnGuardar_1))
+						.addComponent(btnGuardar_1)
+						.addComponent(btnActualizar))
 					.addContainerGap(12, Short.MAX_VALUE))
 		);
 		panel_9.setLayout(gl_panel_9);

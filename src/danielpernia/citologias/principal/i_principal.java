@@ -10,7 +10,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JButton;
 
 import java.awt.Color;
-import java.awt.FileDialog;
+//import java.awt.FileDialog;
 import java.awt.Font;
 import java.awt.Insets;
 
@@ -38,8 +38,8 @@ import javax.swing.border.SoftBevelBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.net.URL;
-import java.util.Properties;
+//import java.net.URL;
+//import java.util.Properties;
 import java.util.Vector;
 
 import javax.swing.UIManager;
@@ -48,12 +48,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JPasswordField;
 import javax.swing.border.LineBorder;
 
-import org.jdatepicker.impl.*;
 
-import com.itextpdf.text.Image;
 
 import javax.swing.JScrollPane;
-import javax.swing.DropMode;
 
 public class i_principal extends JFrame {
 
@@ -81,8 +78,7 @@ public class i_principal extends JFrame {
 	private JTextField textField_19;
 	JButton btnBuscar_1,btnNewButton_4;
 	JButton btnGuardar_1,btnTerminar;
-	private JLabel lblNewLabel,lblInformasionConsulta;
-	JDatePickerImpl datePicker;
+	private JLabel lblNewLabel,lblInformasionConsulta,lblNewLabel_31;
 	private JComboBox comboBox,comboBox_1,comboBox_2,comboBox_3,comboBox_4,comboBox_5,comboBox_6,comboBox_7,comboBox_9, comboBox_13,comboBox_12,comboBox_10,comboBox_11,comboBox_14,comboBox_15,comboBox_16,comboBox_17,comboBox_18,comboBox_8,comboBox_20,comboBox_19,comboBox_21 ;
 	private JComboBox comboBox_28,comboBox_29,comboBox_30,comboBox_31;
 	JTextArea textArea,textArea_1,textArea_2,textArea_3,textArea_4;
@@ -123,6 +119,8 @@ public class i_principal extends JFrame {
 				try {
 					i_principal frame = new i_principal();
 					frame.setVisible(true);
+					ImageIcon img = new ImageIcon("Assets\\icono.png");
+					frame.setIconImage(img.getImage());
 					
 					
 				} catch (Exception e) {
@@ -222,9 +220,11 @@ public class i_principal extends JFrame {
 				CardLayout cl = (CardLayout)central.getLayout();
 				cl.show(central, "name_33870233261272");
 				panel.setVisible(true);
-				lblNewLabel.setText("");
+				//lblNewLabel.setText("");
+				estudio_v.clear();
 				db.buscarEstudiosPendientesPorImprimir(estudio_v);
-				System.out.println("pendientes !"+estudio_v.size());
+				//System.out.println("pendientes !"+estudio_v.size());
+				lblNewLabel_31.setText("Estudios pendiente por imprimir: "+estudio_v.size());
 			}
 		});
 		menuBar.add(btnImprimir);
@@ -346,16 +346,23 @@ public class i_principal extends JFrame {
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(new Color(204, 153, 255));
 		panel_4.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
+		
+		JLabel lblContactoDanielpgmailcom = new JLabel("Contacto: danielp299@gmail.com");
 		GroupLayout gl_p_inicio = new GroupLayout(p_inicio);
 		gl_p_inicio.setHorizontalGroup(
 			gl_p_inicio.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_p_inicio.createSequentialGroup()
-					.addGap(254)
 					.addGroup(gl_p_inicio.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 405, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel_26)
-						.addComponent(lblNewLabel_28)
-						.addComponent(lblNewLabel_27))
+						.addGroup(gl_p_inicio.createSequentialGroup()
+							.addGap(254)
+							.addGroup(gl_p_inicio.createParallelGroup(Alignment.LEADING)
+								.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 405, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNewLabel_26)
+								.addComponent(lblNewLabel_28)
+								.addComponent(lblNewLabel_27)))
+						.addGroup(gl_p_inicio.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblContactoDanielpgmailcom)))
 					.addContainerGap(615, Short.MAX_VALUE))
 		);
 		gl_p_inicio.setVerticalGroup(
@@ -369,7 +376,9 @@ public class i_principal extends JFrame {
 					.addComponent(lblNewLabel_28)
 					.addGap(57)
 					.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(248, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED, 223, Short.MAX_VALUE)
+					.addComponent(lblContactoDanielpgmailcom)
+					.addContainerGap())
 		);
 		
 		JLabel lblNewLabel_24 = new JLabel("Usuario");
@@ -1171,7 +1180,7 @@ public class i_principal extends JFrame {
 				textField_29.setToolTipText("0000-00-00");
 				textField_29.setColumns(6);
 				
-				JLabel lblFechaDeLa = new JLabel("Fecha de la Muestra");
+				JLabel lblFechaDeLa = new JLabel("Fecha de toma de muestra");
 				lblFechaDeLa.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				
 				JComboBox comboBox_25 = new JComboBox();
@@ -1260,8 +1269,8 @@ public class i_principal extends JFrame {
 											.addComponent(textField_12, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 									.addPreferredGap(ComponentPlacement.RELATED))
 								.addGroup(gl_usuario.createSequentialGroup()
-									.addComponent(lblFechaDeLa, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(lblFechaDeLa, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
 									.addComponent(textField_29, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(comboBox_25, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -1813,7 +1822,7 @@ public class i_principal extends JFrame {
 		JLabel lblNewLabel_30 = new JLabel("Informes terminados por dia");
 		lblNewLabel_30.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
-		JLabel lblNewLabel_31 = new JLabel("Informes pendientes:");
+		lblNewLabel_31 = new JLabel("Informes pendientes:");
 		lblNewLabel_31.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		JLabel lblNewLabel_32 = new JLabel("Ultima semana:");
@@ -2883,10 +2892,10 @@ public class i_principal extends JFrame {
 		table.setModel(new DefaultTableModel(
 				datos,
 				new String[] {
-					"Codigo", "Paciente", "Medico", "Fecha recibido", "Fecha resultado"
+					"Codigo", "Paciente", "Medico", "Fecha de toma de muestra", "Fecha resultado"
 				}
 			));
-		table.getColumnModel().getColumn(1).setPreferredWidth(250);
+		table.getColumnModel().getColumn(1).setPreferredWidth(300);
 		table.getColumnModel().getColumn(2).setPreferredWidth(250);
 		table.getColumnModel().getColumn(3).setPreferredWidth(120);
 		table.getColumnModel().getColumn(4).setPreferredWidth(120);

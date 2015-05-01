@@ -18,7 +18,6 @@ import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfWriter;
 
 public class manejador_PDF {
@@ -91,9 +90,9 @@ public class manejador_PDF {
 			documento.open();
 			//-----------------------------------------------------------------------------------------
 			
-			documento.addTitle("Titulo documento");
-			documento.addAuthor("Autor");
-			documento.addSubject("Asunto");
+			documento.addTitle("Estudio Citologico");
+			documento.addAuthor("Lisbeth Jaimes ");
+			documento.addSubject("Resultado de laboratorio");
 			documento.addCreationDate();
 			
 			for (estudio_citologico estudio : estudio_v) {
@@ -134,12 +133,7 @@ public class manejador_PDF {
 		
 		Document documento = new Document(PageSize.LETTER, 50, 50, 0, 50);
 		
-		
-		
-		
 		try {
-			
-			
 			
 			String date[] = estudio.fecha_resultado.split(" ");
 			String fechar = date[0];
@@ -152,7 +146,7 @@ public class manejador_PDF {
 			//-----------------------------------------------------------------------------------------
 			
 			documento.addTitle("Estudio Citologico");
-			documento.addAuthor("Lisbeth Jaimes");
+			documento.addAuthor("Lisbeth Jaimes ");
 			documento.addSubject("Resultado de laboratorio");
 			documento.addCreationDate();
 			
@@ -178,7 +172,6 @@ public class manejador_PDF {
 		
 		db.actualizarImpresionesDeEstudio(estudio);
 		
-		
 		JOptionPane.showMessageDialog(null, "Se imprimio estudio "+estudio.rowid);
 		
 		return 0;
@@ -201,12 +194,12 @@ public class manejador_PDF {
 		//---------PACIENTE-----------------
 		fecha = "N°"+estudio.rowid+"         Fecha: "+fecha_resultado[0];
 		sub_titulo_paciente ="PACIENTE:";
-		info_paciente =      "Cedula: "+estudio.cedula_paciente+"         Nombre: "+paciente_.nombres+" "+paciente_.Apellidos+"\n"
+		info_paciente =      "Cédula: "+estudio.cedula_paciente+"         Nombre: "+paciente_.nombres+" "+paciente_.Apellidos+"\n"
 						+ "Edad:"+paciente_.edad+"         Telefono: "+paciente_.telefono+"        Procedencia: "+paciente_.procedencia+"\n"
-						+ "Direccion: "+paciente_.direccion+"\n"
-						+ "Fecha toma de muestra: "+estudio.fecha_muestra+"\n"
+						+ "Dirección: "+paciente_.direccion+"\n"
+						+ "Fecha de toma de muestra: "+estudio.fecha_muestra+"\n"
 						+ "Motivo consulta: "+estudio.motivo_consulta+"\n"
-						+ "Diagnostico clinico: "+estudio.diagnostico;
+						+ "Diagnostico clínico: "+estudio.diagnostico;
 		//-----TRATAMIENTO PREVIO:
 		sub_titulo_tratamiento ="TRATAMIENTO PREVIO:";
 		info_tratamento ="";
@@ -285,7 +278,7 @@ public class manejador_PDF {
 			contarLineas = contTrantamientoPrevio;
 		}
 		
-		sub_titulo_informacion_g ="INFORMACION GINECOLOGICA:";
+		sub_titulo_informacion_g ="INFORMACIÓN GINECOLÓGICA:";
 		info_informacion_g ="Medico Solicitante: "+medico_.nombres+" "+medico_.Apellidos+"\n"
 				+ "Embarazos: "+estudio.embarazos+" "+"   Partos: "+estudio.partos+"   Cesareas: "+estudio.cesareas+"   Abortos: "+estudio.abortos+"\n";
 		if(!estudio.f_ultimo_embarazo.isEmpty())		{
@@ -317,21 +310,21 @@ public class manejador_PDF {
 		}else{
 			info_resultado+=estudio.resultado;
 			
-			System.out.println("Total caracteres "+estudio.resultado.toCharArray().length);
+			//System.out.println("Total caracteres "+estudio.resultado.toCharArray().length);
 			if(estudio.resultado.toCharArray().length/50 < 1){
 				contarLineas++;
 			}else{
 				contarLineas+=estudio.resultado.toCharArray().length/50;
 			}
 		}
-		sub_titulo_categoria="CATEGORIZACION GENERAL:";
+		sub_titulo_categoria="CATEGORIZACIÓN GENERAL:";
 		info_categoria="";
 		
 		if(estudio.info_muestra1 == 0){ // satisfactoria
 			if(estudio.clasificacion1 == 0){
 				info_categoria+="NEGATIVO PARA LESIÓN INTRAEPITELIAL O MALIGNIDAD\n";
 				if(estudio.clasificacion2 == 0){
-					info_categoria+="MICROORGANISMOS ";
+					info_categoria+="MICROORGANISMOS: ";
 					if(estudio.clasificacion3 == 0){
 						info_categoria+="Trichomonas vaginalis ";
 					}else if(estudio.clasificacion3 == 1){
@@ -344,7 +337,7 @@ public class manejador_PDF {
 						info_categoria+="Cambios celulares compatibles con HERPES SIMPLE ";
 					}
 				}else if(estudio.clasificacion2 == 1){
-					info_categoria+="OTROS HALLAZGOS NO NEOPLÁSICOS";
+					info_categoria+="OTROS HALLAZGOS NO NEOPLÁSICOS: ";
 					if(estudio.clasificacion3 == 0){
 						info_categoria+="Cambios celulares reactivos asosiados a: ";
 						if(estudio.clasificacion4 == 0){
@@ -370,9 +363,6 @@ public class manejador_PDF {
 				 }
 			}else if(estudio.clasificacion1 == 2){
 				info_categoria+="ANOMALÍAS DE LAS CÉLULAS EPITELIALES\n";
-				
-			}else if(estudio.clasificacion1 == 3){
-				info_categoria+="OTRAS NEOPLASIAS MALIGNAS\n";
 				if(estudio.clasificacion2 == 0){
 					info_categoria+="CÉLULAS ESCAMOSAS ";
 					if(estudio.clasificacion3 == 0){
@@ -393,6 +383,7 @@ public class manejador_PDF {
 						info_categoria+="CARCINOMA ESCAMOSO ";
 					} 
 			 }
+				
 				if(estudio.clasificacion2 == 1){
 					info_categoria+="CÉLULAS GLANDULARES ";
 					if(estudio.clasificacion3 == 0){
@@ -426,6 +417,8 @@ public class manejador_PDF {
 						}
 					} 
 			 }
+			}else if(estudio.clasificacion1 == 3){
+				info_categoria+="OTRAS NEOPLASIAS MALIGNAS\n";
 			}
 		}else{
 			sub_titulo_categoria="CALIDAD DE LA MUESTRA:";
@@ -456,7 +449,7 @@ public class manejador_PDF {
 		for(int i = contarLineas; i < 15; i++){
 			info_categoria+="\n";
 		}
-		System.out.println("Total lineas: "+contarLineas);
+		//System.out.println("Total lineas: "+contarLineas);
 
 		Paragraph p_fecha = new Paragraph(fecha,font_info);
 		p_fecha.setAlignment(Paragraph.ALIGN_RIGHT);
@@ -506,13 +499,12 @@ public class manejador_PDF {
 			documento.add(new Paragraph(p_sub_titulo_categoria));
 			documento.add(new Paragraph(p_info_categoria));
 			documento.add(new Paragraph("\n"));
-			System.out.println("botton "+documento.bottom());
-			System.out.println("top "+documento.top());
-			System.out.println("page number "+documento.getPageNumber());
-			System.out.println("toString: "+documento.toString());
+			//System.out.println("botton "+documento.bottom());
+			//System.out.println("top "+documento.top());
+			//System.out.println("page number "+documento.getPageNumber());
+			//System.out.println("toString: "+documento.toString());
 			
 			documento.add(pie);
-			
 			
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block

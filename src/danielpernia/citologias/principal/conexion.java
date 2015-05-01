@@ -771,7 +771,7 @@ public class conexion {
 			sentencia.executeUpdate(sql);
 			//System.out.println("fin insert exitoso");
 			if(alerta)
-				JOptionPane.showMessageDialog(null, "Pasiente "+paciente_.cedula+" Registrado");
+				JOptionPane.showMessageDialog(null, "Paciente "+paciente_.cedula+" Registrado");
 		} catch (SQLException e) {
 			if(e.getErrorCode() == 0){
 				JOptionPane.showMessageDialog(null, "Cedula "+paciente_.cedula+" Ya esta Registrada. Codigo:"+e.getErrorCode());
@@ -1152,9 +1152,6 @@ public class conexion {
 			 }
 		}else if(categoria1 == 2){
 			info_categoria+="ANOMALÍAS DE LAS CÉLULAS EPITELIALES\n";
-			
-		}else if(categoria1 == 3){
-			info_categoria+="OTRAS NEOPLASIAS MALIGNAS\n";
 			if(categoria2 == 0){
 				info_categoria+="CÉLULAS ESCAMOSAS ";
 				if(categoria3 == 0){
@@ -1175,6 +1172,7 @@ public class conexion {
 					info_categoria+="CARCINOMA ESCAMOSO ";
 				} 
 		 }
+			
 			if(categoria2 == 1){
 				info_categoria+="CÉLULAS GLANDULARES ";
 				if(categoria3 == 0){
@@ -1208,6 +1206,10 @@ public class conexion {
 					}
 				} 
 		 }
+		}else if(categoria1 == 3){
+			info_categoria+="OTRAS NEOPLASIAS MALIGNAS\n";
+			
+			
 		}
 		
 		SQL+=		"con.estado ='terminado';";

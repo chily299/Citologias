@@ -15,6 +15,7 @@ public class estudio_citologico {
 	public estudio_citologico() {
 		// TODO Auto-generated constructor stub
 		fecha_muestra = "2015-01-01";
+		cedula_paciente = "";
 	}
 	
 	

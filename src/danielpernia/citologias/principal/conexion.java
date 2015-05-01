@@ -112,7 +112,7 @@ public class conexion {
 	}
 	
 	
-	public boolean buscarUsuarioPorCedula(usuario usu){
+	public boolean buscarUsuarioPorCedula(usuario usu,boolean alerta){
 		
 		boolean usuarioAutorizado = false;
 		
@@ -135,7 +135,8 @@ public class conexion {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
-		JOptionPane.showMessageDialog(null, "No se encuentra");
+		if(alerta)
+			JOptionPane.showMessageDialog(null, "No se encuentra");
 		
 		return usuarioAutorizado;
 		
@@ -175,7 +176,7 @@ public class conexion {
 		return 0;
 	}
 	
-	public int guardarEstudio(estudio_citologico estudio){
+	public int guardarEstudio(estudio_citologico estudio,boolean alerta){
 		
 		try {
 			sentencia = conn.createStatement();
@@ -194,11 +195,13 @@ public class conexion {
 	                   		+ ""+estudio.clasificacion1+","+estudio.clasificacion2+","+estudio.clasificacion3+","+estudio.clasificacion4+",'"+estudio.clasificacion_detalle+"',"
 	                   		+ ""+estudio.numero_impresiones+",'"+estudio.fecha_muestra+"','"+estudio.fecha_resultado+"','"+estudio.estado+"','"+estudio.cedula_paciente+"');"; 
 			sentencia.executeUpdate(sql);
-			JOptionPane.showMessageDialog(null, "Estudio Registrado");
+			if(alerta)
+				JOptionPane.showMessageDialog(null, "Estudio Registrado");
 			return 1;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Problemas Registrando. Codigo: "+e.getErrorCode());
+			if(alerta)
+				JOptionPane.showMessageDialog(null, "Problemas Registrando. Codigo: "+e.getErrorCode());
 		}
 	
 		return 0;
@@ -208,11 +211,11 @@ public class conexion {
 		int encontrado =0;
 		try {
 			sentencia = conn.createStatement();
-			ResultSet rs = sentencia.executeQuery( "SELECT * FROM consulta where cedula_paciente = '"+estudio_.rowid+"';" );
+			ResultSet rs = sentencia.executeQuery( "SELECT * FROM consulta where id_consulta = "+estudio_.rowid+";" );
 			
 			while ( rs.next() ) {
 				encontrado = 1;
-				estudio_ = new estudio_citologico();
+				//estudio_ = new estudio_citologico();
 				
 				estudio_.rowid = rs.getInt("id_consulta");
 				//System.out.println("rowid ? "+estudio_.rowid);
@@ -258,22 +261,10 @@ public class conexion {
 			    estudio_.fecha_resultado = rs.getString("fecha_resultado");
 			    estudio_.estado = rs.getString("estado");
 			    estudio_.cedula_paciente = rs.getString("cedula_paciente");
-			    // estudio.add(estudio_);
-			     
-			     /*
-			     DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-					try {
-					    Date today = (Date) df.parse(rs.getString("fecha_resultado"));
-					    estudio_.fecha_resultado = df.format(today);
-					    System.out.println("F_resultado!!! = " + df.format(today));
-					} catch (ParseException e) {
-					   e.printStackTrace();
-				 }*/
+			    //System.out.println("cedula en la busqueda "+estudio_.cedula_paciente);
+			    
+			   
 			  }
-
-			
-			
-			
 			rs.close();
 			sentencia.close();
 			
@@ -289,7 +280,7 @@ public class conexion {
 		estudio_citologico estudio_ ;
 		try {
 			sentencia = conn.createStatement();
-			ResultSet rs = sentencia.executeQuery( "SELECT * FROM consulta where id_consulta = "+cedula+";" );
+			ResultSet rs = sentencia.executeQuery( "SELECT * FROM consulta where cedula_paciente = '"+cedula+"';" );
 			
 			while ( rs.next() ) {
 				estudio_ = new estudio_citologico();
@@ -338,17 +329,8 @@ public class conexion {
 			    estudio_.fecha_resultado = rs.getString("fecha_resultado");
 			    estudio_.estado = rs.getString("estado");
 			    estudio_.cedula_paciente = rs.getString("cedula_paciente");
-			     estudio.add(estudio_);
-			     
-			     /*
-			     DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-					try {
-					    Date today = (Date) df.parse(rs.getString("fecha_resultado"));
-					    estudio_.fecha_resultado = df.format(today);
-					    System.out.println("F_resultado!!! = " + df.format(today));
-					} catch (ParseException e) {
-					   e.printStackTrace();
-				 }*/
+			    estudio.add(estudio_);
+			    
 			  }
 
 			
@@ -828,7 +810,7 @@ public class conexion {
 		}		
 		
 		
-		return 0;
+		return encontrado;
 	}
 	
 	public int buscarPasientePorRowId(paciente paciente_){
@@ -917,23 +899,26 @@ public class conexion {
 		
 	}
 	
-	public int registrarMedico(medico medico_){
+	public int registrarMedico(medico medico_,boolean alerta){
 		
 		try {
 			sentencia = conn.createStatement();
 			String sql = "INSERT INTO medico (rif,nombres,apellidos) " +
 	                   "VALUES ('"+medico_.rif+"', '"+medico_.nombres+"','"+medico_.Apellidos+"');"; 
 			sentencia.executeUpdate(sql);
-			JOptionPane.showMessageDialog(null, "Medico "+medico_.rif+" Registrado");
+			if(alerta)
+				JOptionPane.showMessageDialog(null, "Medico "+medico_.rif+" Registrado");
 			return 1;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			
 			if(e.getErrorCode()==0){
-				JOptionPane.showMessageDialog(null, " RIF Ya de encuentra registrado - Puede Editar o usar un nuevo RIF. Codigo: "+e.getErrorCode());
+				if(alerta)
+					JOptionPane.showMessageDialog(null, " RIF Ya de encuentra registrado - Puede Editar o usar un nuevo RIF. Codigo: "+e.getErrorCode());
 				
 			}else{
-				JOptionPane.showMessageDialog(null, " No se puede registrar, Falla Codigo "+e.getErrorCode() +"descripcion: " +e.getMessage());
+				if(alerta)
+					JOptionPane.showMessageDialog(null, " No se puede registrar, Falla Codigo "+e.getErrorCode() +"descripcion: " +e.getMessage());
 			}
 			
 			e.printStackTrace();
@@ -944,7 +929,7 @@ public class conexion {
 		return 0;
 	}
 	
-	public int buscarMedico(medico medico_){
+	public int buscarMedico(medico medico_,boolean alertas){
 		
 		int encontrado =0;
 		
@@ -975,6 +960,7 @@ public class conexion {
 		
 		if(encontrado==0){
 			medico_.id_medico = -1;
+			if(alertas)
 			JOptionPane.showMessageDialog(null, "Medico "+medico_.rif+" No encontrado");
 		}
 		return encontrado;
@@ -1032,9 +1018,6 @@ public class conexion {
 				medico_.Apellidos = rs.getString("apellidos");
 			    
 				medico_v.add(medico_);
-			     //imprimir
-			     //System.out.println( "ID = " + medico_.id_medico );
-			     //System.out.println( "ROL = " +medico_.rif);
 		
 			}
 
@@ -1070,12 +1053,62 @@ public class conexion {
 		return 0;
 	}
 	
-	public void consultaEstadistica( int id_medico, int edad_minima,int edad_maxima, int rango_fecha_dias, int categoria1,int categoria2,int categoria3,int categoria4,int estudios_consultados,int resultado){
+	public void consultaEstadistica( String rif_medico, int edad_minima,int edad_maxima, int rango_fecha_dias, int categoria1,int categoria2,int categoria3,int categoria4,int estudios_consultados,int resultado){
+		
+		estudios_consultados =0;
+		resultado =0;
+		
+		medico medico_ = new medico();
+		if(!rif_medico.equals("Todos")){
+			medico_.rif = rif_medico;
+			buscarMedico(medico_, false);
+			//System.out.println("Rif "+rif_medico+ " id_medico: "+medico_.id_medico);
+		}
+		//int id_medico =0; // buscar el id basandose en el rif
+		
+		
+		
+		String SQL =  "SELECT * FROM consulta AS con JOIN paciente AS pas ON con.cedula_paciente = pas.cedula WHERE ";
+		
+		if(!rif_medico.equals("Todos")){
+			SQL+= "con.id_medico = "+medico_.id_medico+" AND ";
+		}
+		
+		if(edad_minima!= -1){
+			SQL+="pas.edad BETWEEN "+edad_minima+" AND "+edad_maxima+" AND ";
+		}
+		
+		if(rango_fecha_dias != -1){
+			SQL+="con.fecha_resultado >= date('now','-"+rango_fecha_dias+" day') AND ";
+		}
+		
+		String SQL_Total = SQL;
+		
+		SQL+= "con.clasificacion_1 = "+categoria1+" AND "
+			+ "con.clasificacion_2 = "+categoria2+" AND "
+			+ "con.clasificacion_3 = "+categoria3+" AND "
+			+ "con.clasificacion_4 = "+categoria4+" AND "
+			+ "con.estado ='terminado';";
+		
+		SQL_Total+= "con.estado ='terminado';";
+		System.out.println("SQL: "+SQL);
+		
 		
 		try {
 			sentencia = conn.createStatement();
-			ResultSet rs = sentencia.executeQuery( "SELECT * FROM medico "
-					+ "where id_medico = "+id_medico+";" );
+			
+			// calculo el total
+			ResultSet rs = sentencia.executeQuery(SQL);
+			
+			while ( rs.next() ) {
+				estudios_consultados++;
+			}
+			// calculo por lesion
+			rs = sentencia.executeQuery(SQL);
+			
+			while ( rs.next() ) {
+				resultado++;
+			}
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -1089,16 +1122,37 @@ public class conexion {
 		int contPacientesNuevos=0;
 		int contEstudiosNuevos=0;
 		int contUsuariosNuevos=0;
+	    
 		//medicos
 		for (medico medicoNuevo : datos.medicos) {
 			medico medicoAlmacenado = new medico();
 			
 			medicoAlmacenado.rif = medicoNuevo.rif;
 			
-			if(buscarMedico(medicoAlmacenado)!=1){
+			if(buscarMedico(medicoAlmacenado,false)!=1){
 				
-				registrarMedico(medicoNuevo);
+				registrarMedico(medicoNuevo,false);
+				
+				buscarMedico(medicoAlmacenado,false);
+				
+				for (estudio_citologico estudio : datos.estudios) {
+					if(estudio.id_medico == medicoNuevo.id_medico){ // busco estudios con el id viejo
+						estudio.id_medico = medicoAlmacenado.id_medico;
+					}
+				}
+				
 				contMedicosNuevos++;
+			}else{
+				if(medicoAlmacenado.id_medico == medicoNuevo.id_medico){
+					
+				}else{
+					// si los id son diferentes se actualizan
+					for (estudio_citologico estudio : datos.estudios) {
+						if(estudio.id_medico == medicoNuevo.id_medico){ //
+							estudio.id_medico = medicoAlmacenado.id_medico;
+						}
+					}
+				}
 			}
 			
 			
@@ -1115,24 +1169,29 @@ public class conexion {
 		}
 		
 		for (estudio_citologico estudioNuevo : datos.estudios) {
-			estudio_citologico estudioAlmacenado = new estudio_citologico();
-			estudioAlmacenado.rowid = estudioNuevo.rowid;
+			Vector<estudio_citologico> estudioAlmacenado_v = new Vector<>(1);
 			
-			if(buscarEstudioPorId(estudioAlmacenado)==1){
-				if(estudioAlmacenado.fecha_muestra.equals(estudioNuevo.fecha_muestra)&& estudioAlmacenado.cedula_paciente.equals(estudioNuevo.cedula_paciente)){
-					
-				}else{
-					guardarEstudio(estudioNuevo);
-					contEstudiosNuevos++;
+			buscarEstudioCedula(estudioNuevo.cedula_paciente, estudioAlmacenado_v);
+			boolean estudioYaEstaRegistado = false;
+			
+			for (estudio_citologico estudioAlmacenado : estudioAlmacenado_v) {
+				if(estudioAlmacenado.fecha_muestra.equals(estudioNuevo.fecha_muestra)){
+					estudioYaEstaRegistado = true;
 				}
 			}
+			
+			if(!estudioYaEstaRegistado){
+				guardarEstudio(estudioNuevo,false);
+				contEstudiosNuevos++;
+			}
+			
 		}
 		
 		for (usuario usuarioNuevo : datos.usuarios) {
 			usuario usuarioAlmacenado = new usuario();
 			usuarioAlmacenado.cedula = usuarioNuevo.cedula;
 			
-			if(buscarUsuarioPorCedula(usuarioAlmacenado)){
+			if(buscarUsuarioPorCedula(usuarioAlmacenado,false)){
 				
 			}else{
 				registrarUsuarioNuevo(usuarioNuevo);
@@ -1141,6 +1200,10 @@ public class conexion {
 		}
 		
 		JOptionPane.showMessageDialog(null, "Importacion de datos completa. Registros Nuevos: "+(contEstudiosNuevos+contMedicosNuevos+contPacientesNuevos+contUsuariosNuevos)+"");
+	}
+	
+	public void analizar(){
+		
 	}
 	
 	

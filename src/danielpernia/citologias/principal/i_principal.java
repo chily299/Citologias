@@ -14,6 +14,7 @@ import java.awt.FileDialog;
 import java.awt.Font;
 import java.awt.Insets;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import javax.swing.GroupLayout;
@@ -37,6 +38,7 @@ import javax.swing.border.SoftBevelBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.net.URL;
 import java.util.Properties;
 import java.util.Vector;
 
@@ -47,6 +49,8 @@ import javax.swing.JPasswordField;
 import javax.swing.border.LineBorder;
 
 import org.jdatepicker.impl.*;
+
+import com.itextpdf.text.Image;
 
 import javax.swing.JScrollPane;
 import javax.swing.DropMode;
@@ -77,7 +81,7 @@ public class i_principal extends JFrame {
 	private JTextField textField_19;
 	JButton btnBuscar_1,btnNewButton_4;
 	JButton btnGuardar_1,btnTerminar;
-	private JLabel lblNewLabel,lblInformasionConsulta;
+	private JLabel lblNewLabel,lblInformasionConsulta,lblConsulta,lblNewLabel_38;
 	JDatePickerImpl datePicker;
 	private JComboBox comboBox,comboBox_1,comboBox_2,comboBox_3,comboBox_4,comboBox_5,comboBox_6,comboBox_7,comboBox_9, comboBox_13,comboBox_12,comboBox_10,comboBox_11,comboBox_14,comboBox_15,comboBox_16,comboBox_17,comboBox_18,comboBox_8,comboBox_20,comboBox_19,comboBox_21 ;
 	private JComboBox comboBox_28,comboBox_29,comboBox_30,comboBox_31;
@@ -108,6 +112,7 @@ public class i_principal extends JFrame {
 	private JPasswordField passwordField_5;
 	private JPasswordField passwordField_3;
 	String anno,mes,dia;
+	int totalEstudiosEstadistica, totalResultadoEstadistica;
 	
 	/**
 	 * Launch the application.
@@ -118,6 +123,7 @@ public class i_principal extends JFrame {
 				try {
 					i_principal frame = new i_principal();
 					frame.setVisible(true);
+					
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -155,6 +161,7 @@ public class i_principal extends JFrame {
 		comboBox_10 = new JComboBox();
 		comboBox_17 = new JComboBox();
 		comboBox_21 = new JComboBox();
+		comboBox_21.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		comboBox_17.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -243,7 +250,7 @@ public class i_principal extends JFrame {
 				
 				if(usu_acceso.rol == 1){
 					usuario_.cedula = usu_acceso.cedula;
-					db.buscarUsuarioPorCedula(usuario_);
+					db.buscarUsuarioPorCedula(usuario_,true);
 					
 					t_u_cedula.setText(usu_acceso.cedula);
 					t_u_nombre.setText(usuario_.nombres);
@@ -380,7 +387,7 @@ public class i_principal extends JFrame {
 				
 				usu_acceso.cedula = textField_21.getText();
 				
-				if(db.buscarUsuarioPorCedula(usu_acceso)){
+				if(db.buscarUsuarioPorCedula(usu_acceso,true)){
 					
 					if(usu_acceso.clave.equals(passwordField_3.getText())){
 						CardLayout cl = (CardLayout)central.getLayout();
@@ -515,7 +522,7 @@ public class i_principal extends JFrame {
 				estudio.estado = "esperando resultado";
 				//estudio.numero_impresiones = 0;
 				
-				if(db.guardarEstudio(estudio) == 1){
+				if(db.guardarEstudio(estudio,true) == 1){
 					
 					limpiarNuevoEstudio();
 
@@ -1806,7 +1813,7 @@ public class i_principal extends JFrame {
 		JLabel lblNewLabel_30 = new JLabel("Total dia:");
 		lblNewLabel_30.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
-		JLabel lblNewLabel_31 = new JLabel("Ultima imprecion : 00/00/0000 - Informes pendientes:");
+		JLabel lblNewLabel_31 = new JLabel("Informes pendientes:");
 		lblNewLabel_31.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		JLabel lblNewLabel_32 = new JLabel("Ultima semana:");
@@ -1848,14 +1855,11 @@ public class i_principal extends JFrame {
 		JLabel lblSincornizar = new JLabel("Sincronizar:");
 		lblSincornizar.setFont(new Font("Tahoma", Font.BOLD, 18));
 		
-		JLabel lblExportarDatosAlmacenados = new JLabel("Exportar datos almacenados: 1541 (Informes).");
+		JLabel lblExportarDatosAlmacenados = new JLabel("Exportar datos almacenados");
 		lblExportarDatosAlmacenados.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		JLabel lblImportarDatos = new JLabel("Importar datos.");
 		lblImportarDatos.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
-		JLabel lblAnalizarYEliminar = new JLabel("Analizar y eliminar informes redundantes.");
-		lblAnalizarYEliminar.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		JButton btnExportar = new JButton("Exportar");
 		btnExportar.addActionListener(new ActionListener() {
@@ -1892,9 +1896,6 @@ public class i_principal extends JFrame {
 				}
 			}
 		});
-		
-		JButton btnAnalizar = new JButton("Analizar");
-		btnAnalizar.setEnabled(false);
 		GroupLayout gl_imprimir = new GroupLayout(imprimir);
 		gl_imprimir.setHorizontalGroup(
 			gl_imprimir.createParallelGroup(Alignment.LEADING)
@@ -1915,17 +1916,15 @@ public class i_principal extends JFrame {
 									.addGap(10)
 									.addGroup(gl_imprimir.createParallelGroup(Alignment.LEADING)
 										.addComponent(lblImportarDatos, GroupLayout.PREFERRED_SIZE, 294, GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblExportarDatosAlmacenados, GroupLayout.PREFERRED_SIZE, 294, GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblAnalizarYEliminar, GroupLayout.PREFERRED_SIZE, 294, GroupLayout.PREFERRED_SIZE))))
+										.addComponent(lblExportarDatosAlmacenados, GroupLayout.PREFERRED_SIZE, 294, GroupLayout.PREFERRED_SIZE))))
 							.addGap(18)
-							.addGroup(gl_imprimir.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnAnalizar, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnImportar, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnExportar, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnNewButton_8)
-								.addComponent(btnImprimirSemana)
-								.addComponent(btnImprimirPendiente))))
-					.addContainerGap(774, Short.MAX_VALUE))
+							.addGroup(gl_imprimir.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(btnImprimirPendiente, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnNewButton_8, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnImprimirSemana, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnExportar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnImportar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+					.addContainerGap(786, Short.MAX_VALUE))
 		);
 		gl_imprimir.setVerticalGroup(
 			gl_imprimir.createParallelGroup(Alignment.LEADING)
@@ -1951,17 +1950,13 @@ public class i_principal extends JFrame {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(lblExportarDatosAlmacenados, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(lblImportarDatos, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(lblAnalizarYEliminar, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
+							.addComponent(lblImportarDatos, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_imprimir.createSequentialGroup()
-							.addGap(32)
+							.addGap(39)
 							.addComponent(btnExportar)
-							.addGap(11)
-							.addComponent(btnImportar)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(btnAnalizar)))
-					.addContainerGap(367, Short.MAX_VALUE))
+							.addComponent(btnImportar)))
+					.addContainerGap(394, Short.MAX_VALUE))
 		);
 		imprimir.setLayout(gl_imprimir);
 		
@@ -1969,26 +1964,27 @@ public class i_principal extends JFrame {
 		central.add(Estadisticas, "name_38544120539856");
 		
 		JPanel panel_8 = new JPanel();
+		panel_8.setBorder(new LineBorder(new Color(0, 0, 0)));
 		GroupLayout gl_Estadisticas = new GroupLayout(Estadisticas);
 		gl_Estadisticas.setHorizontalGroup(
 			gl_Estadisticas.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_Estadisticas.createSequentialGroup()
+				.addGroup(Alignment.TRAILING, gl_Estadisticas.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(panel_8, GroupLayout.PREFERRED_SIZE, 900, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(364, Short.MAX_VALUE))
+					.addComponent(panel_8, GroupLayout.DEFAULT_SIZE, 1254, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		gl_Estadisticas.setVerticalGroup(
 			gl_Estadisticas.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_Estadisticas.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(panel_8, GroupLayout.PREFERRED_SIZE, 226, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(383, Short.MAX_VALUE))
+					.addComponent(panel_8, GroupLayout.PREFERRED_SIZE, 246, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(363, Short.MAX_VALUE))
 		);
 		
 		JLabel lblNewLabel_35 = new JLabel("Estadisticas");
 		lblNewLabel_35.setFont(new Font("Tahoma", Font.BOLD, 18));
 		
-		JLabel lblNewLabel_37 = new JLabel("Doctores");
+		JLabel lblNewLabel_37 = new JLabel("Medico");
 		lblNewLabel_37.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		
@@ -1998,36 +1994,174 @@ public class i_principal extends JFrame {
 		lblEdadPasiente.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		JComboBox comboBox_22 = new JComboBox();
+		comboBox_22.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		comboBox_22.setModel(new DefaultComboBoxModel(new String[] {"Todas", "0-18", "19-29", "30-39", "35-48", "40-48", "Mas de 48"}));
 		
 		JLabel lblLesion = new JLabel("Lesion");
 		lblLesion.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
-		JLabel lblPeriodo = new JLabel("Periodo");
+		JLabel lblPeriodo = new JLabel("Fecha de estudio");
 		lblPeriodo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		JComboBox comboBox_24 = new JComboBox();
-		comboBox_24.setModel(new DefaultComboBoxModel(new String[] {"1 mes", "3 meses", "6 meses", "1 a\u00F1o", "Todos los Datos"}));
+		comboBox_24.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		comboBox_24.setToolTipText("Busca todos los estudios, con fecha de resultado menor o igual al rango seleccionado.");
+		comboBox_24.setModel(new DefaultComboBoxModel(new String[] {"30 dias", "90 dias", "180 dias", "365 dias", "Todos los Datos"}));
 		
 		JButton btnNewButton_10 = new JButton("Consultar");
+		btnNewButton_10.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//db.consultaEstadistica(id_medico, edad_minima, edad_maxima, rango_fecha_dias, categoria1, categoria2, categoria3, categoria4, estudios_consultados, resultado);
+				String rif="Todos";
+				int edadMinima, edadMaxima = 100;
+				int diasConsulta = -1;
+				
+				if(!comboBox_21.getItemAt(comboBox_21.getSelectedIndex()).equals("Todos")){
+					String tmp[] =comboBox_21.getItemAt(comboBox_21.getSelectedIndex()).toString().split(" ");
+					rif = tmp[1];
+				}
+				
+				if(comboBox_22.getItemAt(comboBox_22.getSelectedIndex()).equals("Todas") ){
+					edadMinima = edadMaxima = -1;
+				}else if(comboBox_22.getItemAt(comboBox_22.getSelectedIndex()).equals("Mas de 48")){
+					edadMinima = 48;
+					edadMaxima = 250;
+				}else{
+					String tmp[] =comboBox_22.getItemAt(comboBox_22.getSelectedIndex()).toString().split("-");
+					edadMinima = Integer.parseInt(tmp[0]);
+					edadMaxima = Integer.parseInt(tmp[1]);
+				}
+				
+				if(comboBox_24.getSelectedIndex() == 0){ // 1 mes 
+					diasConsulta = 30;
+				}else if (comboBox_24.getSelectedIndex() == 1){ // 3 meses
+					diasConsulta = 90;
+				}else if (comboBox_24.getSelectedIndex() == 2){ // 6 meses
+					diasConsulta = 180;
+				}else if (comboBox_24.getSelectedIndex() == 3){ // 1 año
+					diasConsulta = 365;
+				}else if (comboBox_24.getSelectedIndex() == 4){ // todo
+					diasConsulta = -1;
+				}
+				
+				db.consultaEstadistica(rif, edadMinima, edadMaxima, diasConsulta, comboBox_28.getSelectedIndex(), comboBox_29.getSelectedIndex(), comboBox_30.getSelectedIndex(), comboBox_31.getSelectedIndex(), totalEstudiosEstadistica, totalResultadoEstadistica);
+			
+				lblConsulta.setText(""+totalEstudiosEstadistica);
+				lblNewLabel_38.setText(""+totalResultadoEstadistica);
+			}
+		});
 		
 		JLabel lblDatosConsultados = new JLabel("Datos consultados:");
 		
 		JLabel lblResultado = new JLabel("Resultado:");
 		
-		JLabel lblConsulta = new JLabel("consulta");
+		lblConsulta = new JLabel("consulta");
 		
-		JLabel lblNewLabel_38 = new JLabel("25");
+		lblNewLabel_38 = new JLabel("25");
 		
 		comboBox_28 = new JComboBox();
 		//comboBox_28.setSelectedIndex(0);
 		comboBox_28.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		comboBox_28.addItemListener(new ItemListener() {
+			
+			public void itemStateChanged(ItemEvent e) {
+				comboBox_29.removeAllItems();
+				
+				if(comboBox_28.getSelectedIndex() == 0){
+					comboBox_29.addItem("MICROORGANISMOS");
+					comboBox_29.addItem("OTROS HALLAZGOS NO NEOPLÁSICOS");
+					comboBox_29.addItem("");
+				}if(comboBox_28.getSelectedIndex() == 1){
+					comboBox_29.addItem("CÉLULAS ENDOMETRIALES  (mujer mayor de 40 años) ");
+					comboBox_29.addItem("");
+				}if(comboBox_28.getSelectedIndex() == 2){
+					comboBox_29.addItem("CÉLULAS ESCAMOSAS");
+					comboBox_29.addItem("CÉLULAS GLANDULARES");
+					comboBox_29.addItem("");
+				}if(comboBox_28.getSelectedIndex() == 3){
+					comboBox_29.addItem("");
+				}
+			}
+		});
+		comboBox_28.setModel(new DefaultComboBoxModel(new String[] {"NEGATIVO PARA LESI\u00D3N INTRAEPITELIAL O MALIGNIDAD", "OTROS HALLAZGOS", "ANOMAL\u00CDAS DE LAS C\u00C9LULAS EPITELIALES", "OTRAS NEOPLASIAS MALIGNAS"}));
+		comboBox_28.setSelectedIndex(0);
 		
 		comboBox_29 = new JComboBox();
 		comboBox_29.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		comboBox_29.setModel(new DefaultComboBoxModel(new String[] {"MICROORGANISMOS", "OTROS HALLAZGOS NO NEOPL\u00C1SICOS",""}));
+		comboBox_29.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				comboBox_30.removeAllItems();
+				
+				if(comboBox_28.getSelectedIndex() == 0 &&comboBox_29.getSelectedIndex() == 0 ){
+					comboBox_30.addItem("Trichomonas vaginalis");
+					comboBox_30.addItem("Elementos micóticos de características morfológicas compatibles con Candida");
+					comboBox_30.addItem("Cambios de la flora vaginal sugerentes de VAGINOSIS BACTERIANA");
+					comboBox_30.addItem("Bacterias de características morfológicas compatibles con Actinomyces");
+					comboBox_30.addItem("Cambios celulares compatibles con HERPES SIMPLE");
+				}if(comboBox_28.getSelectedIndex() == 0 && comboBox_29.getSelectedIndex() == 1){
+					comboBox_30.addItem("Cambios celulares reactivos asosiados a:");
+					comboBox_30.addItem("Células glandulares poshisterectomía");
+					comboBox_30.addItem("Atrofia");
+					
+				}if(comboBox_28.getSelectedIndex() == 1 && comboBox_29.getSelectedIndex() == 0){
+					comboBox_30.addItem("NEGATIVO PARA LESIÓN ESCAMOSA INTRAEPITELIAL");
+				}if(comboBox_28.getSelectedIndex() == 2  && comboBox_29.getSelectedIndex() == 0){
+					comboBox_30.addItem("CÉLULAS ESCAMOSAS ATÍPICAS");
+					comboBox_30.addItem("LESIÓN ESCAMOSA INTRAEPITELIAL DE BAJO GRADO (LSIL)");
+					comboBox_30.addItem("LESIÓN ESCAMOSA INTRAEPITELIAL DE ALTO GRADO (HSIL)");
+					comboBox_30.addItem("CARCINOMA ESCAMOSO");
+				}if(comboBox_28.getSelectedIndex() == 2  && comboBox_29.getSelectedIndex() == 1){
+					comboBox_30.addItem("ATÍPICAS");
+					comboBox_30.addItem("ATÍPICAS SUGESTIVAS A NEOPLASIA");
+					comboBox_30.addItem("ADENOCARCINOMA ENDOCERVICAL (in situ)");
+					comboBox_30.addItem("ADENOCARCINOMA");
+				}
+			}
+		});
 		
 		comboBox_30 = new JComboBox();
 		comboBox_30.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		comboBox_30.addItem("Trichomonas vaginalis");
+		comboBox_30.addItem("Elementos micóticos de características morfológicas compatibles con Candida");
+		comboBox_30.addItem("Cambios de la flora vaginal sugerentes de VAGINOSIS BACTERIANA");
+		comboBox_30.addItem("Bacterias de características morfológicas compatibles con Actinomyces");
+		
+		comboBox_30.addItemListener(new ItemListener() {
+				public void itemStateChanged(ItemEvent arg0) {
+					comboBox_31.removeAllItems();
+					
+					if(comboBox_28.getSelectedIndex() == 0 && comboBox_29.getSelectedIndex() == 1 && comboBox_30.getSelectedIndex() == 0 ){
+						comboBox_31.addItem("Inflamación");
+						comboBox_31.addItem("Radiación");
+						comboBox_31.addItem("Dispositivo intrauterino (DIU)");
+					}else if(comboBox_28.getSelectedIndex() == 2 && comboBox_29.getSelectedIndex() == 0 && comboBox_30.getSelectedIndex() == 0 ){
+						comboBox_31.addItem("de significado indeterminado (ASC-US)");
+						comboBox_31.addItem("no se puede descartar lesion escamosa intraepitelial de alto grado (ASC-H)");
+					}else if(comboBox_28.getSelectedIndex() == 2 && comboBox_29.getSelectedIndex() == 0 && comboBox_30.getSelectedIndex() == 2 ){
+						comboBox_31.addItem("con hallazgos sospechosos de invación");
+					}else if(comboBox_28.getSelectedIndex() == 2 && comboBox_29.getSelectedIndex() == 1 && comboBox_30.getSelectedIndex() == 0 ){
+						comboBox_31.addItem("Células endocervicales");
+						comboBox_31.addItem("Células endometriales");
+						comboBox_31.addItem("Células glandulares");
+					}else if(comboBox_28.getSelectedIndex() == 2 && comboBox_29.getSelectedIndex() == 1 && comboBox_30.getSelectedIndex() == 1 ){
+						comboBox_31.addItem("Células endocervicales");
+						comboBox_31.addItem("Células glandulares");
+					}else if(comboBox_28.getSelectedIndex() == 2 && comboBox_29.getSelectedIndex() == 1 && comboBox_30.getSelectedIndex() == 3 ){
+						comboBox_31.addItem("Endocervical");
+						comboBox_31.addItem("Endometrial");
+						comboBox_31.addItem("Extrauterino");
+						comboBox_31.addItem("Sin Especificar");
+					}
+				}
+			});
+		
+		
+		//comboBox_29 = new JComboBox();
+		//comboBox_29.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		
+		//comboBox_30 = new JComboBox();
+		//comboBox_30.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		
 		comboBox_31 = new JComboBox();
 		comboBox_31.setFont(new Font("Tahoma", Font.PLAIN, 9));
@@ -2064,14 +2198,14 @@ public class i_principal extends JFrame {
 									.addGroup(gl_panel_8.createParallelGroup(Alignment.LEADING)
 										.addGroup(gl_panel_8.createSequentialGroup()
 											.addComponent(comboBox_28, GroupLayout.PREFERRED_SIZE, 297, GroupLayout.PREFERRED_SIZE)
-											.addGap(47)
-											.addComponent(lblPeriodo, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+											.addGap(29)
+											.addComponent(lblPeriodo)
 											.addPreferredGap(ComponentPlacement.RELATED)
 											.addComponent(comboBox_24, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE))
 										.addComponent(comboBox_29, GroupLayout.PREFERRED_SIZE, 204, GroupLayout.PREFERRED_SIZE)
 										.addComponent(comboBox_30, GroupLayout.PREFERRED_SIZE, 336, GroupLayout.PREFERRED_SIZE)
 										.addComponent(comboBox_31, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE))))))
-					.addContainerGap(72, Short.MAX_VALUE))
+					.addContainerGap(423, Short.MAX_VALUE))
 		);
 		gl_panel_8.setVerticalGroup(
 			gl_panel_8.createParallelGroup(Alignment.LEADING)
@@ -2097,7 +2231,7 @@ public class i_principal extends JFrame {
 							.addComponent(lblEdadPasiente, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
 							.addComponent(comboBox_22, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addComponent(lblLesion, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)))
-					.addPreferredGap(ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
 					.addComponent(btnNewButton_10)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_panel_8.createParallelGroup(Alignment.BASELINE)
@@ -2130,7 +2264,7 @@ public class i_principal extends JFrame {
 				
 				medico_.rif = comboBox_8.getItemAt(comboBox_8.getSelectedIndex()).toString() + textField_22.getText();
 				
-				if(db.buscarMedico(medico_)==1){
+				if(db.buscarMedico(medico_,true)==1){
 					btnEditar.setEnabled(true);
 				}
 				
@@ -2234,7 +2368,7 @@ public class i_principal extends JFrame {
 					medico_.nombres = textField_24.getText();
 					medico_.Apellidos = textField_25.getText();
 					
-					if(db.registrarMedico(medico_)==1){
+					if(db.registrarMedico(medico_,true)==1){
 						medico_.rif = "";
 						medico_.nombres = "";
 						medico_.Apellidos = "";
@@ -2417,7 +2551,7 @@ public class i_principal extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				usuario_.cedula = comboBox_19.getItemAt(comboBox_19.getSelectedIndex()) + t_u_cedula.getText();
-				db.buscarUsuarioPorCedula(usuario_);
+				db.buscarUsuarioPorCedula(usuario_,true);
 				
 				t_u_nombre.setText(usuario_.nombres);
 				t_u_apellido.setText(usuario_.apellidos);
@@ -2589,7 +2723,14 @@ public class i_principal extends JFrame {
 		}
 		
 		comboBox_10.setModel(new DefaultComboBoxModel<String>(listaMedicos));
-		comboBox_21.setModel(new DefaultComboBoxModel<String>(listaMedicos));
+		Vector<String> medicosEstadistica = new Vector<String>(1);
+		
+		medicosEstadistica.add("Todos");
+		for (String string : listaMedicos) {
+			medicosEstadistica.add(string);
+		}
+		
+		comboBox_21.setModel(new DefaultComboBoxModel<String>(medicosEstadistica));
 		
 	}
 	

@@ -10,7 +10,7 @@ public class estudio_citologico {
 	public String quirurgico;public String hormonas; public int diu,anticonceptivo; public String d_anticonceptivo;
 	public String resultado, cedula_paciente; public int info_muestra1;public int info_muestra2;public int info_muestra3;
 	public int clasificacion1;public int clasificacion2;public int clasificacion3;public int clasificacion4;public String clasificacion_detalle;
-	public int numero_impresiones;public String fecha_muestra;public String fecha_resultado; public String estado;
+	public int numero_impresiones;public String fecha_muestra;public String fecha_resultado; public String estado; public String fecha_recepcion;
 	
 	public estudio_citologico() {
 		// TODO Auto-generated constructor stub

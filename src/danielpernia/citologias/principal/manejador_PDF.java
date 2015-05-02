@@ -364,7 +364,7 @@ public class manejador_PDF {
 			}else if(estudio.clasificacion1 == 2){
 				info_categoria+="ANOMALÍAS DE LAS CÉLULAS EPITELIALES\n";
 				if(estudio.clasificacion2 == 0){
-					info_categoria+="CÉLULAS ESCAMOSAS ";
+					info_categoria+="CÉLULAS ESCAMOSAS: ";
 					if(estudio.clasificacion3 == 0){
 						info_categoria+="CÉLULAS ESCAMOSAS ATÍPICAS ";
 						if(estudio.clasificacion4 == 0){
@@ -385,7 +385,7 @@ public class manejador_PDF {
 			 }
 				
 				if(estudio.clasificacion2 == 1){
-					info_categoria+="CÉLULAS GLANDULARES ";
+					info_categoria+="CÉLULAS GLANDULARES: ";
 					if(estudio.clasificacion3 == 0){
 						info_categoria+="ATÍPICAS ";
 						if(estudio.clasificacion4 == 0){

@@ -38,6 +38,9 @@ import javax.swing.border.SoftBevelBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 //import java.net.URL;
 //import java.util.Properties;
 import java.util.Vector;
@@ -529,6 +532,11 @@ public class i_principal extends JFrame {
 				actualizarEstudioConFormulario();
 				
 				estudio.estado = "esperando resultado";
+				Calendar fechaActual = new GregorianCalendar();
+				SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+				String fecha = format1.format(fechaActual.getTime());
+				
+				estudio.fecha_recepcion =""+fecha;
 				//estudio.numero_impresiones = 0;
 				
 				if(db.guardarEstudio(estudio,true) == 1){
@@ -773,6 +781,7 @@ public class i_principal extends JFrame {
 						comboBox_17.addItem("no se puede descartar lesion escamosa intraepitelial de alto grado (ASC-H)");
 					}else if(comboBox_14.getSelectedIndex() == 2 && comboBox_15.getSelectedIndex() == 0 && comboBox_16.getSelectedIndex() == 2 ){
 						comboBox_17.addItem("con hallazgos sospechosos de invación");
+						comboBox_17.addItem("");
 					}else if(comboBox_14.getSelectedIndex() == 2 && comboBox_15.getSelectedIndex() == 1 && comboBox_16.getSelectedIndex() == 0 ){
 						comboBox_17.addItem("Células endocervicales");
 						comboBox_17.addItem("Células endometriales");
@@ -2170,6 +2179,7 @@ public class i_principal extends JFrame {
 						comboBox_31.addItem("no se puede descartar lesion escamosa intraepitelial de alto grado (ASC-H)");
 					}else if(comboBox_28.getSelectedIndex() == 2 && comboBox_29.getSelectedIndex() == 0 && comboBox_30.getSelectedIndex() == 2 ){
 						comboBox_31.addItem("con hallazgos sospechosos de invación");
+						comboBox_31.addItem("");
 					}else if(comboBox_28.getSelectedIndex() == 2 && comboBox_29.getSelectedIndex() == 1 && comboBox_30.getSelectedIndex() == 0 ){
 						comboBox_31.addItem("Células endocervicales");
 						comboBox_31.addItem("Células endometriales");
@@ -2883,7 +2893,7 @@ public class i_principal extends JFrame {
 			db.buscarPasientePorCedula(paciente_);
 			
 			//System.out.println("ssss: "+estudio.estado);
-			datos[i] = new String[]{""+estudio.rowid,""+estudio.cedula_paciente+ " "+paciente_.Apellidos+" "+paciente_.nombres,""+comboBox_10.getItemAt(estudio.id_medico-1),""+estudio.fecha_muestra,""+fecha[0]};
+			datos[i] = new String[]{""+estudio.rowid,""+estudio.cedula_paciente+ " "+paciente_.Apellidos+" "+paciente_.nombres,""+comboBox_10.getItemAt(estudio.id_medico-1),""+estudio.fecha_recepcion,""+fecha[0]};
 			
 		}
 		
@@ -2892,12 +2902,12 @@ public class i_principal extends JFrame {
 		table.setModel(new DefaultTableModel(
 				datos,
 				new String[] {
-					"Codigo", "Paciente", "Medico", "Fecha de toma de muestra", "Fecha resultado"
+					"Codigo", "Paciente", "Medico", "Fecha de recepción de muestra", "Fecha resultado"
 				}
 			));
-		table.getColumnModel().getColumn(1).setPreferredWidth(300);
+		table.getColumnModel().getColumn(1).setPreferredWidth(350);
 		table.getColumnModel().getColumn(2).setPreferredWidth(250);
-		table.getColumnModel().getColumn(3).setPreferredWidth(120);
-		table.getColumnModel().getColumn(4).setPreferredWidth(120);
+		table.getColumnModel().getColumn(3).setPreferredWidth(100);
+		table.getColumnModel().getColumn(4).setPreferredWidth(100);
 	}
 }

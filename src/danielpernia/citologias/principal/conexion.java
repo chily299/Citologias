@@ -185,7 +185,7 @@ public class conexion {
 					+ "fur,fecha_fur,citologia,citologia_fecha,biopsia,biopsia_fecha,muestra_de,sitio_lesion,id_medico,"
 					+ "irradiacion,irradiacion_fecha,quimioterapia,quimioterapia_fecha,quirurgico,hormonas,diu,anticonceptivos_orales,anticonceptivos_orales_descripcion,"
 					+ "resultado,info_muestra_1,info_muestra_2,info_muestra_3,clasificacion_1,clasificacion_2,clasificacion_3,clasificacion_4,clasificacion_descripcion,"
-					+ "numero_impresion,fecha_muestra,fecha_resultado,estado,cedula_paciente) " +
+					+ "numero_impresion,fecha_muestra,fecha_resultado,estado,cedula_paciente,fecha_recepcion) " +
 	                   "VALUES ( '"+estudio.motivo_consulta+"','"+estudio.diagnostico+"',"
 	                   		+ ""+estudio.embarazos+","+estudio.cesareas+","+estudio.partos+","+estudio.abortos+",'"+estudio.f_ultimo_embarazo+"',"
 	                   		+ ""+estudio.FUR+",'"+estudio.f_FUR+"',"+estudio.citologia+",'"+estudio.f_citologia+"',"+estudio.biopsia+",'"+estudio.f_biopsia+"',"
@@ -194,7 +194,7 @@ public class conexion {
 	                   		+ "'"+estudio.quirurgico+"','"+estudio.hormonas+"',"+estudio.diu+","+estudio.anticonceptivo+",'"+estudio.d_anticonceptivo+"',"
 	                   		+ "'"+estudio.resultado+"',"+estudio.info_muestra1+","+estudio.info_muestra2+","+estudio.info_muestra3+","
 	                   		+ ""+estudio.clasificacion1+","+estudio.clasificacion2+","+estudio.clasificacion3+","+estudio.clasificacion4+",'"+estudio.clasificacion_detalle+"',"
-	                   		+ ""+estudio.numero_impresiones+",'"+estudio.fecha_muestra+"','"+estudio.fecha_resultado+"','"+estudio.estado+"','"+estudio.cedula_paciente+"');"; 
+	                   		+ ""+estudio.numero_impresiones+",'"+estudio.fecha_muestra+"','"+estudio.fecha_resultado+"','"+estudio.estado+"','"+estudio.cedula_paciente+"','"+estudio.fecha_recepcion+"');"; 
 			sentencia.executeUpdate(sql);
 			if(alerta)
 				JOptionPane.showMessageDialog(null, "Estudio Registrado");
@@ -262,6 +262,7 @@ public class conexion {
 			    estudio_.fecha_resultado = rs.getString("fecha_resultado");
 			    estudio_.estado = rs.getString("estado");
 			    estudio_.cedula_paciente = rs.getString("cedula_paciente");
+			    estudio_.fecha_recepcion = rs.getString("fecha_recepcion");
 			    //System.out.println("cedula en la busqueda "+estudio_.cedula_paciente);
 			    
 			   
@@ -330,6 +331,7 @@ public class conexion {
 			    estudio_.fecha_resultado = rs.getString("fecha_resultado");
 			    estudio_.estado = rs.getString("estado");
 			    estudio_.cedula_paciente = rs.getString("cedula_paciente");
+			    estudio_.fecha_recepcion = rs.getString("fecha_recepcion");
 			    estudio.add(estudio_);
 			    
 			  }
@@ -445,6 +447,7 @@ public class conexion {
 			    estudio_.fecha_resultado = rs.getString("fecha_resultado");
 			    estudio_.estado = rs.getString("estado");
 			    estudio_.cedula_paciente = rs.getString("cedula_paciente");
+			    estudio_.fecha_recepcion = rs.getString("fecha_recepcion");
 			     estudio.add(estudio_);
 			     
 			     //imprimir
@@ -520,6 +523,7 @@ public class conexion {
 			    estudio_.fecha_resultado = rs.getString("fecha_resultado");
 			    estudio_.estado = rs.getString("estado");
 			    estudio_.cedula_paciente = rs.getString("cedula_paciente");
+			    estudio_.fecha_recepcion = rs.getString("fecha_recepcion");
 			    estudio.add(estudio_);
 			     
 			     //imprimir
@@ -593,6 +597,7 @@ public class conexion {
 			    estudio_.fecha_resultado = rs.getString("fecha_resultado");
 			    estudio_.estado = rs.getString("estado");
 			    estudio_.cedula_paciente = rs.getString("cedula_paciente");
+			    estudio_.fecha_recepcion = rs.getString("fecha_recepcion");
 			    estudio.add(estudio_);
 			     
 			     //imprimir
@@ -669,6 +674,7 @@ public class conexion {
 		    estudio_.fecha_resultado = rs.getString("fecha_resultado");
 		    estudio_.estado = rs.getString("estado");
 		    estudio_.cedula_paciente = rs.getString("cedula_paciente");
+		    estudio_.fecha_recepcion = rs.getString("fecha_recepcion");
 		    estudio.add(estudio_);
 		     
 		     //imprimir
@@ -743,6 +749,7 @@ public class conexion {
 		    estudio_.fecha_resultado = rs.getString("fecha_resultado");
 		    estudio_.estado = rs.getString("estado");
 		    estudio_.cedula_paciente = rs.getString("cedula_paciente");
+		    estudio_.fecha_recepcion = rs.getString("fecha_recepcion");
 		    estudio.add(estudio_);
 		     
 		     //imprimir

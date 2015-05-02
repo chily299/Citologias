@@ -71,6 +71,7 @@ public class sincronizaDatos {
 
 		
 		Calendar fechaActual = new GregorianCalendar();
+		
 		String fecha = ""+fechaActual.get(Calendar.YEAR)+"-"+(fechaActual.get(Calendar.MONTH)+1)+"-"+fechaActual.get(Calendar.DAY_OF_MONTH);
 		
 		File archivo = new File("datos citologias-"+fecha+".dat");

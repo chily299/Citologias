@@ -310,6 +310,10 @@ public class manejador_PDF {
 		}else{
 			info_resultado+=estudio.resultado;
 			
+			String resultadoSeparado[]= estudio.resultado.split("\n");
+			
+			contarLineas+=resultadoSeparado.length;
+			
 			//System.out.println("Total caracteres "+estudio.resultado.toCharArray().length);
 			if(estudio.resultado.toCharArray().length/50 < 1){
 				contarLineas++;
@@ -499,10 +503,6 @@ public class manejador_PDF {
 			documento.add(new Paragraph(p_sub_titulo_categoria));
 			documento.add(new Paragraph(p_info_categoria));
 			documento.add(new Paragraph("\n"));
-			//System.out.println("botton "+documento.bottom());
-			//System.out.println("top "+documento.top());
-			//System.out.println("page number "+documento.getPageNumber());
-			//System.out.println("toString: "+documento.toString());
 			
 			documento.add(pie);
 			

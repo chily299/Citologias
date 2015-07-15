@@ -54,6 +54,7 @@ import javax.swing.border.LineBorder;
 
 
 import javax.swing.JScrollPane;
+import javax.swing.JScrollBar;
 
 public class i_principal extends JFrame {
 
@@ -379,7 +380,7 @@ public class i_principal extends JFrame {
 					.addComponent(lblNewLabel_28)
 					.addGap(57)
 					.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 223, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 175, Short.MAX_VALUE)
 					.addComponent(lblContactoDanielpgmailcom)
 					.addContainerGap())
 		);
@@ -2731,6 +2732,14 @@ public class i_principal extends JFrame {
 		);
 		panel_9.setLayout(gl_panel_9);
 		Usuarios.setLayout(gl_Usuarios);
+		
+		JScrollBar scrollBar = new JScrollBar();
+		scrollBar.setOrientation(JScrollBar.HORIZONTAL);
+		contentPane.add(scrollBar, BorderLayout.SOUTH);
+		
+		
+		JScrollBar scrollBar_1 = new JScrollBar();
+		contentPane.add(scrollBar_1, BorderLayout.WEST);
 	}
 	
 	

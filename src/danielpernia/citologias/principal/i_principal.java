@@ -560,7 +560,7 @@ public class i_principal extends JFrame {
 				actualizarEstudioConFormulario();
 				
 				if(db.EditarEstudio(estudio)==1){
-					JOptionPane.showMessageDialog(null, "Estudio N° "+estudio.rowid+" Actualizado");
+					JOptionPane.showMessageDialog(null, "Estudio Nï¿½ "+estudio.rowid+" Actualizado");
 				}
 				
 				
@@ -577,7 +577,7 @@ public class i_principal extends JFrame {
 				estudio.numero_impresiones = -1;
 				
 				if(db.EditarEstudio(estudio)==1){
-					JOptionPane.showMessageDialog(null, "Estudio N° "+estudio.rowid+" Listo para imprimir");
+					JOptionPane.showMessageDialog(null, "Estudio Nï¿½ "+estudio.rowid+" Listo para imprimir");
 					db.actualizarImpresionesDeEstudio(estudio);
 				}
 			}
@@ -710,14 +710,14 @@ public class i_principal extends JFrame {
 				
 				if(comboBox_14.getSelectedIndex() == 0){
 					comboBox_15.addItem("MICROORGANISMOS");
-					comboBox_15.addItem("OTROS HALLAZGOS NO NEOPLÁSICOS");
+					comboBox_15.addItem("OTROS HALLAZGOS NO NEOPLï¿½SICOS");
 					comboBox_15.addItem("");
 				}if(comboBox_14.getSelectedIndex() == 1){
-					comboBox_15.addItem("CÉLULAS ENDOMETRIALES  (mujer mayor de 40 años) ");
+					comboBox_15.addItem("Cï¿½LULAS ENDOMETRIALES  (mujer mayor de 40 aï¿½os) ");
 					comboBox_15.addItem("");
 				}if(comboBox_14.getSelectedIndex() == 2){
-					comboBox_15.addItem("CÉLULAS ESCAMOSAS");
-					comboBox_15.addItem("CÉLULAS GLANDULARES");
+					comboBox_15.addItem("Cï¿½LULAS ESCAMOSAS");
+					comboBox_15.addItem("Cï¿½LULAS GLANDULARES");
 					comboBox_15.addItem("");
 				}if(comboBox_14.getSelectedIndex() == 3){
 					comboBox_15.addItem("");
@@ -736,25 +736,25 @@ public class i_principal extends JFrame {
 				
 				if(comboBox_14.getSelectedIndex() == 0 &&comboBox_15.getSelectedIndex() == 0 ){
 					comboBox_16.addItem("Trichomonas vaginalis");
-					comboBox_16.addItem("Elementos micóticos de características morfológicas compatibles con Candida");
+					comboBox_16.addItem("Elementos micï¿½ticos de caracterï¿½sticas morfolï¿½gicas compatibles con Candida");
 					comboBox_16.addItem("Cambios de la flora vaginal sugerentes de VAGINOSIS BACTERIANA");
-					comboBox_16.addItem("Bacterias de características morfológicas compatibles con Actinomyces");
+					comboBox_16.addItem("Bacterias de caracterï¿½sticas morfolï¿½gicas compatibles con Actinomyces");
 					comboBox_16.addItem("Cambios celulares compatibles con HERPES SIMPLE");
 				}if(comboBox_14.getSelectedIndex() == 0 && comboBox_15.getSelectedIndex() == 1){
 					comboBox_16.addItem("Cambios celulares reactivos asosiados a:");
-					comboBox_16.addItem("Células glandulares poshisterectomía");
+					comboBox_16.addItem("Cï¿½lulas glandulares poshisterectomï¿½a");
 					comboBox_16.addItem("Atrofia");
 					
 				}if(comboBox_14.getSelectedIndex() == 1 && comboBox_15.getSelectedIndex() == 0){
-					comboBox_16.addItem("NEGATIVO PARA LESIÓN ESCAMOSA INTRAEPITELIAL");
+					comboBox_16.addItem("NEGATIVO PARA LESIï¿½N ESCAMOSA INTRAEPITELIAL");
 				}if(comboBox_14.getSelectedIndex() == 2  && comboBox_15.getSelectedIndex() == 0){
-					comboBox_16.addItem("CÉLULAS ESCAMOSAS ATÍPICAS");
-					comboBox_16.addItem("LESIÓN ESCAMOSA INTRAEPITELIAL DE BAJO GRADO (LSIL)");
-					comboBox_16.addItem("LESIÓN ESCAMOSA INTRAEPITELIAL DE ALTO GRADO (HSIL)");
+					comboBox_16.addItem("Cï¿½LULAS ESCAMOSAS ATï¿½PICAS");
+					comboBox_16.addItem("LESIï¿½N ESCAMOSA INTRAEPITELIAL DE BAJO GRADO (LSIL)");
+					comboBox_16.addItem("LESIï¿½N ESCAMOSA INTRAEPITELIAL DE ALTO GRADO (HSIL)");
 					comboBox_16.addItem("CARCINOMA ESCAMOSO");
 				}if(comboBox_14.getSelectedIndex() == 2  && comboBox_15.getSelectedIndex() == 1){
-					comboBox_16.addItem("ATÍPICAS");
-					comboBox_16.addItem("ATÍPICAS SUGESTIVAS A NEOPLASIA");
+					comboBox_16.addItem("ATï¿½PICAS");
+					comboBox_16.addItem("ATï¿½PICAS SUGESTIVAS A NEOPLASIA");
 					comboBox_16.addItem("ADENOCARCINOMA ENDOCERVICAL (in situ)");
 					comboBox_16.addItem("ADENOCARCINOMA");
 				}
@@ -764,9 +764,9 @@ public class i_principal extends JFrame {
 		comboBox_16 = new JComboBox();
 		comboBox_16.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		comboBox_16.addItem("Trichomonas vaginalis");
-		comboBox_16.addItem("Elementos micóticos de características morfológicas compatibles con Candida");
+		comboBox_16.addItem("Elementos micï¿½ticos de caracterï¿½sticas morfolï¿½gicas compatibles con Candida");
 		comboBox_16.addItem("Cambios de la flora vaginal sugerentes de VAGINOSIS BACTERIANA");
-		comboBox_16.addItem("Bacterias de características morfológicas compatibles con Actinomyces");
+		comboBox_16.addItem("Bacterias de caracterï¿½sticas morfolï¿½gicas compatibles con Actinomyces");
 		comboBox_16.addItem("Cambios celulares compatibles con HERPES SIMPLE");
 		
 			comboBox_16.addItemListener(new ItemListener() {
@@ -774,22 +774,22 @@ public class i_principal extends JFrame {
 					comboBox_17.removeAllItems();
 					
 					if(comboBox_14.getSelectedIndex() == 0 && comboBox_15.getSelectedIndex() == 1 && comboBox_16.getSelectedIndex() == 0 ){
-						comboBox_17.addItem("Inflamación");
-						comboBox_17.addItem("Radiación");
+						comboBox_17.addItem("Inflamaciï¿½n");
+						comboBox_17.addItem("Radiaciï¿½n");
 						comboBox_17.addItem("Dispositivo intrauterino (DIU)");
 					}else if(comboBox_14.getSelectedIndex() == 2 && comboBox_15.getSelectedIndex() == 0 && comboBox_16.getSelectedIndex() == 0 ){
 						comboBox_17.addItem("de significado indeterminado (ASC-US)");
 						comboBox_17.addItem("no se puede descartar lesion escamosa intraepitelial de alto grado (ASC-H)");
 					}else if(comboBox_14.getSelectedIndex() == 2 && comboBox_15.getSelectedIndex() == 0 && comboBox_16.getSelectedIndex() == 2 ){
-						comboBox_17.addItem("con hallazgos sospechosos de invación");
+						comboBox_17.addItem("con hallazgos sospechosos de invaciï¿½n");
 						comboBox_17.addItem("");
 					}else if(comboBox_14.getSelectedIndex() == 2 && comboBox_15.getSelectedIndex() == 1 && comboBox_16.getSelectedIndex() == 0 ){
-						comboBox_17.addItem("Células endocervicales");
-						comboBox_17.addItem("Células endometriales");
-						comboBox_17.addItem("Células glandulares");
+						comboBox_17.addItem("Cï¿½lulas endocervicales");
+						comboBox_17.addItem("Cï¿½lulas endometriales");
+						comboBox_17.addItem("Cï¿½lulas glandulares");
 					}else if(comboBox_14.getSelectedIndex() == 2 && comboBox_15.getSelectedIndex() == 1 && comboBox_16.getSelectedIndex() == 1 ){
-						comboBox_17.addItem("Células endocervicales");
-						comboBox_17.addItem("Células glandulares");
+						comboBox_17.addItem("Cï¿½lulas endocervicales");
+						comboBox_17.addItem("Cï¿½lulas glandulares");
 					}else if(comboBox_14.getSelectedIndex() == 2 && comboBox_15.getSelectedIndex() == 1 && comboBox_16.getSelectedIndex() == 3 ){
 						comboBox_17.addItem("Endocervical");
 						comboBox_17.addItem("Endometrial");
@@ -800,8 +800,8 @@ public class i_principal extends JFrame {
 			});
 			
 			
-			comboBox_17.addItem("Inflamación");
-			comboBox_17.addItem("Radiación");
+			comboBox_17.addItem("Inflamaciï¿½n");
+			comboBox_17.addItem("Radiaciï¿½n");
 			comboBox_17.addItem("Dispositivo intrauterino (DIU)");
 			
 				textArea_1 = new JTextArea();
@@ -2058,7 +2058,7 @@ public class i_principal extends JFrame {
 					diasConsulta = 90;
 				}else if (comboBox_24.getSelectedIndex() == 2){ // 6 meses
 					diasConsulta = 180;
-				}else if (comboBox_24.getSelectedIndex() == 3){ // 1 año
+				}else if (comboBox_24.getSelectedIndex() == 3){ // 1 aï¿½o
 					diasConsulta = 365;
 				}else if (comboBox_24.getSelectedIndex() == 4){ // todo
 					diasConsulta = -1;
@@ -2109,14 +2109,14 @@ public class i_principal extends JFrame {
 				
 				if(comboBox_28.getSelectedIndex() == 0){
 					comboBox_29.addItem("MICROORGANISMOS");
-					comboBox_29.addItem("OTROS HALLAZGOS NO NEOPLÁSICOS");
+					comboBox_29.addItem("OTROS HALLAZGOS NO NEOPLï¿½SICOS");
 					comboBox_29.addItem("");
 				}if(comboBox_28.getSelectedIndex() == 1){
-					comboBox_29.addItem("CÉLULAS ENDOMETRIALES  (mujer mayor de 40 años) ");
+					comboBox_29.addItem("Cï¿½LULAS ENDOMETRIALES  (mujer mayor de 40 aï¿½os) ");
 					comboBox_29.addItem("");
 				}if(comboBox_28.getSelectedIndex() == 2){
-					comboBox_29.addItem("CÉLULAS ESCAMOSAS");
-					comboBox_29.addItem("CÉLULAS GLANDULARES");
+					comboBox_29.addItem("Cï¿½LULAS ESCAMOSAS");
+					comboBox_29.addItem("Cï¿½LULAS GLANDULARES");
 					comboBox_29.addItem("");
 				}if(comboBox_28.getSelectedIndex() == 3){
 					comboBox_29.addItem("");
@@ -2135,25 +2135,25 @@ public class i_principal extends JFrame {
 				
 				if(comboBox_28.getSelectedIndex() == 0 &&comboBox_29.getSelectedIndex() == 0 ){
 					comboBox_30.addItem("Trichomonas vaginalis");
-					comboBox_30.addItem("Elementos micóticos de características morfológicas compatibles con Candida");
+					comboBox_30.addItem("Elementos micï¿½ticos de caracterï¿½sticas morfolï¿½gicas compatibles con Candida");
 					comboBox_30.addItem("Cambios de la flora vaginal sugerentes de VAGINOSIS BACTERIANA");
-					comboBox_30.addItem("Bacterias de características morfológicas compatibles con Actinomyces");
+					comboBox_30.addItem("Bacterias de caracterï¿½sticas morfolï¿½gicas compatibles con Actinomyces");
 					comboBox_30.addItem("Cambios celulares compatibles con HERPES SIMPLE");
 				}if(comboBox_28.getSelectedIndex() == 0 && comboBox_29.getSelectedIndex() == 1){
 					comboBox_30.addItem("Cambios celulares reactivos asosiados a:");
-					comboBox_30.addItem("Células glandulares poshisterectomía");
+					comboBox_30.addItem("Cï¿½lulas glandulares poshisterectomï¿½a");
 					comboBox_30.addItem("Atrofia");
 					
 				}if(comboBox_28.getSelectedIndex() == 1 && comboBox_29.getSelectedIndex() == 0){
-					comboBox_30.addItem("NEGATIVO PARA LESIÓN ESCAMOSA INTRAEPITELIAL");
+					comboBox_30.addItem("NEGATIVO PARA LESIï¿½N ESCAMOSA INTRAEPITELIAL");
 				}if(comboBox_28.getSelectedIndex() == 2  && comboBox_29.getSelectedIndex() == 0){
-					comboBox_30.addItem("CÉLULAS ESCAMOSAS ATÍPICAS");
-					comboBox_30.addItem("LESIÓN ESCAMOSA INTRAEPITELIAL DE BAJO GRADO (LSIL)");
-					comboBox_30.addItem("LESIÓN ESCAMOSA INTRAEPITELIAL DE ALTO GRADO (HSIL)");
+					comboBox_30.addItem("Cï¿½LULAS ESCAMOSAS ATï¿½PICAS");
+					comboBox_30.addItem("LESIï¿½N ESCAMOSA INTRAEPITELIAL DE BAJO GRADO (LSIL)");
+					comboBox_30.addItem("LESIï¿½N ESCAMOSA INTRAEPITELIAL DE ALTO GRADO (HSIL)");
 					comboBox_30.addItem("CARCINOMA ESCAMOSO");
 				}if(comboBox_28.getSelectedIndex() == 2  && comboBox_29.getSelectedIndex() == 1){
-					comboBox_30.addItem("ATÍPICAS");
-					comboBox_30.addItem("ATÍPICAS SUGESTIVAS A NEOPLASIA");
+					comboBox_30.addItem("ATï¿½PICAS");
+					comboBox_30.addItem("ATï¿½PICAS SUGESTIVAS A NEOPLASIA");
 					comboBox_30.addItem("ADENOCARCINOMA ENDOCERVICAL (in situ)");
 					comboBox_30.addItem("ADENOCARCINOMA");
 				}
@@ -2163,31 +2163,31 @@ public class i_principal extends JFrame {
 		comboBox_30 = new JComboBox();
 		comboBox_30.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		comboBox_30.addItem("Trichomonas vaginalis");
-		comboBox_30.addItem("Elementos micóticos de características morfológicas compatibles con Candida");
+		comboBox_30.addItem("Elementos micï¿½ticos de caracterï¿½sticas morfolï¿½gicas compatibles con Candida");
 		comboBox_30.addItem("Cambios de la flora vaginal sugerentes de VAGINOSIS BACTERIANA");
-		comboBox_30.addItem("Bacterias de características morfológicas compatibles con Actinomyces");
+		comboBox_30.addItem("Bacterias de caracterï¿½sticas morfolï¿½gicas compatibles con Actinomyces");
 		
 		comboBox_30.addItemListener(new ItemListener() {
 				public void itemStateChanged(ItemEvent arg0) {
 					comboBox_31.removeAllItems();
 					
 					if(comboBox_28.getSelectedIndex() == 0 && comboBox_29.getSelectedIndex() == 1 && comboBox_30.getSelectedIndex() == 0 ){
-						comboBox_31.addItem("Inflamación");
-						comboBox_31.addItem("Radiación");
+						comboBox_31.addItem("Inflamaciï¿½n");
+						comboBox_31.addItem("Radiaciï¿½n");
 						comboBox_31.addItem("Dispositivo intrauterino (DIU)");
 					}else if(comboBox_28.getSelectedIndex() == 2 && comboBox_29.getSelectedIndex() == 0 && comboBox_30.getSelectedIndex() == 0 ){
 						comboBox_31.addItem("de significado indeterminado (ASC-US)");
 						comboBox_31.addItem("no se puede descartar lesion escamosa intraepitelial de alto grado (ASC-H)");
 					}else if(comboBox_28.getSelectedIndex() == 2 && comboBox_29.getSelectedIndex() == 0 && comboBox_30.getSelectedIndex() == 2 ){
-						comboBox_31.addItem("con hallazgos sospechosos de invación");
+						comboBox_31.addItem("con hallazgos sospechosos de invaciï¿½n");
 						comboBox_31.addItem("");
 					}else if(comboBox_28.getSelectedIndex() == 2 && comboBox_29.getSelectedIndex() == 1 && comboBox_30.getSelectedIndex() == 0 ){
-						comboBox_31.addItem("Células endocervicales");
-						comboBox_31.addItem("Células endometriales");
-						comboBox_31.addItem("Células glandulares");
+						comboBox_31.addItem("Cï¿½lulas endocervicales");
+						comboBox_31.addItem("Cï¿½lulas endometriales");
+						comboBox_31.addItem("Cï¿½lulas glandulares");
 					}else if(comboBox_28.getSelectedIndex() == 2 && comboBox_29.getSelectedIndex() == 1 && comboBox_30.getSelectedIndex() == 1 ){
-						comboBox_31.addItem("Células endocervicales");
-						comboBox_31.addItem("Células glandulares");
+						comboBox_31.addItem("Cï¿½lulas endocervicales");
+						comboBox_31.addItem("Cï¿½lulas glandulares");
 					}else if(comboBox_28.getSelectedIndex() == 2 && comboBox_29.getSelectedIndex() == 1 && comboBox_30.getSelectedIndex() == 3 ){
 						comboBox_31.addItem("Endocervical");
 						comboBox_31.addItem("Endometrial");
@@ -2889,9 +2889,13 @@ public class i_principal extends JFrame {
 	public void actualizarTabla(Vector<estudio_citologico> estudio_v){
 		int i =0;
 		
-		Object[][] datos = new Object[100][];
+		Object[][] datos; 
 		
 		actualizarDatosMedico();
+		
+		//System.out.println("numero de estudios"+estudio_v.size());
+		
+		datos = new Object[estudio_v.size()+1][];
 		
 		for (estudio_citologico estudio : estudio_v) {
 			i++;
@@ -2900,6 +2904,7 @@ public class i_principal extends JFrame {
 			paciente  paciente_= new paciente();
 			paciente_.cedula = estudio.cedula_paciente;
 			db.buscarPasientePorCedula(paciente_);
+			
 			
 			//System.out.println("ssss: "+estudio.estado);
 			datos[i] = new String[]{""+estudio.rowid,""+estudio.cedula_paciente+ " "+paciente_.Apellidos+" "+paciente_.nombres,""+comboBox_10.getItemAt(estudio.id_medico-1),""+estudio.fecha_recepcion,""+fecha[0]};
@@ -2911,7 +2916,7 @@ public class i_principal extends JFrame {
 		table.setModel(new DefaultTableModel(
 				datos,
 				new String[] {
-					"Codigo", "Paciente", "Medico", "Fecha de recepción de muestra", "Fecha resultado"
+					"Codigo", "Paciente", "Medico", "Fecha de recepciï¿½n de muestra", "Fecha resultado"
 				}
 			));
 		table.getColumnModel().getColumn(1).setPreferredWidth(350);

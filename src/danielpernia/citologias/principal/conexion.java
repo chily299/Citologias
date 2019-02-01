@@ -106,11 +106,8 @@ public class conexion {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		return i;
-		
 	}
-	
 	
 	public boolean buscarUsuarioPorCedula(usuario usu,boolean alerta){
 		
@@ -336,9 +333,6 @@ public class conexion {
 			    
 			  }
 
-			
-			
-			
 			rs.close();
 			sentencia.close();
 			
@@ -1118,33 +1112,33 @@ public class conexion {
 		}
 		
 		if(categoria1 == 0){
-			info_categoria+="NEGATIVO PARA LESIÓN INTRAEPITELIAL O MALIGNIDAD\n";
+			info_categoria+="NEGATIVO PARA LESIï¿½N INTRAEPITELIAL O MALIGNIDAD\n";
 			if(categoria2 == 0){
 				info_categoria+="MICROORGANISMOS ";
 				if(categoria3 == 0){
 					info_categoria+="Trichomonas vaginalis ";
 				}else if(categoria3 == 1){
-					info_categoria+="Elementos micóticos de características morfológicas compatibles con Candida ";
+					info_categoria+="Elementos micï¿½ticos de caracterï¿½sticas morfolï¿½gicas compatibles con Candida ";
 				}else if(categoria3 == 2){
 					info_categoria+="Cambios de la flora vaginal sugerentes de VAGINOSIS BACTERIANA ";
 				}else if(categoria3 == 3){
-					info_categoria+="Bacterias de características morfológicas compatibles con Actinomyces ";
+					info_categoria+="Bacterias de caracterï¿½sticas morfolï¿½gicas compatibles con Actinomyces ";
 				}else if(categoria3 == 4){
 					info_categoria+="Cambios celulares compatibles con HERPES SIMPLE ";
 				}
 			}else if(categoria2 == 1){
-				info_categoria+="OTROS HALLAZGOS NO NEOPLÁSICOS";
+				info_categoria+="OTROS HALLAZGOS NO NEOPLï¿½SICOS";
 				if(categoria3 == 0){
 					info_categoria+="Cambios celulares reactivos asosiados a: ";
 					if(categoria4 == 0){
-						info_categoria+="Inflamación ";
+						info_categoria+="Inflamaciï¿½n ";
 					}else if(categoria4 == 1){
-						info_categoria+="Radiación ";
+						info_categoria+="Radiaciï¿½n ";
 					}else if(categoria4 == 2){
 						info_categoria+="Dispositivo intrauterino (DIU) ";
 					}
 				}else if(categoria3 == 1){
-					info_categoria+="Células glandulares poshisterectomía ";
+					info_categoria+="Cï¿½lulas glandulares poshisterectomï¿½a ";
 				}else if(categoria3 == 2){
 					info_categoria+="Atrofia ";
 				}
@@ -1152,28 +1146,28 @@ public class conexion {
 		}else if(categoria1 == 1){
 			info_categoria+="OTROS HALLAZGOS\n";
 			 if(categoria2 == 0){
-					info_categoria+="CÉLULAS ENDOMETRIALES  (mujer mayor de 40 años)  ";
+					info_categoria+="Cï¿½LULAS ENDOMETRIALES  (mujer mayor de 40 aï¿½os)  ";
 					if(categoria3 == 0){
-						info_categoria+="NEGATIVO PARA LESIÓN ESCAMOSA INTRAEPITELIAL ";
+						info_categoria+="NEGATIVO PARA LESIï¿½N ESCAMOSA INTRAEPITELIAL ";
 				 }
 			 }
 		}else if(categoria1 == 2){
-			info_categoria+="ANOMALÍAS DE LAS CÉLULAS EPITELIALES\n";
+			info_categoria+="ANOMALï¿½AS DE LAS Cï¿½LULAS EPITELIALES\n";
 			if(categoria2 == 0){
-				info_categoria+="CÉLULAS ESCAMOSAS ";
+				info_categoria+="Cï¿½LULAS ESCAMOSAS ";
 				if(categoria3 == 0){
-					info_categoria+="CÉLULAS ESCAMOSAS ATÍPICAS ";
+					info_categoria+="Cï¿½LULAS ESCAMOSAS ATï¿½PICAS ";
 					if(categoria4 == 0){
 						info_categoria+="de significado indeterminado (ASC-US) ";
 					}else if(categoria4 == 1){
 						info_categoria+="no se puede descartar lesion escamosa intraepitelial de alto grado (ASC-H) ";
 					}
 				}else if(categoria3 == 1){
-					info_categoria+="LESIÓN ESCAMOSA INTRAEPITELIAL DE BAJO GRADO (LSIL) ";
+					info_categoria+="LESIï¿½N ESCAMOSA INTRAEPITELIAL DE BAJO GRADO (LSIL) ";
 				}else if(categoria3 == 2){
-					info_categoria+="LESIÓN ESCAMOSA INTRAEPITELIAL DE ALTO GRADO (HSIL) ";
+					info_categoria+="LESIï¿½N ESCAMOSA INTRAEPITELIAL DE ALTO GRADO (HSIL) ";
 					if(categoria4 == 0){
-						info_categoria+="con hallazgos sospechosos de invación ";
+						info_categoria+="con hallazgos sospechosos de invaciï¿½n ";
 					}
 				}else if(categoria3 == 3){
 					info_categoria+="CARCINOMA ESCAMOSO ";
@@ -1181,22 +1175,22 @@ public class conexion {
 		 }
 			
 			if(categoria2 == 1){
-				info_categoria+="CÉLULAS GLANDULARES ";
+				info_categoria+="Cï¿½LULAS GLANDULARES ";
 				if(categoria3 == 0){
-					info_categoria+="ATÍPICAS ";
+					info_categoria+="ATï¿½PICAS ";
 					if(categoria4 == 0){
-						info_categoria+="Células endocervicales ";
+						info_categoria+="Cï¿½lulas endocervicales ";
 					}else if(categoria4 == 1){
-						info_categoria+="Células endometriales ";
+						info_categoria+="Cï¿½lulas endometriales ";
 					}else if(categoria4 == 2){
-						info_categoria+="Células glandulares ";
+						info_categoria+="Cï¿½lulas glandulares ";
 					}
 				}else if(categoria3 == 1){
-					info_categoria+="ATÍPICAS SUGESTIVAS A NEOPLASIA ";
+					info_categoria+="ATï¿½PICAS SUGESTIVAS A NEOPLASIA ";
 					if(categoria4 == 0){
-						info_categoria+="Células endocervicales ";
+						info_categoria+="Cï¿½lulas endocervicales ";
 					}else if(categoria4 == 1){
-						info_categoria+="Células glandulares ";
+						info_categoria+="Cï¿½lulas glandulares ";
 					}
 				}else if(categoria3 == 2){
 					info_categoria+="ADENOCARCINOMA ENDOCERVICAL (in situ) ";

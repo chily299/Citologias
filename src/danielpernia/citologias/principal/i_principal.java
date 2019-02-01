@@ -524,6 +524,7 @@ public class i_principal extends JFrame {
 				paciente_.cedula = comboBox_5.getItemAt(comboBox_5.getSelectedIndex()).toString()+textField_10.getText();
 				
 				if(db.buscarPasientePorCedula(paciente_)==1){
+					
 				}else{
 					actulizarPasienteConFormulario();
 					db.registrarPasiente(paciente_,true);
@@ -583,15 +584,18 @@ public class i_principal extends JFrame {
 			}
 		});
 		btnTerminar.setToolTipText("Estudio y resultado preparado para imprimir");
+		
+		JScrollBar scrollBar = new JScrollBar();
+		scrollBar.setOrientation(JScrollBar.HORIZONTAL);
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_1.createSequentialGroup()
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_1.createSequentialGroup()
+						.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
 							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-								.addComponent(usuario, GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE)
-								.addComponent(info_ginecologica, GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE))
+								.addComponent(info_ginecologica, GroupLayout.DEFAULT_SIZE, 653, Short.MAX_VALUE)
+								.addComponent(usuario, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 653, Short.MAX_VALUE))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
 								.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 630, Short.MAX_VALUE)
@@ -602,7 +606,10 @@ public class i_principal extends JFrame {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(btnGuardarYActualizar)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnTerminar, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(btnTerminar, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE))
+						.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
+							.addContainerGap(542, Short.MAX_VALUE)
+							.addComponent(scrollBar, GroupLayout.PREFERRED_SIZE, 1290, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		gl_panel_1.setVerticalGroup(
@@ -612,17 +619,19 @@ public class i_principal extends JFrame {
 						.addGroup(gl_panel_1.createSequentialGroup()
 							.addComponent(usuario, GroupLayout.PREFERRED_SIZE, 272, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(info_ginecologica, GroupLayout.PREFERRED_SIZE, 197, GroupLayout.PREFERRED_SIZE))
+							.addComponent(info_ginecologica, GroupLayout.PREFERRED_SIZE, 274, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_panel_1.createSequentialGroup()
-							.addComponent(tratamiento_previo, GroupLayout.PREFERRED_SIZE, 186, GroupLayout.PREFERRED_SIZE)
+							.addComponent(tratamiento_previo, GroupLayout.PREFERRED_SIZE, 217, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 372, GroupLayout.PREFERRED_SIZE)))
-					.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addGap(40)
+					.addComponent(scrollBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(36)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnTerminar)
 						.addComponent(btnGuardarYActualizar)
 						.addComponent(btnNewButton_4))
-					.addContainerGap(27, Short.MAX_VALUE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		
 		JLabel lblNewLabel_22 = new JLabel("Resultado");
@@ -740,6 +749,7 @@ public class i_principal extends JFrame {
 					comboBox_16.addItem("Cambios de la flora vaginal sugerentes de VAGINOSIS BACTERIANA");
 					comboBox_16.addItem("Bacterias de caracter�sticas morfol�gicas compatibles con Actinomyces");
 					comboBox_16.addItem("Cambios celulares compatibles con HERPES SIMPLE");
+				
 				}if(comboBox_14.getSelectedIndex() == 0 && comboBox_15.getSelectedIndex() == 1){
 					comboBox_16.addItem("Cambios celulares reactivos asosiados a:");
 					comboBox_16.addItem("C�lulas glandulares poshisterectom�a");
@@ -747,11 +757,13 @@ public class i_principal extends JFrame {
 					
 				}if(comboBox_14.getSelectedIndex() == 1 && comboBox_15.getSelectedIndex() == 0){
 					comboBox_16.addItem("NEGATIVO PARA LESI�N ESCAMOSA INTRAEPITELIAL");
+				
 				}if(comboBox_14.getSelectedIndex() == 2  && comboBox_15.getSelectedIndex() == 0){
 					comboBox_16.addItem("C�LULAS ESCAMOSAS AT�PICAS");
 					comboBox_16.addItem("LESI�N ESCAMOSA INTRAEPITELIAL DE BAJO GRADO (LSIL)");
 					comboBox_16.addItem("LESI�N ESCAMOSA INTRAEPITELIAL DE ALTO GRADO (HSIL)");
 					comboBox_16.addItem("CARCINOMA ESCAMOSO");
+				
 				}if(comboBox_14.getSelectedIndex() == 2  && comboBox_15.getSelectedIndex() == 1){
 					comboBox_16.addItem("AT�PICAS");
 					comboBox_16.addItem("AT�PICAS SUGESTIVAS A NEOPLASIA");
@@ -1047,8 +1059,8 @@ public class i_principal extends JFrame {
 								.addGroup(gl_info_ginecologica.createSequentialGroup()
 									.addComponent(lblNewLabel_21)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(comboBox_10, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-							.addContainerGap(102, Short.MAX_VALUE))
+									.addComponent(comboBox_10, GroupLayout.PREFERRED_SIZE, 165, GroupLayout.PREFERRED_SIZE)))
+							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 				);
 				gl_info_ginecologica.setVerticalGroup(
 					gl_info_ginecologica.createParallelGroup(Alignment.LEADING)
@@ -1590,7 +1602,7 @@ public class i_principal extends JFrame {
 					comboBox_15.setSelectedIndex(estudio.clasificacion2);
 					comboBox_16.setSelectedIndex(estudio.clasificacion3);
 					if(comboBox_17.getItemCount()>0)
-					comboBox_17.setSelectedIndex(estudio.clasificacion4);
+						comboBox_17.setSelectedIndex(estudio.clasificacion4);
 					textArea_1.setText(estudio.clasificacion_detalle);
 					estudio.numero_impresiones = 0;
 					textField_29.setText(estudio.fecha_muestra);
@@ -2732,10 +2744,6 @@ public class i_principal extends JFrame {
 		);
 		panel_9.setLayout(gl_panel_9);
 		Usuarios.setLayout(gl_Usuarios);
-		
-		JScrollBar scrollBar = new JScrollBar();
-		scrollBar.setOrientation(JScrollBar.HORIZONTAL);
-		contentPane.add(scrollBar, BorderLayout.SOUTH);
 		
 		
 		JScrollBar scrollBar_1 = new JScrollBar();

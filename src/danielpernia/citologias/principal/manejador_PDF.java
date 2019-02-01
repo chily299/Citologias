@@ -28,11 +28,16 @@ public class manejador_PDF {
 	public manejador_PDF() {
 
 		try {
-			cabeza = Image.getInstance("Assets\\cabecera.png");
+			/**Windows*/
+			//cabeza = Image.getInstance("Assets\\cabecera.png");
+			/**MAC-Linux*/
+			cabeza = Image.getInstance("Assets//cabecera.png");
 			cabeza.scaleToFit(400, 100);
 			cabeza.setAlignment(Chunk.ALIGN_CENTER);
-			
-			pie = Image.getInstance("Assets\\pie.png");
+			/**Windows*/
+			//pie = Image.getInstance("Assets\\pie.png");
+			/**MAC-Linux*/
+			pie = Image.getInstance("Assets//pie.png");
 			pie.scaleToFit(500, 100);
 			pie.setAlignment(Chunk.ALIGN_CENTER);
 			
@@ -48,22 +53,22 @@ public class manejador_PDF {
 		}
 		
 		/*Font font_titulo = FontFactory.getFont("arial",   // fuente
-		22,                            // tamaño
+		22,                            // tamaï¿½o
 		Font.BOLD,                   // estilo
 		BaseColor.BLACK);*/
 
-		 font_sub_titulo= FontFactory.getFont("arial",   // fuente
-		14,                            // tamaño
+		font_sub_titulo= FontFactory.getFont("arial",   // fuente
+		14,                            // tamaï¿½o
 		Font.BOLD,                   // estilo
 		BaseColor.BLACK);
 
 		 font_info = FontFactory.getFont("arial",   // fuente
-		12,                            // tamaño
+		12,                            // tamaï¿½o
 		Font.NORMAL,                   // estilo
 		BaseColor.BLACK);
 
 		 font_info_pequena =  FontFactory.getFont("arial",   // fuente
-		10,                            // tamaño
+		10,                            // tamaï¿½o
 		Font.NORMAL,                   // estilo
 		BaseColor.BLACK); 
 		
@@ -73,8 +78,6 @@ public class manejador_PDF {
 	
 	public int imprimirListaDeEstudios(Vector<estudio_citologico> estudio_v,conexion db ){
 		Document documento = new Document(PageSize.LETTER, 50, 50, 0, 50);
-		
-		
 		
 		try {
 			
@@ -192,14 +195,14 @@ public class manejador_PDF {
 		String fecha_resultado[] = estudio.fecha_resultado.split(" ");
 		
 		//---------PACIENTE-----------------
-		fecha = "N°"+estudio.rowid+"         Fecha: "+fecha_resultado[0];
+		fecha = "Nï¿½"+estudio.rowid+"         Fecha: "+fecha_resultado[0];
 		sub_titulo_paciente ="PACIENTE:";
-		info_paciente =      "Cédula: "+estudio.cedula_paciente+"         Nombre: "+paciente_.nombres+" "+paciente_.Apellidos+"\n"
+		info_paciente =      "Cï¿½dula: "+estudio.cedula_paciente+"         Nombre: "+paciente_.nombres+" "+paciente_.Apellidos+"\n"
 						+ "Edad:"+paciente_.edad+"         Telefono: "+paciente_.telefono+"        Procedencia: "+paciente_.procedencia+"\n"
-						+ "Dirección: "+paciente_.direccion+"\n"
+						+ "Direcciï¿½n: "+paciente_.direccion+"\n"
 						+ "Fecha de toma de muestra: "+estudio.fecha_muestra+"\n"
 						+ "Motivo consulta: "+estudio.motivo_consulta+"\n"
-						+ "Diagnostico clínico: "+estudio.diagnostico;
+						+ "Diagnostico clï¿½nico: "+estudio.diagnostico;
 		//-----TRATAMIENTO PREVIO:
 		sub_titulo_tratamiento ="TRATAMIENTO PREVIO:";
 		info_tratamento ="";
@@ -278,7 +281,7 @@ public class manejador_PDF {
 			contarLineas = contTrantamientoPrevio;
 		}
 		
-		sub_titulo_informacion_g ="INFORMACIÓN GINECOLÓGICA:";
+		sub_titulo_informacion_g ="INFORMACIï¿½N GINECOLï¿½GICA:";
 		info_informacion_g ="Medico Solicitante: "+medico_.nombres+" "+medico_.Apellidos+"\n"
 				+ "Embarazos: "+estudio.embarazos+" "+"   Partos: "+estudio.partos+"   Cesareas: "+estudio.cesareas+"   Abortos: "+estudio.abortos+"\n";
 		if(!estudio.f_ultimo_embarazo.isEmpty())		{
@@ -321,38 +324,38 @@ public class manejador_PDF {
 				contarLineas+=estudio.resultado.toCharArray().length/50;
 			}
 		}
-		sub_titulo_categoria="CATEGORIZACIÓN GENERAL:";
+		sub_titulo_categoria="CATEGORIZACIï¿½N GENERAL:";
 		info_categoria="";
 		
 		if(estudio.info_muestra1 == 0){ // satisfactoria
 			if(estudio.clasificacion1 == 0){
-				info_categoria+="NEGATIVO PARA LESIÓN INTRAEPITELIAL O MALIGNIDAD\n";
+				info_categoria+="NEGATIVO PARA LESIï¿½N INTRAEPITELIAL O MALIGNIDAD\n";
 				if(estudio.clasificacion2 == 0){
 					info_categoria+="MICROORGANISMOS: ";
 					if(estudio.clasificacion3 == 0){
 						info_categoria+="Trichomonas vaginalis ";
 					}else if(estudio.clasificacion3 == 1){
-						info_categoria+="Elementos micóticos de características morfológicas compatibles con Candida ";
+						info_categoria+="Elementos micï¿½ticos de caracterï¿½sticas morfolï¿½gicas compatibles con Candida ";
 					}else if(estudio.clasificacion3 == 2){
 						info_categoria+="Cambios de la flora vaginal sugerentes de VAGINOSIS BACTERIANA ";
 					}else if(estudio.clasificacion3 == 3){
-						info_categoria+="Bacterias de características morfológicas compatibles con Actinomyces ";
+						info_categoria+="Bacterias de caracterï¿½sticas morfolï¿½gicas compatibles con Actinomyces ";
 					}else if(estudio.clasificacion3 == 4){
 						info_categoria+="Cambios celulares compatibles con HERPES SIMPLE ";
 					}
 				}else if(estudio.clasificacion2 == 1){
-					info_categoria+="OTROS HALLAZGOS NO NEOPLÁSICOS: ";
+					info_categoria+="OTROS HALLAZGOS NO NEOPLï¿½SICOS: ";
 					if(estudio.clasificacion3 == 0){
 						info_categoria+="Cambios celulares reactivos asosiados a: ";
 						if(estudio.clasificacion4 == 0){
-							info_categoria+="Inflamación ";
+							info_categoria+="Inflamaciï¿½n ";
 						}else if(estudio.clasificacion4 == 1){
-							info_categoria+="Radiación ";
+							info_categoria+="Radiaciï¿½n ";
 						}else if(estudio.clasificacion4 == 2){
 							info_categoria+="Dispositivo intrauterino (DIU) ";
 						}
 					}else if(estudio.clasificacion3 == 1){
-						info_categoria+="Células glandulares poshisterectomía ";
+						info_categoria+="Cï¿½lulas glandulares poshisterectomï¿½a ";
 					}else if(estudio.clasificacion3 == 2){
 						info_categoria+="Atrofia ";
 					}
@@ -360,28 +363,28 @@ public class manejador_PDF {
 			}else if(estudio.clasificacion1 == 1){
 				info_categoria+="OTROS HALLAZGOS\n";
 				 if(estudio.clasificacion2 == 0){
-						info_categoria+="CÉLULAS ENDOMETRIALES  (mujer mayor de 40 años)  ";
+						info_categoria+="Cï¿½LULAS ENDOMETRIALES  (mujer mayor de 40 aï¿½os)  ";
 						if(estudio.clasificacion3 == 0){
-							info_categoria+="NEGATIVO PARA LESIÓN ESCAMOSA INTRAEPITELIAL ";
+							info_categoria+="NEGATIVO PARA LESIï¿½N ESCAMOSA INTRAEPITELIAL ";
 					 }
 				 }
 			}else if(estudio.clasificacion1 == 2){
-				info_categoria+="ANOMALÍAS DE LAS CÉLULAS EPITELIALES\n";
+				info_categoria+="ANOMALï¿½AS DE LAS Cï¿½LULAS EPITELIALES\n";
 				if(estudio.clasificacion2 == 0){
-					info_categoria+="CÉLULAS ESCAMOSAS: ";
+					info_categoria+="Cï¿½LULAS ESCAMOSAS: ";
 					if(estudio.clasificacion3 == 0){
-						info_categoria+="CÉLULAS ESCAMOSAS ATÍPICAS ";
+						info_categoria+="Cï¿½LULAS ESCAMOSAS ATï¿½PICAS ";
 						if(estudio.clasificacion4 == 0){
 							info_categoria+="de significado indeterminado (ASC-US) ";
 						}else if(estudio.clasificacion4 == 1){
 							info_categoria+="no se puede descartar lesion escamosa intraepitelial de alto grado (ASC-H) ";
 						}
 					}else if(estudio.clasificacion3 == 1){
-						info_categoria+="LESIÓN ESCAMOSA INTRAEPITELIAL DE BAJO GRADO (LSIL) ";
+						info_categoria+="LESIï¿½N ESCAMOSA INTRAEPITELIAL DE BAJO GRADO (LSIL) ";
 					}else if(estudio.clasificacion3 == 2){
-						info_categoria+="LESIÓN ESCAMOSA INTRAEPITELIAL DE ALTO GRADO (HSIL) ";
+						info_categoria+="LESIï¿½N ESCAMOSA INTRAEPITELIAL DE ALTO GRADO (HSIL) ";
 						if(estudio.clasificacion4 == 0){
-							info_categoria+="con hallazgos sospechosos de invación ";
+							info_categoria+="con hallazgos sospechosos de invaciï¿½n ";
 						}
 					}else if(estudio.clasificacion3 == 3){
 						info_categoria+="CARCINOMA ESCAMOSO ";
@@ -389,22 +392,22 @@ public class manejador_PDF {
 			 }
 				
 				if(estudio.clasificacion2 == 1){
-					info_categoria+="CÉLULAS GLANDULARES: ";
+					info_categoria+="Cï¿½LULAS GLANDULARES: ";
 					if(estudio.clasificacion3 == 0){
-						info_categoria+="ATÍPICAS ";
+						info_categoria+="ATï¿½PICAS ";
 						if(estudio.clasificacion4 == 0){
-							info_categoria+="Células endocervicales ";
+							info_categoria+="Cï¿½lulas endocervicales ";
 						}else if(estudio.clasificacion4 == 1){
-							info_categoria+="Células endometriales ";
+							info_categoria+="Cï¿½lulas endometriales ";
 						}else if(estudio.clasificacion4 == 2){
-							info_categoria+="Células glandulares ";
+							info_categoria+="Cï¿½lulas glandulares ";
 						}
 					}else if(estudio.clasificacion3 == 1){
-						info_categoria+="ATÍPICAS SUGESTIVAS A NEOPLASIA ";
+						info_categoria+="ATï¿½PICAS SUGESTIVAS A NEOPLASIA ";
 						if(estudio.clasificacion4 == 0){
-							info_categoria+="Células endocervicales ";
+							info_categoria+="Cï¿½lulas endocervicales ";
 						}else if(estudio.clasificacion4 == 1){
-							info_categoria+="Células glandulares ";
+							info_categoria+="Cï¿½lulas glandulares ";
 						}
 					}else if(estudio.clasificacion3 == 2){
 						info_categoria+="ADENOCARCINOMA ENDOCERVICAL (in situ) ";
@@ -427,7 +430,7 @@ public class manejador_PDF {
 		}else{
 			sub_titulo_categoria="CALIDAD DE LA MUESTRA:";
 			
-			info_categoria+= "Insatisfactoria para evaluación ";
+			info_categoria+= "Insatisfactoria para evaluaciï¿½n ";
 			if(estudio.info_muestra2 == 0){
 				info_categoria+= "Muestra rechazada y no procesada ";
 				if(estudio.info_muestra3 == 0){
@@ -436,7 +439,7 @@ public class manejador_PDF {
 					info_categoria+= "lamina invalidada por defecto fisico ";
 				}	
 			}else if(estudio.info_muestra2 == 1){
-				info_categoria+= "Muestra procesada y examinada pero insatisfactoria para la evaluación de anomalía epiteliales  ";
+				info_categoria+= "Muestra procesada y examinada pero insatisfactoria para la evaluaciï¿½n de anomalï¿½a epiteliales  ";
 				if(estudio.info_muestra3 == 0){
 					info_categoria+= "muy sanguinolenta ";
 				}else if(estudio.info_muestra3 == 1){
@@ -448,7 +451,7 @@ public class manejador_PDF {
 		}
 		
 		if(estudio.clasificacion_detalle!=null && !estudio.clasificacion_detalle.isEmpty()){
-			info_categoria+="\nObservación: "+estudio.clasificacion_detalle;
+			info_categoria+="\nObservaciï¿½n: "+estudio.clasificacion_detalle;
 		}
 		for(int i = contarLineas; i < 15; i++){
 			info_categoria+="\n";

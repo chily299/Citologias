@@ -23,6 +23,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 public class manejador_PDF {
 	Image pie,cabeza;
 	Font font_sub_titulo,font_info,font_info_pequena;
+	
 	//conexion db = new conexion();
 	
 	public manejador_PDF() {
@@ -94,7 +95,7 @@ public class manejador_PDF {
 			//-----------------------------------------------------------------------------------------
 			
 			documento.addTitle("Estudio Citologico");
-			documento.addAuthor("Lisbeth Jaimes ");
+			documento.addAuthor("https://github.com/danielp299/Citologias");
 			documento.addSubject("Resultado de laboratorio");
 			documento.addCreationDate();
 			
@@ -149,7 +150,7 @@ public class manejador_PDF {
 			//-----------------------------------------------------------------------------------------
 			
 			documento.addTitle("Estudio Citologico");
-			documento.addAuthor("Lisbeth Jaimes ");
+			documento.addAuthor("https://github.com/danielp299/Citologias");
 			documento.addSubject("Resultado de laboratorio");
 			documento.addCreationDate();
 			
